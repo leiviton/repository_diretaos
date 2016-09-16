@@ -1,29 +1,25 @@
 angular.module('starter.controllers')
     .controller('DeliverymanOrderCtrl',[
-        '$scope','$state','$ionicLoading','$stateParams','$ionicActionSheet','DeliverymanOrder','$ionicPopup','$cordovaGeolocation',
-        function ($scope, $state,$ionicLoading,$stateParams,$ionicActionSheet,DeliverymanOrder,$ionicPopup,$cordovaGeolocation) {
+        '$scope','$state','$ionicLoading','$stateParams','$ionicActionSheet','DeliverymanOrder','$ionicPopup','$cordovaGeolocation','$localStorage',
+        function ($scope, $state,$ionicLoading,$stateParams,$ionicActionSheet,DeliverymanOrder,$ionicPopup,$cordovaGeolocation,$localStorage) {
 
-        $scope.items = [];
+            $scope.items = [];
 
-        $ionicLoading.show({
-           template: 'Carregando...'
-        });
-
-
-
-        $scope.doRefresh = function () {
-          getOrders().then(function (data) {
-
-              $scope.items = data.data;
-              console.log($scope.items);
-              $scope.$broadcast('scroll.refreshComplete');
-          },function (dataError) {
-              $scope.$broadcast('scroll.refreshComplete');
-          });
-        };
+            $ionicLoading.show({
+               template: 'Carregando...'
+            });
+            $scope.doRefresh = function () {
+              getOrders().then(function (data) {
+                  $localStorage.setObject('orders',data.data);
+                  console.log('orders refresh',$localStorage.getObject('orders'));
+                  $scope.items = $localStorage.getObject('orders');
+                  $scope.$broadcast('scroll.refreshComplete');
+              },function (dataError) {
+                  $scope.$broadcast('scroll.refreshComplete');
+              });
+            };
 
             $scope.giveBack = function (o) {
-
                 $ionicPopup.confirm({
                     title: 'Atenção',
                     template: 'Deseja devolver esta Ordem?'
@@ -47,7 +43,6 @@ angular.module('starter.controllers')
                                 },function (data) {
                                     console.log(data);
                                     $ionicLoading.hide();
-
                                 });
                             }, function(err) {
                                 // error
@@ -58,46 +53,23 @@ angular.module('starter.controllers')
                     }
                 });
             };
-        $scope.openOrderDetail = function (order) {
-            console.log(order);
-            if (order.status == 1) {
-                $state.go('deliveryman.view_close', {id: order.id});
-            }else {
-                $state.go('deliveryman.view_order', {id: order.id});
-            }
-        };
-            $scope.showActionSheet = function (order) {
-                $ionicActionSheet.show({
-                    buttons:[
-                        {text:'Ver detalhes'}
-                        ],
-                    titleText:'O que fazer?',
-                    cancelText:'Cancelar',
-                    cancel:function () {
-
-                    },
-                    buttonClicked:function (index) {
-                        switch (index){
-                            case 0:
-                                if (order.status == 1) {
-                                    $state.go('deliveryman.view_close', {id: order.id});
-                                }else {
-                                    $state.go('deliveryman.view_order', {id: order.id});
-                                }
-                                break;
-                            case 1:
-                                break
-                        }
-                    }
-                });
+            $scope.openOrderDetail = function (order) {
+                console.log(order);
+                if (order.status == 1) {
+                    $state.go('deliveryman.view_close', {id: order.id});
+                }else {
+                    $state.go('deliveryman.view_order', {id: order.id});
+                }
             };
             function getOrders() {
-                return DeliverymanOrder.query({
-                    id:null,
-                    orderBy:'created_at',
-                    sortedBy:'asc'
-                }).$promise;
-            }
+                //return $localStorage.getObject('orders');
+
+                    return DeliverymanOrder.query({
+                        id:null,
+                        orderBy:'created_at',
+                        sortedBy:'asc'
+                    }).$promise;
+                }
 
             getOrders().then(function (data) {
                 if(data.data.length==0){
@@ -112,9 +84,15 @@ angular.module('starter.controllers')
                         }
                     });
                 }
-                $scope.items = data.data;
+
+                $localStorage.setObject('orders',data.data);
+
+                console.log('orders',$localStorage.getObject('orders'));
+                $scope.items = $localStorage.getObject('orders');
                 $ionicLoading.hide();
             },function (dataError) {
                 $ionicLoading.hide();
             });
+
+
     }]);

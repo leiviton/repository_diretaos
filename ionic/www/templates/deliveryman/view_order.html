@@ -39,7 +39,7 @@
         <button type="button" class="button button-dark button-full button-circle" ng-click="goToOrder()">
             Cliente não encontrado
         </button>
-    <div ng-if="exibir=true">
+    <div ng-if="exibir==0">
         <h2 class="visita">Histórico de visitas:</h2>
         <h2 class="visita" ng-repeat="visita in visitors">{{ visita.data }}</h2>
     </div>

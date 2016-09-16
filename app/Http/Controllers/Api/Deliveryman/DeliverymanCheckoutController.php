@@ -63,7 +63,7 @@ class DeliverymanCheckoutController extends Controller
             ->skipPresenter(false)
             ->with(['items'])
             ->scopeQuery(function ($query)use($id,$status){
-            return $query->where('user_deliveryman_id','=',$id)->where('status','!=',$status);
+            return $query->where('user_deliveryman_id','=',$id)->where('status','<=',1);
         })->paginate();
 
         return $orders;

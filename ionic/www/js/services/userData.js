@@ -1,5 +1,6 @@
 angular.module('starter.services')
-    .factory('UserData',['$localStorage',function ($localStorage) {
+    .factory('UserData',['$localStorage','User','OAuth','OAuthToken','$state','$ionicLoading',
+        function ($localStorage,User,OAuth,OAuthToken,$state,$ionicLoading) {
         var key = 'user';
         return {
             set: function (value) {
@@ -7,6 +8,40 @@ angular.module('starter.services')
             },
             get: function () {
                 return $localStorage.getObject(key);
+            },
+            login: function (o) {
+                $ionicLoading.show({
+                    template: 'Aguarde'
+                });
+                var promise = OAuth.getAccessToken(o);
+                $localStorage.setObject('login',o);
+                promise
+                    .then(function (data) {
+                        var token = $localStorage.get('device_token');
+                        return User.updateDeviceToken({},{device_token:token}).$promise;
+                    })
+                    .then(function (data) {
+                        return User.authenticated({include:'client'}).$promise;
+                    }).then(function (data) {
+                    $localStorage.setObject(key,data.data);
+
+                    if (data.data.role=='client'){
+                        $ionicLoading.hide();
+                        $state.go('client.checkout');
+                    }else{
+                        $ionicLoading.hide();
+                        $state.go('deliveryman.home');
+                    }
+
+                },function (responseError) {
+                    $localStorage.setObject(key,null);
+                    OAuthToken.removeToken();
+                    $ionicPopup.alert({
+                        title:'Advertência',
+                        template:'Usuário e/ou senha inválidos'
+                    });
+                    console.debug(responseError);
+                });
             }
         }
     }]);

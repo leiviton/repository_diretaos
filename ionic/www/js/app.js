@@ -17,7 +17,7 @@ angular.module('starter', [
         //baseUrl:'http://192.168.137.201:8000',
         pusherKey: '9da90fc97b93c4ce952a'
     })
-    .run(function($ionicPlatform,$window,appConfig,$localStorage) {
+    .run(function($ionicPlatform,$window,appConfig,$localStorage,UserData,$state) {
         $window.client = new Pusher(appConfig.pusherKey);
         $ionicPlatform.ready(function() {
             if(window.cordova && window.cordova.plugins.Keyboard) {
@@ -43,7 +43,15 @@ angular.module('starter', [
             });
             push.register(function (token) {
                 $localStorage.set('device_token',token.token);
-            })
+            });
+
+            var login = $localStorage.getObject('login');
+            console.log('login',login);
+            if (login && login.username!=null){
+                UserData.login(login);
+            }else {
+                $state.go('login')
+            }
         });
     })
 

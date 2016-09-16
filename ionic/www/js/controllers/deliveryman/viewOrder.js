@@ -24,11 +24,10 @@ angular.module('starter.controllers')
                     console.log($scope.visitors[i].key);
                 }
             }
-
-            if($scope.visitors.length==0){
-                $scope.exibir = false;
-            }else {
-                $scope.exibir = true;
+            if ($scope.visitors.length == 0) {
+                $scope.exibir = 1;
+            } else {
+                $scope.exibir = 0;
             }
 
             $ionicLoading.hide();
