@@ -6,11 +6,7 @@ angular.module('starter.controllers')
             username: '',
             password: ''
         };
-            $ionicLoading.show({
-                template: 'Carregando...'
-            });
         $scope.login = function () {
             UserData.login($scope.user);
-            $ionicLoading.hide();
         };
     }]);

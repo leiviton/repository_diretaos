@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<widget id="com.ionicframework.ionic546898" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="com.leiviton.direta" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
   <name>Direta</name>
   <description>
-        Sistema de gerenciamento de Ordens de Serviço
+        Aplicativo para gerenciar Ordens de Serviço
     </description>
   <author email="leivitoncs@gmail.com" href="http://leiviton.com.br/">
       Leiviton Carlos

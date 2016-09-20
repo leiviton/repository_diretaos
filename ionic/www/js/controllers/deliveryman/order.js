@@ -62,37 +62,10 @@ angular.module('starter.controllers')
                 }
             };
             function getOrders() {
-                //return $localStorage.getObject('orders');
-
-                    return DeliverymanOrder.query({
-                        id:null,
-                        orderBy:'created_at',
-                        sortedBy:'asc'
-                    }).$promise;
-                }
-
-            getOrders().then(function (data) {
-                if(data.data.length==0){
-                    $ionicPopup.alert({
-                        title: 'Atenção',
-                        template: 'Não existe novas Ordens'
-                    }).then(function(res) {
-                        if(res){
-                            $state.go('deliveryman.home');
-                        }else{
-                            $state.go('deliveryman.home');
-                        }
-                    });
-                }
-
-                $localStorage.setObject('orders',data.data);
-
-                console.log('orders',$localStorage.getObject('orders'));
                 $scope.items = $localStorage.getObject('orders');
                 $ionicLoading.hide();
-            },function (dataError) {
-                $ionicLoading.hide();
-            });
+            }
+            getOrders();
 
 
     }]);

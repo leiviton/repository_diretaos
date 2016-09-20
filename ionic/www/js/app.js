@@ -21,6 +21,13 @@ angular.module('starter', [
         $window.client = new Pusher(appConfig.pusherKey);
         $ionicPlatform.ready(function() {
             if(window.cordova && window.cordova.plugins.Keyboard) {
+                var login = $localStorage.getObject('login');
+                console.log('login',login);
+                if (login!=null){
+                    UserData.login(login);
+                }else {
+                    $state.go('login')
+                }
                 // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
                 // for form inputs)
                 cordova.plugins.Keyboard.hideKeyboardAccessoryBar(false);
@@ -44,14 +51,6 @@ angular.module('starter', [
             push.register(function (token) {
                 $localStorage.set('device_token',token.token);
             });
-
-            var login = $localStorage.getObject('login');
-            console.log('login',login);
-            if (login && login.username!=null){
-                UserData.login(login);
-            }else {
-                $state.go('login')
-            }
         });
     })
 
@@ -143,7 +142,7 @@ angular.module('starter', [
             .state('deliveryman.home',{
                 url:'/home',
                 templateUrl:'templates/deliveryman/home.html',
-                controller:function ($scope) {}
+                controller:'DeliverymanHomeCtrl'
             })
             .state('deliveryman.notification',{
                 url:'/notification',

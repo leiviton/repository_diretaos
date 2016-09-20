@@ -8,6 +8,7 @@ angular.module('starter.controllers')
             $scope.logout = function () {
                 $cart.clear();
                 $localStorage.setObject('login',null);
+                $localStorage.setObject('orders',[]);
                 UserData.set(null);
                 OAuthToken.removeToken();
                 $state.go('login');

@@ -1,7 +1,7 @@
 {
   "name": "Direta",
-  "version": "1.1.1",
-  "description": "ionic: Sistema de ordens de serviços online",
+  "version": "0.0.1",
+  "description": "direta: aplicativo de ordens de serviços online",
   "dependencies": {
     "chart.js": "^2.2.2",
     "gulp": "^3.5.6",

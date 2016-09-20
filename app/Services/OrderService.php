@@ -123,9 +123,8 @@ class OrderService{
                     $this->pushProcessor->notify([$order->deliveryman->device_token],[
                         'message'=>"Você visitou o cliente {$order->name} ás {$hora} do dia {$data}"
                     ]);
-                    $order->visita .= ' || '.date("d/m/Y H:i:s");
+                    $order->save();
                 }
-                $order->save();
                 break;
             case 1:
                 $action['key'] = "Iniciar";

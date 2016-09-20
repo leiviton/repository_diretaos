@@ -1,22 +1,27 @@
 angular.module('starter.controllers')
     .controller('DeliverymanViewOrderCtrl',[
-                  '$scope','$state','$stateParams','DeliverymanOrder','$ionicLoading','$cordovaGeolocation','$ionicPopup','$cart',
-        function ($scope,$state, $stateParams, DeliverymanOrder,$ionicLoading,$cordovaGeolocation,$ionicPopup,$cart) {
+                  '$scope','$state','$stateParams','DeliverymanOrder','$ionicLoading','$cordovaGeolocation','$ionicPopup','$cart','$localStorage',
+        function ($scope,$state, $stateParams, DeliverymanOrder,$ionicLoading,$cordovaGeolocation,$ionicPopup,$cart,$localStorage) {
         var watch;
         $scope.order = [];
         $scope.equipe = [];
         $scope.actions = [];
         $scope.visitors = [];
         $scope.exibir = [];
-        $ionicLoading.show({
-           template: 'Carregando...'
-        });
-        DeliverymanOrder.get({id:$stateParams.id},function (data) {
+        var orders = $localStorage.getObject('orders');
+            $ionicLoading.show({
+               template: 'Carregando...'
+            });
 
-            $scope.order = data.data;
+            for (var i=0;i < orders.length;i++){
+                if (orders[i].id == $stateParams.id){
+                    $scope.order = orders[i];
+                }
+            }
             console.log($scope.order);
             $scope.actions = $scope.order.actions.data;
             console.log('actions',$scope.actions);
+
             for (var i=0;i < $scope.actions.length;i++){
                 if ($scope.actions[i].key=="Visita"){
                     console.log($scope.actions[i].key);
@@ -29,11 +34,8 @@ angular.module('starter.controllers')
             } else {
                 $scope.exibir = 0;
             }
+            $ionicLoading.hide();
 
-            $ionicLoading.hide();
-        },function (dataError) {
-            $ionicLoading.hide();
-        });
         $scope.goToOrder = function () {
             $ionicPopup.confirm({
                 title: 'Atenção',

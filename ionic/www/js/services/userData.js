@@ -1,6 +1,6 @@
 angular.module('starter.services')
-    .factory('UserData',['$localStorage','User','OAuth','OAuthToken','$state','$ionicLoading',
-        function ($localStorage,User,OAuth,OAuthToken,$state,$ionicLoading) {
+    .factory('UserData',['$localStorage','User','OAuth','OAuthToken','$state','$ionicLoading','DeliverymanOrder',
+        function ($localStorage,User,OAuth,OAuthToken,$state,$ionicLoading,DeliverymanOrder) {
         var key = 'user';
         return {
             set: function (value) {
@@ -22,9 +22,9 @@ angular.module('starter.services')
                     })
                     .then(function (data) {
                         return User.authenticated({include:'client'}).$promise;
-                    }).then(function (data) {
+                    })
+                    .then(function (data) {
                     $localStorage.setObject(key,data.data);
-
                     if (data.data.role=='client'){
                         $ionicLoading.hide();
                         $state.go('client.checkout');
@@ -40,6 +40,7 @@ angular.module('starter.services')
                         title:'Advertência',
                         template:'Usuário e/ou senha inválidos'
                     });
+                    $ionicLoading.hide();
                     console.debug(responseError);
                 });
             }
