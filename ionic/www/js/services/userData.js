@@ -1,6 +1,6 @@
 angular.module('starter.services')
-    .factory('UserData',['$localStorage','User','OAuth','OAuthToken','$state','$ionicLoading','DeliverymanOrder',
-        function ($localStorage,User,OAuth,OAuthToken,$state,$ionicLoading,DeliverymanOrder) {
+    .factory('UserData',['$localStorage','User','OAuth','OAuthToken','$state','$ionicLoading','$ionicPopup',
+        function ($localStorage,User,OAuth,OAuthToken,$state,$ionicLoading,$ionicPopup) {
         var key = 'user';
         return {
             set: function (value) {
@@ -21,10 +21,11 @@ angular.module('starter.services')
                         return User.updateDeviceToken({},{device_token:token}).$promise;
                     })
                     .then(function (data) {
-                        return User.authenticated({include:'client'}).$promise;
+                        return User.authenticated({include:'client',include:'notification'}).$promise;
                     })
                     .then(function (data) {
                     $localStorage.setObject(key,data.data);
+                    $localStorage.setObject('notification',{items:data.data.notification.data});
                     if (data.data.role=='client'){
                         $ionicLoading.hide();
                         $state.go('client.checkout');

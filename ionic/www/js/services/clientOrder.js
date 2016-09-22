@@ -37,12 +37,11 @@ angular.module('starter.services')
             countDi:{
                 method: 'GET',
                 url: appConfig.baseUrl +'/api/deliveryman/countDi'
+            },
+            get:{
+                method: 'GET',
+                url: appConfig.baseUrl +'/api/notification'
             }
         });
 
-    }])
-    .factory('DeliverymanOrderLocal',['$localStorage',function ($localStorage){
-        var getI = function(o){
-            return $localStorage.getObjectI('orders',o);
-        }
     }]);

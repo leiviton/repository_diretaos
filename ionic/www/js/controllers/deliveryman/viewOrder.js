@@ -1,25 +1,30 @@
 angular.module('starter.controllers')
     .controller('DeliverymanViewOrderCtrl',[
-                  '$scope','$state','$stateParams','DeliverymanOrder','$ionicLoading','$cordovaGeolocation','$ionicPopup','$cart','$localStorage',
-        function ($scope,$state, $stateParams, DeliverymanOrder,$ionicLoading,$cordovaGeolocation,$ionicPopup,$cart,$localStorage) {
-        var watch;
+                  '$scope','$state','$stateParams','DeliverymanOrder','$ionicLoading','$cordovaGeolocation','$ionicPopup','$cart','$localStorage','$order',
+        function ($scope,$state, $stateParams, DeliverymanOrder,$ionicLoading,$cordovaGeolocation,$ionicPopup,$cart,$localStorage,$order) {
+        var item = [];
         $scope.order = [];
         $scope.equipe = [];
         $scope.actions = [];
         $scope.visitors = [];
         $scope.exibir = [];
+
+
         var orders = $localStorage.getObject('orders');
             $ionicLoading.show({
                template: 'Carregando...'
             });
 
-            for (var i=0;i < orders.length;i++){
-                if (orders[i].id == $stateParams.id){
-                    $scope.order = orders[i];
+            for (var i=0;i < orders.items.length;i++){
+                if (orders.items[i].id == $stateParams.id){
+                    $scope.order = orders.items[i];
                 }
             }
             console.log($scope.order);
-            $scope.actions = $scope.order.actions.data;
+
+            if ($scope.order.actions.data!=null) {
+                $scope.actions = $scope.order.actions.data;
+            }
             console.log('actions',$scope.actions);
 
             for (var i=0;i < $scope.actions.length;i++){
@@ -114,14 +119,12 @@ angular.module('starter.controllers')
             };
 
             $scope.giveBack = function () {
-
-                $ionicPopup.confirm({
+               $ionicPopup.confirm({
                     title: 'Atenção',
                     template: 'Deseja devolver esta Ordem?'
                 }).then(function(res) {
                     if(res) {
                         var posOptions = {timeout: 30000, enableHighAccuracy: false, maximumAge: 0};
-
                         $cordovaGeolocation
                             .getCurrentPosition(posOptions)
                             .then(function (position) {
@@ -130,31 +133,36 @@ angular.module('starter.controllers')
 
                                 console.log(lat,long);
 
-                                DeliverymanOrder.updateStatus({id: $stateParams.id}, {
-                                    devolver:1,
-                                    status: 0,
+
+                                item = {
+                                    id:$stateParams.id,
+                                    lat:lat,
+                                    long:long,
+                                    status:3
+                                };
+                                /*DeliverymanOrder.updateStatus({id: $stateParams.id}, {
+                                    status: 3,
                                     lat: lat,
                                     long: long
-                                },function (data) {
-                                    console.log(data);
+                                },function (data) {*/
+                                    $order.addItem(item);
+                                    $order.removeItem($stateParams.index);
+                                    //$localStorage.setObject('orders_update',{items:{}});
+                                    console.log('update',$localStorage.getObject('orders_update'));
+
+                                    ;
+
+                                    //console.log(data);
                                     $ionicLoading.hide();
-                                    $state.go('deliveryman.order');
-                                });
+                                    $state.go('deliveryman.home');
+                                /*});
                             }, function(err) {
                                 // error
-                                $ionicLoading.hide();
+                                $ionicLoading.hide();*/
                             });
-                    } else {
+                    }else {
                         $ionicLoading.hide();
                     }
                 });
             };
-
-
-        
-        function stopWatchPosition() {
-            if(watch && typeof watch =='object' && watch.hasOwnProperty('watchID')){
-                $cordovaGeolocation.clearWatch(watch.watchID);
-            }
-        }
     }]);

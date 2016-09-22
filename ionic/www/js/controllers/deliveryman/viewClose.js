@@ -24,9 +24,9 @@ angular.module('starter.controllers')
         $ionicLoading.show({
            template: 'Carregando...'
         });
-        for (var i=0;i < orders.length;i++){
-            if (orders[i].id == $stateParams.id){
-                $scope.order = orders[i];
+        for (var i=0;i < orders.items.length;i++){
+            if (orders.items[i].id == $stateParams.id){
+                $scope.order = orders.items[i];
             }
         }
         $ionicLoading.hide();

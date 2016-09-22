@@ -105,6 +105,7 @@ Route::group(['middleware'=>'cors'],function (){
            });
 
         Route::get('authenticated','Api\UserController@authenticated');
+        Route::get('notification','Api\UserController@notification');
         Route::patch('device_token','Api\UserController@updateDeviceToken');
         Route::get('cupom/{code}','Api\CupomController@show');
 

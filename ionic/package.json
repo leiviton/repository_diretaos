@@ -34,7 +34,9 @@
       "locator": "phonegap-plugin-push",
       "id": "phonegap-plugin-push"
     },
-    "cordova-plugin-splashscreen"
+    "cordova-plugin-splashscreen",
+    "cordova-plugin-network-information",
+    "cordova-plugin-progressindicator"
   ],
   "cordovaPlatforms": [
     "android"

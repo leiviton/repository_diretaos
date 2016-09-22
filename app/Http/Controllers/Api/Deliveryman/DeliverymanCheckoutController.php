@@ -89,7 +89,6 @@ class DeliverymanCheckoutController extends Controller
             $request->get('lat'),
             $request->get('long'),
             $request->get('service'),
-            $request->get('devolver'),
             $auxiliarys
         );
 
@@ -122,15 +121,5 @@ class DeliverymanCheckoutController extends Controller
         $geo->long = $request->get('long');
         event(new GetLocationDeliveryman($geo,$order));
         return $geo;
-    }
-
-    private function itemToArray($products)
-    {
-        $itemCollection = [];
-        foreach ($products as $product) {
-            $item = OrderItem::firstOrCreate(['product_id' => $product->id]);
-            array_push($itemCollection, $item->id);
-        }
-        return $itemCollection;
     }
 }

@@ -1,17 +1,13 @@
 angular.module('starter.services')
     .factory('Notification',['$resource','appConfig',function ($resource,appConfig) {
 
-        return $resource(appConfig.baseUrl + '/api/authenticated',{},{
+        return $resource(appConfig.baseUrl + '/api/notification',{id:'@id'},{
             query:{
                 isArray: false
             },
-            authenticated:{
+            notification:{
                 method:'GET',
-                url:appConfig.baseUrl + '/api/authenticated'
-            },
-            updateDeviceToken:{
-                method:'PATCH',
-                url:appConfig.baseUrl + '/api/device_token'
+                url: appConfig.baseUrl + '/api/notification'
             }
         });
 

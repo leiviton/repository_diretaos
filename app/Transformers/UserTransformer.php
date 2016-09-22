@@ -12,7 +12,7 @@ use CodeDelivery\Models\User;
 class UserTransformer extends TransformerAbstract
 {
 
-    protected $availableIncludes = ['client'];
+    protected $availableIncludes = ['client','notification'];
     /**
      * Transform the \User entity
      * @param \User $model
@@ -25,7 +25,7 @@ class UserTransformer extends TransformerAbstract
             'id'    => (int) $model->id,
             'name'  => $model->name,
             'email' => $model->email,
-            'role'  => $model->role,
+            'role'  => $model->role
         ];
     }
 
@@ -35,6 +35,10 @@ class UserTransformer extends TransformerAbstract
         }else{
             return null;
         }
+    }
+
+    public function includeNotification(User $model){
+        return $this->collection($model->notification,new NotificationTransformer());
     }
 
 }

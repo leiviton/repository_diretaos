@@ -50,5 +50,9 @@ class RepositoryServiceProvider extends ServiceProvider
             'CodeDelivery\Repositories\AuxiliaryItemsRepository',
             'CodeDelivery\Repositories\AuxiliaryItemsRepositoryEloquent'
         );
+        $this->app->bind(
+            'CodeDelivery\Repositories\NotificationRepository',
+            'CodeDelivery\Repositories\NotificationRepositoryEloquent'
+        );
     }
 }

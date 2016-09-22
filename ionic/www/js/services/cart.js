@@ -2,13 +2,16 @@ angular.module('starter.services')
     .service('$cart',['$localStorage',function ($localStorage) {
         var key = 'cart', cartAux = $localStorage.getObject(key);
         var key1 = 'auxiliar', aux = $localStorage.getObject(key1);
+        var key2 = 'orders_update', oax = $localStorage.getObject(key2);
         if(!cartAux){
             initCart();
         }
         if(!aux){
             initAux();
         }
-
+        if(!oax){
+            initOx();
+        }
         this.clear = function () {
             initCart();
         };
@@ -119,9 +122,9 @@ angular.module('starter.services')
                 total:0,
                 cupom:{
                     code:null,
-                    value:null,
+                    value:null
                 }
-            })
+            });
 
             $localStorage.setObject(key1,{
                 auxiliar:[]
@@ -131,6 +134,12 @@ angular.module('starter.services')
         function initAux() {
             $localStorage.setObject(key1,{
                 auxiliar:[]
+            });
+        }
+
+        function initOx() {
+            $localStorage.setObject(key2,{
+                items:[]
             });
         }
     }]);

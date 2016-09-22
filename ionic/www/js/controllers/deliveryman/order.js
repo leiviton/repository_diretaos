@@ -36,8 +36,7 @@ angular.module('starter.controllers')
                                 console.log(lat,long);
 
                                 DeliverymanOrder.updateStatus({id: o.id}, {
-                                    devolver:1,
-                                    status: 0,
+                                    status: 3,
                                     lat: lat,
                                     long: long
                                 },function (data) {
@@ -53,16 +52,16 @@ angular.module('starter.controllers')
                     }
                 });
             };
-            $scope.openOrderDetail = function (order) {
+            $scope.openOrderDetail = function (order,index) {
                 console.log(order);
                 if (order.status == 1) {
-                    $state.go('deliveryman.view_close', {id: order.id});
+                    $state.go('deliveryman.view_close', {id: order.id, index: index});
                 }else {
-                    $state.go('deliveryman.view_order', {id: order.id});
+                    $state.go('deliveryman.view_order', {id: order.id, index: index});
                 }
             };
             function getOrders() {
-                $scope.items = $localStorage.getObject('orders');
+                $scope.items = $localStorage.getObject('orders').items;
                 $ionicLoading.hide();
             }
             getOrders();

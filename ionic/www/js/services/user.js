@@ -12,6 +12,10 @@ angular.module('starter.services')
             updateDeviceToken:{
                 method:'PATCH',
                 url:appConfig.baseUrl + '/api/device_token'
+            },
+            notification:{
+                method:'GET',
+                url:appConfig.baseUrl + '/api/notification'
             }
         });
 

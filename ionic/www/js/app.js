@@ -13,21 +13,56 @@ angular.module('starter', [
     'angular-oauth2','ngResource','ngCordova','pusher-angular'
 ])
     .constant('appConfig',{
-        baseUrl:'http://leiviton.com.br/direta/public',
-        //baseUrl:'http://192.168.137.201:8000',
+        //baseUrl:'http://leiviton.com.br/direta/public',
+        baseUrl:'http://192.168.137.201:8000',
         pusherKey: '9da90fc97b93c4ce952a'
     })
-    .run(function($ionicPlatform,$window,appConfig,$localStorage,UserData,$state) {
+    .run(function($ionicPlatform,$window,appConfig,$localStorage,UserData,$state,$ionicPopup,$timeout) {
         $window.client = new Pusher(appConfig.pusherKey);
         $ionicPlatform.ready(function() {
+            ProgressIndicator.showText(true, 'Sincronizando...');
+            timeout(4000);
+            function timeout(time) {
+                $timeout(function () {
+                    ProgressIndicator.hide();
+                }, time);
+            }
             if(window.cordova && window.cordova.plugins.Keyboard) {
-                var login = $localStorage.getObject('login');
-                console.log('login',login);
-                if (login!=null){
-                    UserData.login(login);
-                }else {
-                    $state.go('login')
+                if(window.Connection) {
+                    if(navigator.connection.type == Connection.NONE) {
+                        var login = $localStorage.getObject('login');
+                        console.log('login',login);
+                        if (login!=null){
+                            $state.go('deliveryman.home');
+                        }else {
+                            $state.go('login');
+                        }
+
+                    }else {
+                        var login = $localStorage.getObject('login');
+                        console.log('login',login);
+                        if (login!=null){
+                            UserData.login(login);
+                        }else {
+                            $state.go('login')
+                        }
+
+                        Ionic.io();
+                        var push = new Ionic.Push({
+                            debug:true,
+                            onNotification: function (message) {
+                                $ionicPopup.alert({
+                                    title:'Atenção',
+                                    template: message
+                                });
+                            }
+                        });
+                        push.register(function (token) {
+                            $localStorage.set('device_token',token.token);
+                        });
+                    }
                 }
+
                 // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
                 // for form inputs)
                 cordova.plugins.Keyboard.hideKeyboardAccessoryBar(false);
@@ -41,16 +76,6 @@ angular.module('starter', [
                 //StatusBar.styleDefault();
                 StatusBar.styleBlackTranslucent();
             }
-            Ionic.io();
-            var push = new Ionic.Push({
-                debug:true,
-                onNotification: function (message) {
-                    console.log(message);
-                }
-            });
-            push.register(function (token) {
-                $localStorage.set('device_token',token.token);
-            });
         });
     })
 
@@ -140,6 +165,7 @@ angular.module('starter', [
                 controller: 'DeliverymanMenuCtrl'
             })
             .state('deliveryman.home',{
+                cache:false,
                 url:'/home',
                 templateUrl:'templates/deliveryman/home.html',
                 controller:'DeliverymanHomeCtrl'

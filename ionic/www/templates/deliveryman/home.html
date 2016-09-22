@@ -11,12 +11,12 @@
         <div class="col card">
             <ion-item class="item-icon-left" ui-sref="deliveryman.notification">
                 <i class="icon ion-android-notifications-none"></i>Notificações
-
+                <span class="badge badge-assertive" ng-if="countNot > 0">{{countNot}}</span>
             </ion-item>
         </div>
         <div class="col card">
-            <ion-item class="item-icon-left dark">
-                <i class="icon ion-loop"></i>Sincronizar  | Data: 30/08/2016
+            <ion-item class="item-icon-left dark" ng-click="countSinc > 0 && sincronizar()">
+                <i class="icon ion-loop"></i>Sincronizar  <span class="badge badge-assertive" ng-if="countSinc > 0"> {{countSinc}}</span>
             </ion-item>
         </div>
     </ion-content>

@@ -3,6 +3,7 @@
 namespace CodeDelivery\Repositories;
 
 use Carbon\Carbon;
+use CodeDelivery\Presenters\OrderPresenter;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\DB;
@@ -95,7 +96,7 @@ class OrderRepositoryEloquent extends BaseRepository implements OrderRepository
 
     public function presenter()
     {
-        return \CodeDelivery\Presenters\OrderPresenter::class;
+        return OrderPresenter::class;
     }
 
 }

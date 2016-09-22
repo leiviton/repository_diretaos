@@ -27,6 +27,10 @@ class User extends Model implements Transformable,AuthenticatableContract,
         return $this->hasMany(Action::class);
     }
 
+    public function notification(){
+        return $this->hasMany(Notification::class);
+    }
+
     /**
      * The database table used by the model.
      *
