@@ -8,6 +8,7 @@ angular.module('starter.controllers')
         $scope.actions = [];
         $scope.visitors = [];
         $scope.exibir = [];
+        $scope.link = [];
 
 
         var orders = $localStorage.getObject('orders');
@@ -18,23 +19,24 @@ angular.module('starter.controllers')
             for (var i=0;i < orders.items.length;i++){
                 if (orders.items[i].id == $stateParams.id){
                     $scope.order = orders.items[i];
+                    initMarkes($scope.order);
                 }
             }
+
+
             console.log($scope.order);
 
-            if ($scope.order.actions.data!=null) {
+            if ($scope.order.actions.data.length>0) {
                 $scope.actions = $scope.order.actions.data;
             }
+
             console.log('actions',$scope.actions);
 
+
             for (var i=0;i < $scope.actions.length;i++){
-                if ($scope.actions[i].key=="Visita"){
-                    console.log($scope.actions[i].key);
                     $scope.visitors[i] = $scope.actions[i];
-                    console.log($scope.visitors[i].key);
-                }
             }
-            if ($scope.visitors.length == 0) {
+            if ($scope.visitors.length <= 0) {
                 $scope.exibir = 1;
             } else {
                 $scope.exibir = 0;
@@ -47,6 +49,9 @@ angular.module('starter.controllers')
                 template: 'Cliente não se encontra?'
             }).then(function(res) {
                 if(res) {
+                    $ionicLoading.show({
+                        template: 'Gravando visita'
+                    });
                     var posOptions = {timeout: 30000, enableHighAccuracy: false, maximumAge: 0};
 
                     $cordovaGeolocation
@@ -86,6 +91,9 @@ angular.module('starter.controllers')
                     template: 'Deseja iniciar esta Ordem?'
                 }).then(function(res) {
                     if(res) {
+                        $ionicLoading.show({
+                            template: 'Iniciando'
+                        });
                         var posOptions = {timeout: 30000, enableHighAccuracy: false, maximumAge: 0};
 
                         $cordovaGeolocation
@@ -117,13 +125,15 @@ angular.module('starter.controllers')
                     }
                 });
             };
-
             $scope.giveBack = function () {
                $ionicPopup.confirm({
                     title: 'Atenção',
                     template: 'Deseja devolver esta Ordem?'
                 }).then(function(res) {
                     if(res) {
+                        $ionicLoading.show({
+                            template: 'Notificando PCP'
+                        });
                         var posOptions = {timeout: 30000, enableHighAccuracy: false, maximumAge: 0};
                         $cordovaGeolocation
                             .getCurrentPosition(posOptions)
@@ -140,29 +150,54 @@ angular.module('starter.controllers')
                                     long:long,
                                     status:3
                                 };
-                                /*DeliverymanOrder.updateStatus({id: $stateParams.id}, {
+                                DeliverymanOrder.updateStatus({id: $stateParams.id}, {
                                     status: 3,
                                     lat: lat,
                                     long: long
-                                },function (data) {*/
+                                },function (data) {
                                     $order.addItem(item);
                                     $order.removeItem($stateParams.index);
                                     //$localStorage.setObject('orders_update',{items:{}});
                                     console.log('update',$localStorage.getObject('orders_update'));
 
-                                    ;
 
-                                    //console.log(data);
+
+                                    console.log(data);
                                     $ionicLoading.hide();
                                     $state.go('deliveryman.home');
-                                /*});
+                                });
                             }, function(err) {
                                 // error
-                                $ionicLoading.hide();*/
+                                $ionicLoading.hide();
                             });
                     }else {
                         $ionicLoading.hide();
                     }
                 });
             };
+
+            function initMarkes(order) {
+                var address = $scope.order.zipcode + ', ' +
+                    $scope.order.address +',' +
+                    $scope.order.address_number +', '+
+                    $scope.order.city +' - '+
+                    $scope.order.state;
+                console.log('address',address);
+                createMarkerClient(address);
+            }
+
+            function createMarkerClient(address) {
+                var geocoder = new google.maps.Geocoder();
+                geocoder.geocode({
+                    address: address
+                },function (results,status) {
+                    if (status == google.maps.GeocoderStatus.OK) {
+                        var lat = results[0].geometry.location.lat(),
+                            long = results[0].geometry.location.lng();
+                        $scope.link = "https://google.com/maps/place/" + lat+","+long;
+                        console.log('link',$scope.link);
+                    }
+                });
+            }
+
     }]);

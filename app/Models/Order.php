@@ -17,7 +17,8 @@ class Order extends Model implements Transformable
         'geo',
         'service',
         'defect',
-        'number_os_sise'
+        'number_os_sise',
+        'zipcode'
     ];
 
     public function items(){

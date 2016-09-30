@@ -37,6 +37,26 @@ angular.module('starter.controllers')
         //     $ionicLoading.hide();
         // });
 
+        $scope.openProduct= function (o) {
+            $localStorage.setObject('order_close',o);
+            switch (o.type) {
+                case 1:
+                    $state.go('deliveryman.checkout_fibra',{id: o.id});
+                    break;
+                case 2:
+                    $state.go('deliveryman.checkout_radio',{id: o.id});
+                    break;
+                case 3:
+                    $state.go('deliveryman.checkout_seguranca',{id: o.id});
+                    break;
+                default:
+                    $ionicPopup.alert({
+                        title: 'Informação',
+                        template: 'Ocorreu um erro, tente novamente'
+                    });
+            }
+
+        };
         $scope.goToDeliveryClose = function (o) {
             $ionicPopup.confirm({
                 title: 'Atenção',
@@ -62,7 +82,6 @@ angular.module('starter.controllers')
                             });
                             console.log(ax);
                             DeliverymanOrder.updateStatus({id: $stateParams.id}, {
-                                devolver: null,
                                 status: 2,
                                 lat: lat,
                                 long: long,

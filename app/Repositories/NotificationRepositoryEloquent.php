@@ -17,6 +17,7 @@ class NotificationRepositoryEloquent extends BaseRepository implements Notificat
 {
     protected $skipPresenter = true;
 
+
     /**
      * Specify Model class name
      *
@@ -27,10 +28,6 @@ class NotificationRepositoryEloquent extends BaseRepository implements Notificat
         return Notification::class;
     }
 
-    
-    public function read($id){
-        return $this->model->where(['bit_read'=>0,'user_id'=>$id])->get();
-    }
     /**
      * Boot up the repository, pushing criteria
      */

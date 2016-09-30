@@ -6,6 +6,9 @@ angular.module('starter.controllers')
             $scope.count = 0;
             $scope.countSinc = 0;
             $scope.countNot = 0;
+            $ionicLoading.show({
+                template: 'Sincronizando...'
+            });
 
             $scope.sincronizar = function() {
                 $ionicPopup.confirm({
@@ -28,10 +31,20 @@ angular.module('starter.controllers')
                         }).$promise;
             }
 
-            $ionicLoading.show({
-                template: 'Aguarde'
+            function getNotification() {
+                return DeliverymanOrder.countN({
+                    id:null,
+                    orderBy:'created_at',
+                    sortedBy:'asc'
+                }).$promise;
+            }
+
+            getNotification().then(function (data) {
+                $scope.notification = data.data;
+                $localStorage.setObject('notification',{items:data.data})
             });
 
+            getNotification();
             function getOrders() {
                 if($localStorage.getObject('orders_update').items.length>0) {
                     console.log($localStorage.getObject('orders_update').items.length);
@@ -67,30 +80,16 @@ angular.module('starter.controllers')
                 }else{
                     $scope.count = orders.items.length;
                 }
-                if (orders.items.length==0){
-                    $ionicPopup.confirm({
-                        title: 'Atenção',
-                        template:'Não existem ordens'
-                    }).then(function(res) {
-                        if (res) {
-                            $state.go('deliveryman.home');
-                        }else {
-                            $state.go('deliveryman.home');
-                        }
+                if (orders.items.length==0) {
+                    $ionicLoading.show({
+                        template: 'Não existe ordens abertas'
                     });
                 }
                 console.log('orders',orders);
                 $ionicLoading.hide();
             },function (dataError) {
-                ProgressIndicator.showText(false, 'Não foi possivel conectar ao servidor', 'top');
-                timeout(5000);
+
                 $ionicLoading.hide();
             });
 
-            function timeout(time) {
-                $timeout(function () {
-                    ProgressIndicator.hide();
-                }, time);
-
-            }
     }]);

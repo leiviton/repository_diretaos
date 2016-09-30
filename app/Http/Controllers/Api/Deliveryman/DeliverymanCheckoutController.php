@@ -9,6 +9,7 @@ use CodeDelivery\Models\Geo;
 use CodeDelivery\Models\OrderItem;
 use CodeDelivery\Repositories\AuxiliaryItemsRepository;
 use CodeDelivery\Repositories\AuxiliaryRepository;
+use CodeDelivery\Repositories\NotificationRepository;
 use CodeDelivery\Repositories\OrderRepository;
 use CodeDelivery\Repositories\UserRepository;
 use CodeDelivery\Services\OrderService;
@@ -28,16 +29,12 @@ class DeliverymanCheckoutController extends Controller
      * @var OrderService
      */
     private $orderService;
-    /**
-     * @var AuxiliaryItemsRepository
-     */
-    private $auxiliaryRepository;
 
     private $repository;
-
     /**
-     * @var DeliverymanAuxiliaryController
+     * @var NotificationRepository
      */
+    private $notificationRepository;
 
 
 
@@ -45,7 +42,7 @@ class DeliverymanCheckoutController extends Controller
         OrderRepository $repository,
         UserRepository $userRepository,
         OrderService $orderService,
-        AuxiliaryItemsRepository $auxiliaryRepository
+        NotificationRepository $notificationRepository
 
     )
     {
@@ -53,7 +50,7 @@ class DeliverymanCheckoutController extends Controller
         $this->userRepository = $userRepository;
         $this->orderService = $orderService;
 
-        $this->auxiliaryRepository = $auxiliaryRepository;
+        $this->notificationRepository = $notificationRepository;
     }
 
     public function index(){
@@ -84,17 +81,33 @@ class DeliverymanCheckoutController extends Controller
             $auxiliarys = $request->get('auxiliary');
         }
 
+        $items = null;
+        if ($request->get('items')!=null){
+            $items = $request->get('items');
+        }
+
         return $this->orderService->updateStatus($id,$idDeliveryman,
             $request->get('status'),
             $request->get('lat'),
             $request->get('long'),
             $request->get('service'),
-            $auxiliarys
+            $auxiliarys,
+            $items
         );
 
 
     }
 
+    public function countN(){
+        $id= Authorizer::getResourceOwnerId();
+        $notifications = $this->notificationRepository
+            ->skipPresenter(false)
+            ->scopeQuery(function ($query)use($id){
+                return $query->where('user_id','=',$id)->where('bit_read','=',0);
+            })->all();
+
+        return $notifications;
+    }
     public function count(Request $request){
         $idDeliveryman= Authorizer::getResourceOwnerId();
         return $this->repository->skipPresenter(false)->countM($idDeliveryman,$request->get('status'));

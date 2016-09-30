@@ -11,8 +11,8 @@
                        Data:{{order.created_at.date|limitTo: 10 | date: '   dd/MM/yyyy'}}
                    </div>
                    <div class="col text-right data">
-                       <i class="energized ion ion-alert-circled text-right" ng-if="order.priority==2"></i>
-                       <i class="assertive ion ion-alert-circled text-right" ng-if="order.priority==3"></i>
+                       <i class="energized ion ion-alert-circled text-right" ng-if="order.priority=='Alta'"></i>
+                       <i class="assertive ion ion-alert-circled text-right" ng-if="order.priority=='Critica'"></i>
                    </div>
                </h2>
                <div class="conteudo">
@@ -48,8 +48,11 @@
                     <input type="text" placeholder="Descreva o serviço" ng-model="order.service" ng-required="true" ng-minlength="10">
                 </label>
             </form>
-            <button type="button" class="button button-calm button-full" ng-disabled="formClose.$invalid" ng-click="goToDeliveryClose(order)">
+            <button type="button" class="button button-calm button-full" ng-if="order.type==0" ng-disabled="formClose.$invalid" ng-click="goToDeliveryClose(order)">
                 Fechar Ordem
+            </button>
+            <button type="button" class="button button-calm button-full"  ng-disabled="formClose.$invalid" ng-click="openProduct(order)">
+                Adicionar produtos
             </button>
         </ion-list>
     </ion-content>

@@ -7,7 +7,7 @@ angular.module('starter.services')
             }
         });
     }])
-    .factory('DeliverymanOrder',['$resource','appConfig','$localStorage',function ($resource,appConfig,$localStorage) {
+    .factory('DeliverymanOrder',['$resource','appConfig','$localStorage',function ($resource,appConfig) {
         var url = appConfig.baseUrl + '/api/deliveryman/order/:id';
 
         return $resource(url,{id:'@id'},{
@@ -38,9 +38,9 @@ angular.module('starter.services')
                 method: 'GET',
                 url: appConfig.baseUrl +'/api/deliveryman/countDi'
             },
-            get:{
+            countN:{
                 method: 'GET',
-                url: appConfig.baseUrl +'/api/notification'
+                url: appConfig.baseUrl +'/api/deliveryman/countN'
             }
         });
 

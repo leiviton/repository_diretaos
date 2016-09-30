@@ -28,6 +28,7 @@ class ActionTransformer extends TransformerAbstract
             'action'     => $model->action,
             'geo_location' => $model->geo_location,
             'data' => $model->data,
+            'link_geo' => $model->link_geo,
             'created_at' => $model->created_at,
             'updated_at' => $model->updated_at
         ];

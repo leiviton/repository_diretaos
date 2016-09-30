@@ -25,6 +25,7 @@ class OrderTransformer extends TransformerAbstract
     {
         return [
             'id'         => (int) $model->id,
+            'user_deliveryman_id' =>(int) $model->user_deliveryman_id,
             'defect'=>$model->defect,
             'status'=>$model->status,
             'priority'=>$model->priority,
@@ -33,6 +34,7 @@ class OrderTransformer extends TransformerAbstract
             'phone1' => $model->phone1,
             'phone2' => $model->phone2,
             'type' => $model->type,
+            'cep' => $model->zipcode,
             'address' => $model->address,
             'address_number'=>$model->address_number,
             'district' => $model->district,

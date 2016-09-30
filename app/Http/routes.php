@@ -102,6 +102,13 @@ Route::group(['middleware'=>'cors'],function (){
 
             Route::get('countDi','Api\Deliveryman\DeliverymanCheckoutController@countDi');
 
+            Route::get('countN','Api\Deliveryman\DeliverymanCheckoutController@countN');
+
+            Route::get('fibra','Api\Deliveryman\DeliverymanProductController@fibra');
+
+            Route::get('radio','Api\Deliveryman\DeliverymanProductController@radio');
+
+            Route::get('seguranca','Api\Deliveryman\DeliverymanProductController@seguranca');
            });
 
         Route::get('authenticated','Api\UserController@authenticated');

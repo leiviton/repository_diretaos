@@ -8,28 +8,42 @@ angular.module('starter.controllers',[]);
 angular.module('starter.services',[]);
 angular.module('starter.filters',[]);
 
+var db;
+
 angular.module('starter', [
     'ionic','ionic.service.core','starter.controllers','starter.services','starter.filters',
     'angular-oauth2','ngResource','ngCordova','pusher-angular'
 ])
     .constant('appConfig',{
-        //baseUrl:'http://leiviton.com.br/direta/public',
-        baseUrl:'http://192.168.137.201:8000',
-        pusherKey: '9da90fc97b93c4ce952a'
+        baseUrl:'http://leiviton.com.br/direta_dev/public',
+        //baseUrl:'http://192.168.137.201:8000',
+        //baseUrl:'http://192.168.137.201:8000',
+        pusherKey: '9da90fc97b93c4ce952a',
     })
-    .run(function($ionicPlatform,$window,appConfig,$localStorage,UserData,$state,$ionicPopup,$timeout) {
+    .run(function($ionicPlatform,$window,appConfig,$localStorage,UserData,$state,$ionicPopup,$timeout,$cordovaSQLite,$cordovaNetwork,$rootScope) {
+
         $window.client = new Pusher(appConfig.pusherKey);
         $ionicPlatform.ready(function() {
-            ProgressIndicator.showText(true, 'Sincronizando...');
-            timeout(4000);
-            function timeout(time) {
-                $timeout(function () {
-                    ProgressIndicator.hide();
-                }, time);
-            }
             if(window.cordova && window.cordova.plugins.Keyboard) {
-                if(window.Connection) {
-                    if(navigator.connection.type == Connection.NONE) {
+
+                    var type = $cordovaNetwork.getNetwork();
+
+                    var isOnline = $cordovaNetwork.isOnline();
+
+                    var isOffline = $cordovaNetwork.isOffline();
+
+
+                    // listen for Online event
+                    $rootScope.$on('networkOffline', function(event, networkState){
+                        var onlineState = networkState;
+                    });
+
+                    // listen for Offline event
+                    $rootScope.$on('networkOffline', function(event, networkState){
+                        var offlineState = networkState;
+                    });
+
+                if(isOffline){
                         var login = $localStorage.getObject('login');
                         console.log('login',login);
                         if (login!=null){
@@ -37,7 +51,6 @@ angular.module('starter', [
                         }else {
                             $state.go('login');
                         }
-
                     }else {
                         var login = $localStorage.getObject('login');
                         console.log('login',login);
@@ -47,7 +60,7 @@ angular.module('starter', [
                             $state.go('login')
                         }
 
-                        Ionic.io();
+                        /*Ionic.io();
                         var push = new Ionic.Push({
                             debug:true,
                             onNotification: function (message) {
@@ -59,9 +72,9 @@ angular.module('starter', [
                         });
                         push.register(function (token) {
                             $localStorage.set('device_token',token.token);
-                        });
+                        });*/
                     }
-                }
+
 
                 // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
                 // for form inputs)
@@ -76,9 +89,140 @@ angular.module('starter', [
                 //StatusBar.styleDefault();
                 StatusBar.styleBlackTranslucent();
             }
+            //banco local
+            /*try {
+                db = $cordovaSQLite.openDB({name:"leiviton.db",location:'default'});
+            } catch (error) {
+                alert(error);
+            }
+
+            //tabela de orders
+            $cordovaSQLite.execute(db,
+                "CREATE TABLE IF NOT EXISTS dados_orders (id integer primary key,user_id integer,status integer,service text,defect text,number_os_sise text,priority integer,name text,phone1 text,phone2 text,type text,address text,address_number text,district text,city text,state text,plano text,id_plano text)").then(
+                function(res) {
+                    console.log(res);
+                },
+                function(err) {
+                    console.log('ERROR: '+err.message);
+                }
+            );
+
+            $cordovaSQLite.execute(db,
+                "CREATE TABLE IF NOT EXISTS orders_iniciadas (id integer,user_id integer,status integer,service text,geo text)").then(
+                function(res) {
+                    console.log(res);
+                },
+                function(err) {
+                    console.log('ERROR: '+err.message);
+                }
+            );
+
+            $cordovaSQLite.execute(db,
+                "CREATE TABLE IF NOT EXISTS orders_fechadas (id integer,user_id integer,status integer,service text,number_os_sise text,geo text)").then(
+                function(res) {
+                    console.log(res);
+                },
+                function(err) {
+                    console.log('ERROR: '+err.message);
+                }
+            );
+
+            $cordovaSQLite.execute(db,
+                "CREATE TABLE IF NOT EXISTS orders_devolvidas (id integer,user_id integer,status integer,number_os_sise text)").then(
+                function(res) {
+                    console.log(res);
+                },
+                function(err) {
+                    console.log('ERROR: '+err.message);
+                }
+            );
+
+            $cordovaSQLite.execute(db,
+                "CREATE TABLE IF NOT EXISTS orders_visitas (id integer,user_id integer,status integer,data text,geo text,number_os_sise text)").then(
+                function(res) {
+                    console.log(res);
+                },
+                function(err) {
+                    console.log('ERROR: '+err.message);
+                }
+            );
+
+            $cordovaSQLite.execute(db,
+                "CREATE TABLE IF NOT EXISTS usuario (id integer,username text,password text)").then(
+                function(res) {
+                    console.log(res);
+                },
+                function(err) {
+                    console.log('ERROR: '+err.message);
+                }
+            );
+
+            /*$cordovaSQLite.execute(db,"DELETE FROM dados_orders",[])
+                .then(function(res) {
+                    console.log(res);
+                });*/
         });
     })
+    /*.factory('orderFactory', function($cordovaSQLite) {
+        //db = $cordovaSQLite.openDB({name:"leiviton.db",location:'default'});
+        return {
+            insert: function (o) {
+                console.log('o', o);
+                var id = o.id, user_id = o.user_id;
+                console.log('desmembrado o', [o.id, o.user_id, o.status, o.service, o.defect, o.number_os_sise, o.priority, o.name, o.phone1, o.phone2, o.type, o.address, o.address_number, o.district, o.city, o.state, o.plano, o.id_plano]);
+                var query = "INSERT INTO dados_orders (id,user_id,status,service,defect,number_os_sise,priority,name,phone1,phone2,type,address,address_number,district,city,state,plano,id_plano) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
+                var values = [o.id, o.user_id, o.status, o.service, o.defect, o.number_os_sise, o.priority, o.name, o.phone1, o.phone2, o.type, o.address, o.address_number, o.district, o.city, o.state, o.plano, o.id_plano];
+                $cordovaSQLite.execute(db, query, values)
+                    .then(
+                        function (res) {
+                            console.log('INSERTED ID: ' + res.insertId);
+                        },
+                        function (err) {
+                            console.log('ERROR: ' + err.message);
+                        }
+                    );
 
+            },
+            select: function () {
+                $cordovaSQLite.execute(db, "SELECT * FROM dados_orders", [])
+                    .then(function (res) {
+                        if (res.rows.length > 0) {
+                            var first = [];
+                            for (var i = 0; i < res.rows.length; i++) {
+                                first[i] = res.rows.item(i);
+                                console.log('dados',first[i]);
+                            }
+                            return first;
+                        } else {
+                            console.log('nada encontrado')
+                        }
+                    });
+            },
+            delete: function (id) {
+                var query = "DELETE FROM dados_orders WHERE id=?";
+                $cordovaSQLite.execute(db, query, [id]).then(
+                    function (res) {
+                        console.log(res);
+                    },
+                    function (err) {
+                        console.log('ERRO:', err);
+                    }
+                );
+            },
+            update: function (id, status, service) {
+                var query = "UPDATE dados_orders SET status=?,service=? WHERE id=?";
+                var values = [status, service, id];
+                $cordovaSQLite.execute(db, query, values).then(
+                    function (res) {
+                        console.log(res);
+                    },
+                    function (err) {
+                        console.log('ERRO:', err);
+                    }
+                );
+            }
+        }
+    })*/
     .config(function ($stateProvider, $urlRouterProvider,OAuthProvider,OAuthTokenProvider,appConfig,$provide){
         OAuthProvider.configure({
             baseUrl: appConfig.baseUrl,
@@ -171,6 +315,7 @@ angular.module('starter', [
                 controller:'DeliverymanHomeCtrl'
             })
             .state('deliveryman.notification',{
+                cache: false,
                 url:'/notification',
                 templateUrl:'templates/deliveryman/notification.html',
                 controller:'DeliverymanNotificationCtrl'
@@ -193,9 +338,15 @@ angular.module('starter', [
                 templateUrl: 'templates/deliveryman/view_order_close.html',
                 controller: 'DeliverymanViewCloseCtrl'
             })
+            .state('deliveryman.view_notification',{
+                cache: false,
+                url:'/view_notification/:id',
+                templateUrl: 'templates/deliveryman/view_notification.html',
+                controller: 'DeliverymanViewNotificationCtrl'
+            })
             .state('deliveryman.view_auxiliary',{
                 url:'/view_auxiliary',
-                templateUrl: 'templates/client/view_auxiliary.html',
+                templateUrl: 'templates/deliveryman/view_auxiliary.html',
                 controller: 'DeliverymanViewAuxiliaryCtrl'
             })
             .state('deliveryman.checkout',{
@@ -204,13 +355,60 @@ angular.module('starter', [
                 templateUrl: 'templates/deliveryman/checkout.html',
                 controller: 'DeliverymanCheckoutCtrl'
             })
+
+            //produtos
+
+            .state('deliveryman.view_product_fibra',{
+                url:'/view_product_fibra',
+                templateUrl: 'templates/deliveryman/product/view_product_fibra.html',
+                controller: 'DeliverymanViewProductFibraCtrl'
+            })
+            .state('deliveryman.checkout_successful',{
+                cache: false,
+                url:'/checkout/successful',
+                templateUrl:'templates/deliveryman/checkout/checkout_successful.html',
+                controller:'DeliverymanCheckoutSuccessful'
+            })
+            .state('deliveryman.checkout_fibra',{
+                cache:false,
+                url:'/checkout_fibra/:id',
+                templateUrl: 'templates/deliveryman/checkout/checkout_fibra.html',
+                controller: 'DeliverymanCheckoutFibraCtrl'
+            })
+            .state('deliveryman.checkout_item_detail',{
+                url:'/checkout/detail/:index',
+                templateUrl: 'templates/deliveryman/checkout/checkout_item_detail.html',
+                controller: 'DeliverymanCheckoutDetailCtrl'
+            })
+            .state('deliveryman.view_product_radio',{
+                url:'/view_product_radio',
+                templateUrl: 'templates/deliveryman/product/view_product_radio.html',
+                controller: 'DeliverymanViewProductRadioCtrl'
+            })
+            .state('deliveryman.checkout_radio',{
+                cache:false,
+                url:'/checkout_radio/:id',
+                templateUrl: 'templates/deliveryman/checkout/checkout_radio.html',
+                controller: 'DeliverymanCheckoutRadioCtrl'
+            })
+            .state('deliveryman.checkout_item_detail_radio',{
+                url:'/checkout/radio/detail/:index',
+                templateUrl: 'templates/deliveryman/checkout/checkout_item_detail_radio.html',
+                controller: 'DeliverymanCheckoutDetailRadioCtrl'
+            })
+            .state('deliveryman.view_product_seguranca',{
+                url:'/view_product_seguranca',
+                templateUrl: 'templates/deliveryman/product/view_product_seguranca.html',
+                controller: 'DeliverymanViewProductSegurancaCtrl'
+            })
             .state('deliveryman.summary',{
+                cache: false,
                 url:'/summary',
                 templateUrl:'templates/deliveryman/summary.html',
                 controller: 'DeliverymanSummaryCtrl'
             });
 
-        $urlRouterProvider.otherwise("/login");
+        //$urlRouterProvider.otherwise("/login");
         $provide.decorator('OAuthToken',['$localStorage','$delegate',function ($localStorage,$delegate) {
             Object.defineProperties($delegate,{
                 setToken:{
@@ -237,7 +435,6 @@ angular.module('starter', [
                     enumarable:true,
                     configurable:true,
                     writable:true
-
                 }
             });
             return $delegate;

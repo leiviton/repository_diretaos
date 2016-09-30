@@ -92,7 +92,7 @@ class OrderService{
         }
     }
 
-    public function updateStatus($id,$idDeliveryman,$status,$lat,$long,$service=null,$ax=null){
+    public function updateStatus($id,$idDeliveryman,$status,$lat,$long,$service=null,$ax=null,$items=null){
         $order = $this->orderRepository->getByIDAndDeliveryman($id,$idDeliveryman);
 
         $order->flag_sincronizado = 0;
@@ -105,10 +105,9 @@ class OrderService{
                 $action['data'] = date("d/m/Y H:i:s");
                 $action['action'] = "Visita ao cliente $order->name da $order->number_os_sise";
                 $action['geo_location'] = $lat.','.$long;
+                $action['link_geo'] = 'https://google.com/maps/place/'.$lat.','.$long;
                 $order->actions()->create($action);
-                $hora = date("H:i:s");
-                $data = date("d/m/Y");
-                /*$this->pushProcessor->notify([$order->deliveryman->device_token],[
+               /*$this->pushProcessor->notify([$order->deliveryman->device_token],[
                     'message'=>"Você visitou o cliente {$order->name} ás {$hora} do dia {$data}"
                 ]);*/
                 $order->save();
@@ -123,7 +122,6 @@ class OrderService{
                 if((int)($order->status == 1 && !$order->hash)){
                     $order->hash = md5((new \DateTime())->getTimestamp());
                 }
-                $order->geo = $lat.','.$long;
                 $order->save();
                 break;
             case 2:
@@ -133,12 +131,17 @@ class OrderService{
                 $action['action'] = "Fechou a ordem $order->number_os_sise";
                 $action['geo_location'] = $lat.','.$long;
                 $order->actions()->create($action);
-                $order->geo_final = $lat.','.$long;
                 $order->service = $service;
                 $auxiliares = $ax;
                 if ($auxiliares!=null) {
                     foreach ($auxiliares as $axs) {
                         $order->auxiliarys()->create($axs);
+                    }
+                }
+                $ite = $items;
+                if ($ite!=null){
+                    foreach ($ite as $i){
+                        $order->items()->create($i);
                     }
                 }
                 $order->save();

@@ -10,7 +10,6 @@ angular.module('starter.controllers')
         });
         var aux = $cart.getAux();
         $scope.items = aux.auxiliar;
-        $scope.total = $cart.getTotalFinal();
 
         $scope.removeItem = function (i) {
            $cart.removeAux(i);

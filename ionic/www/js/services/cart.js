@@ -3,6 +3,7 @@ angular.module('starter.services')
         var key = 'cart', cartAux = $localStorage.getObject(key);
         var key1 = 'auxiliar', aux = $localStorage.getObject(key1);
         var key2 = 'orders_update', oax = $localStorage.getObject(key2);
+        var key3 = 'order_close', oc = $localStorage.getObject(key3);
         if(!cartAux){
             initCart();
         }
@@ -12,8 +13,13 @@ angular.module('starter.services')
         if(!oax){
             initOx();
         }
+
+        if(!oc){
+            initOc();
+        }
         this.clear = function () {
             initCart();
+            initOc();
         };
         this.get = function () {
             return $localStorage.getObject(key);
@@ -29,17 +35,15 @@ angular.module('starter.services')
             for (var index in cart.items){
                 itemAux = cart.items[index];
                 if (itemAux.id == item.id){
-                    itemAux.qtd = item.qtd + itemAux.qtd;
+                    itemAux.serial = item.serial;
                     itemAux.subTotal = calculateSubtotal(itemAux);
                     exists = true;
                     break;
                 }
             }
             if (!exists){
-                item.subTotal = calculateSubtotal(item);
                 cart.items.push(item);
             }
-            cart.total = getTotal(cart.items);
             $localStorage.setObject(key,cart);
         };
         //auxiliares
@@ -70,12 +74,10 @@ angular.module('starter.services')
             $localStorage.setObject(key,cart);
         };
 
-        this.updateQtd = function(i, qtd){
+        this.updateSerial = function(i, serial){
             var cart = this.get(),
                 itemAux = cart.items[i];
-            itemAux.qtd = qtd;
-            itemAux.subTotal = calculateSubtotal(itemAux);
-            cart.total = getTotal(cart.items);
+            itemAux.serial = serial;
             $localStorage.setObject(key,cart);
         };
 
@@ -99,10 +101,7 @@ angular.module('starter.services')
 
         };
 
-        this.getTotalFinal = function () {
-            var cart = this.get();
-            return cart.total - (cart.cupom.value || 0);
-        };
+
         function calculateSubtotal(item) {
             return item.price * item.qtd;
         }
@@ -117,17 +116,7 @@ angular.module('starter.services')
         
         function initCart() {
             $localStorage.setObject(key,{
-
-                items:[],
-                total:0,
-                cupom:{
-                    code:null,
-                    value:null
-                }
-            });
-
-            $localStorage.setObject(key1,{
-                auxiliar:[]
+                items:[]
             });
         }
 
@@ -139,6 +128,12 @@ angular.module('starter.services')
 
         function initOx() {
             $localStorage.setObject(key2,{
+                items:[]
+            });
+        }
+
+        function initOc() {
+            $localStorage.setObject(key3,{
                 items:[]
             });
         }

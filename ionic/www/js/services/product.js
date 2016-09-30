@@ -1,10 +1,23 @@
 angular.module('starter.services')
     .factory('Product',['$resource','appConfig',function ($resource,appConfig) {
-
-        return $resource(appConfig.baseUrl + '/api/client/product',{},{
+        var url = appConfig.baseUrl + '/api/deliveryman/';
+        return $resource(url,{},{
             query:{
                 isArray: false
+            },
+            fibra:{
+                method:'GET',
+                url: url + 'fibra'
+            },
+            radio:{
+                method:'GET',
+                url: url + 'radio'
+            },
+            seguranca:{
+                method:'GET',
+                url: url + 'seguranca'
             }
+
         });
 
     }])

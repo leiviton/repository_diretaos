@@ -121,7 +121,7 @@
     }
 
     .visita{
-        font-size: 0.9em !important;
+        font-size: 1.0em !important;
     }
 }
 
@@ -163,6 +163,24 @@ input{
     font-size: 3em !important;
     color: #ff0000;
     margin-top: -30px !important;
+}
+
+.link{
+    margin-top: -14px !important;
+    font-size: 1.8em !important;
+}
+
+.v{
+    font-size: 0.9em !important;
+    margin-top: -12px !important;
+}
+
+a.end:link{
+    font-size: 1.0em !important;
+    color: #000 !important;
+}
+a.linkum:link {
+    font-size: 1.4em !important;
 }
 
 

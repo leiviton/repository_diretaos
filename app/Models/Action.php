@@ -16,7 +16,8 @@ class Action extends Model implements Transformable
         'key',
         'action',
         'geo_location',
-        'data'
+        'data',
+        'link_geo'
     ];
     public function deliveryman(){
         return $this->belongsTo(User::class);

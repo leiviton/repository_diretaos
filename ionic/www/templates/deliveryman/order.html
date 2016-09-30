@@ -10,18 +10,14 @@
                     </div>
                     <div class="col text-right">
                         # {{o.number_os_sise}}
-                        <i class="energized ion ion-alert-circled" ng-if="o.priority==2"></i>
-                        <i class="assertive ion ion-alert-circled" ng-if="o.priority==3"></i>
+                        <i class="energized ion ion-alert-circled" ng-if="o.priority=='Alta'"></i>
+                        <i class="assertive ion ion-alert-circled" ng-if="o.priority=='Critica'"></i>
                         <i class="clear ion-alert-circled" ng-if="o.priority==1"></i>
                     </div>
                 </div>
                 <div class="row item-text-wrap">
                     <p>{{o.address}},{{o.address_number}} , {{o.district}} - {{o.city}} </p>
                 </div>
-                <ion-option-button class="button-assertive"
-                                   ng-click="giveBack(o)" ng-if="o.status==0">
-                    Devolver
-                </ion-option-button>
             </ion-item>
         </ion-list>
     </ion-content>

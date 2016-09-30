@@ -24,6 +24,8 @@ class ProductRepositoryEloquent extends BaseRepository implements ProductReposit
     public function listar(){
         return $this->model->get(['id','name','price']);
     }
+
+
     
 
     /**

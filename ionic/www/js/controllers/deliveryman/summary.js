@@ -8,12 +8,6 @@ angular.module('starter.controllers')
             });
             DeliverymanOrder.countD({id:null,status:0},function (data) {
                 $scope.dia = data[0];
-                if ($scope.atual < $scope.anterior) {
-                    console.log($scope.atual, $scope.anterior);
-                    $scope.menor = true;
-                } else {
-                    $scope.menor = false;
-                }
             });
             DeliverymanOrder.countMi({id:null,status:2},function (data) {
                 $scope.mesI = data[0];

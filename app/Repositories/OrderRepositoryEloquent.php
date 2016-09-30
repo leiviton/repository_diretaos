@@ -21,6 +21,7 @@ class OrderRepositoryEloquent extends BaseRepository implements OrderRepository
     protected $skipPresenter = true;
 
     public function getByIdAndDeliveryman($id,$idDeliveryman){
+
         $result = $this->model->where('id',$id)
             ->where('user_deliveryman_id',$idDeliveryman)
             ->where('status','!=',2)
@@ -44,18 +45,18 @@ class OrderRepositoryEloquent extends BaseRepository implements OrderRepository
     public function countM($id,$status){
 
             return $this->model
-                ->where('created_at', '>=', Carbon::now()->startOfMonth())
                 ->where('user_deliveryman_id',$id)
-                ->where('status',1)
-                ->where('status',$status)->get()->count();
+                ->where('status','<=',1)
+                ->where('priority',3)
+                ->get()->count();
     }
 
     public function countD($id,$status){
 
             return $this->model
-                ->where('created_at', '>=', Carbon::now()->startOfDay())
                 ->where('user_deliveryman_id',$id)
-                ->where('status',1)
+                ->where('priority',2)
+                ->where('status','<=',1)
                 ->where('status',$status)->get()->count();
 
     }
