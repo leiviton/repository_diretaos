@@ -2,16 +2,19 @@ angular.module('starter.controllers')
     .controller('DeliverymanCheckoutFibraCtrl',[
         '$scope','$state','$stateParams','$cart','ClientOrder',
         '$ionicLoading','$ionicPopup','Cupom','$cordovaBarcodeScanner',
-        'User','$localStorage','DeliverymanOrder','$cordovaGeolocation',
+        'User','$localStorage','DeliverymanOrder','$cordovaGeolocation','ionicToast',
         function ($scope,$state,$stateParams,$cart,ClientOrder,
                   $ionicLoading,$ionicPopup,Cupom,$cordovaBarcodeScanner,
-                  User,$localStorage,DeliverymanOrder,$cordovaGeolocation) {
+                  User,$localStorage,DeliverymanOrder,$cordovaGeolocation,ionicToast) {
+
 
             User.authenticated({include:'client'},function (data) {
                 console.log(data.data);
             },function (responseError) {
                 console.log(responseError);
             });
+
+            $scope.validation = 0;
 
             var aux = $cart.getAux();
             if(aux.auxiliar.length == 0 || aux.auxiliar==null){
@@ -41,6 +44,7 @@ angular.module('starter.controllers')
                 $scope.items.splice(i,1);
             };
 
+
             $scope.openListProducts = function () {
                 $state.go('deliveryman.view_product_fibra');
             };
@@ -48,6 +52,7 @@ angular.module('starter.controllers')
             $scope.openProductDetail = function (i) {
                 $state.go('deliveryman.checkout_item_detail',{index:i});
             };
+
 
             $scope.goToDeliveryClose = function () {
                 $ionicPopup.confirm({
@@ -58,42 +63,60 @@ angular.module('starter.controllers')
                         template: 'Enviando...'
                     });
                     if(res) {
-                        var posOptions = {timeout: 30000, enableHighAccuracy: false, maximumAge: 0};
+                        var v = $cart.get().items;
+                        for (var i=0;i<v.length;i++){
+                            if(v[i].serial==null || v[i].serial==''){
+                                $scope.validation = $scope.validation + 1;
+                            }
+                        }
 
-                        $cordovaGeolocation
-                            .getCurrentPosition(posOptions)
-                            .then(function (position) {
-                                var lat = position.coords.latitude;
-                                var long = position.coords.longitude;
+                        if (v.length==0){
+                            $ionicLoading.hide();
+                            ionicToast.show('Voce não adicionou produtos a ordem', 'middle', false, 3500);
 
-                                console.log(lat,long);
+                        }else if ($scope.validation>0){
+                            $ionicLoading.hide();
+                            ionicToast.show('Voce não adicionou serial em todos os produtos', 'middle', false, 3500);
 
-                                var  o = {items: angular.copy($scope.items)};
-                                angular.forEach(o.items,function (item) {
-                                    item.product_id = item.id;
-                                });
+                        }else if($scope.validation==0){
+                            var posOptions = {timeout: 30000, enableHighAccuracy: false, maximumAge: 0};
 
-                                var  ax = {auxiliary: angular.copy($scope.auxiliary)};
-                                console.log('o',o);
-                                angular.forEach(ax.auxiliary,function (item) {
-                                    item.auxiliary_id = item.id;
-                                });
-                                console.log(ax);
-                                DeliverymanOrder.updateStatus({id: $stateParams.id}, {
-                                    status: 2,
-                                    lat: lat,
-                                    long: long,
-                                    service: orders.service,
-                                    items: o.items,
-                                    auxiliary:ax.auxiliary
-                                },function (data) {
+                            $cordovaGeolocation
+                                .getCurrentPosition(posOptions)
+                                .then(function (position) {
+                                    var lat = position.coords.latitude;
+                                    var long = position.coords.longitude;
+
+                                    console.log(lat,long);
+
+                                    var  o = {items: angular.copy($scope.items)};
+                                    angular.forEach(o.items,function (item) {
+                                        item.product_id = item.id;
+                                    });
+
+                                    var  ax = {auxiliary: angular.copy($scope.auxiliary)};
+                                    console.log('o',o);
+                                    angular.forEach(ax.auxiliary,function (item) {
+                                        item.auxiliary_id = item.id;
+                                    });
+                                    console.log(ax);
+                                    DeliverymanOrder.updateStatus({id: $stateParams.id}, {
+                                        status: 2,
+                                        lat: lat,
+                                        long: long,
+                                        service: orders.service,
+                                        items: o.items,
+                                        auxiliary:ax.auxiliary
+                                    },function (data) {
+                                        $ionicLoading.hide();
+                                        $state.go('deliveryman.checkout_successful');
+                                    });
+                                }, function(err) {
+
                                     $ionicLoading.hide();
-                                    $state.go('deliveryman.checkout_successful');
                                 });
-                            }, function(err) {
+                        }
 
-                                $ionicLoading.hide();
-                            });
                     } else {
                         $ionicLoading.hide();
                     }

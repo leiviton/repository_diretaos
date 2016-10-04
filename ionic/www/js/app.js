@@ -12,7 +12,7 @@ var db;
 
 angular.module('starter', [
     'ionic','ionic.service.core','starter.controllers','starter.services','starter.filters',
-    'angular-oauth2','ngResource','ngCordova','pusher-angular'
+    'angular-oauth2','ngResource','ngCordova','pusher-angular','ionic-toast'
 ])
     .constant('appConfig',{
         //baseUrl:'http://leiviton.com.br/direta_dev/public',
@@ -241,6 +241,10 @@ angular.module('starter', [
                 url:'/login',
                 templateUrl:'templates/login.html',
                 controller:'loginCtrl'
+            })
+            .state('logout',{
+                url:'/logout',
+                controller:'logoutCtrl'
             })
             .state('home',{
                 url:'/home',

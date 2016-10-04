@@ -1,4 +1,12 @@
 {
   "name": "Direta",
-  "app_id": "d678ef24"
+  "app_id": "d678ef24",
+  "gulpStartupTasks": [
+    "sass",
+    "watch"
+  ],
+  "watchPatterns": [
+    "www/**/*",
+    "!www/lib/**/*"
+  ]
 }

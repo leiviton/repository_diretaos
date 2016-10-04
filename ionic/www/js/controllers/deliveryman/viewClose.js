@@ -1,9 +1,9 @@
 angular.module('starter.controllers')
     .controller('DeliverymanViewCloseCtrl',[
         '$scope','$state','$stateParams','DeliverymanOrder','$ionicLoading',
-        '$cordovaGeolocation','$ionicPopup','$cart','UserData','$localStorage',
+        '$cordovaGeolocation','$ionicPopup','$cart','UserData','$localStorage','ionicToast',
         function ($scope,$state, $stateParams, DeliverymanOrder,$ionicLoading
-            ,$cordovaGeolocation,$ionicPopup,$cart,UserData,$localStorage) {
+            ,$cordovaGeolocation,$ionicPopup,$cart,UserData,$localStorage,ionicToast) {
         var watch;
         $scope.user = UserData.get();
         var orders = $localStorage.getObject('orders');
@@ -37,6 +37,7 @@ angular.module('starter.controllers')
         //     $ionicLoading.hide();
         // });
 
+            ionicToast.show('Ordem '+$scope.order.number_os_sise+' inicializada com sucesso', 'bottom', false, 3500);
         $scope.openProduct= function (o) {
             var order = $localStorage.getObject('order_close');
 

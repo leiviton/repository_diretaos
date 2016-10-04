@@ -1,7 +1,7 @@
 angular.module('starter.controllers')
     .controller('DeliverymanSummaryCtrl',[
-        '$scope','DeliverymanOrder',
-        function ($scope,DeliverymanOrder) {
+        '$scope','DeliverymanOrder','ionicToast',
+        function ($scope,DeliverymanOrder,ionicToast) {
 
             DeliverymanOrder.count({id:null,status:0},function (data) {
                 $scope.mes = data[0];
@@ -20,4 +20,6 @@ angular.module('starter.controllers')
                     $scope.menorP = false;
                 }
             });
+
+            ionicToast.show('Seus indicadores estão atualizados', 'bottom', false, 3500);
     }]);

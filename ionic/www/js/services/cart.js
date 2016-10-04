@@ -4,6 +4,9 @@ angular.module('starter.services')
         var key1 = 'auxiliar', aux = $localStorage.getObject(key1);
         var key2 = 'orders_update', oax = $localStorage.getObject(key2);
         var key3 = 'order_close', oc = $localStorage.getObject(key3);
+        var key4 = 'login', log = $localStorage.getObject(key4);
+        var key5 = 'orders', orders = $localStorage.getObject(key5);
+        var key6 = 'notification', notification = $localStorage.getObject(key6);
         if(!cartAux){
             initCart();
         }
@@ -13,13 +16,27 @@ angular.module('starter.services')
         if(!oax){
             initOx();
         }
-
         if(!oc){
             initOc();
+        }
+        if(!log){
+            initLogin();
+        }
+        if(!orders){
+            initOrders();
+        }
+        if(!notification){
+            initNot();
         }
         this.clear = function () {
             initCart();
             initOc();
+            initOx();
+        };
+        this.clearOrder = function () {
+            initOrders();
+            initLogin();
+            initNot()
         };
         this.get = function () {
             return $localStorage.getObject(key);
@@ -134,6 +151,22 @@ angular.module('starter.services')
 
         function initOc() {
             $localStorage.setObject(key3,{
+                items:[]
+            });
+        }
+
+        function initLogin() {
+            $localStorage.setObject(key4,null);
+        }
+
+        function initOrders() {
+            $localStorage.setObject(key5,{
+                items:[]
+            });
+        }
+
+        function initNot() {
+            $localStorage.setObject(key6,{
                 items:[]
             });
         }

@@ -7,24 +7,24 @@
         <ion-list>
             <ion-item>
                 <div class="row">
-                    <div class="col text-center">
+                    <div class="col text-left">
                         <h2>Produto</h2>
                     </div>
                     <div class="col text-center">
                         <h2>Serial</h2>
                     </div>
-                    <div class="col text-center">
+                    <div class="col text-right">
                         Qtd
                     </div>
                 </div>
                 <div class="row" ng-repeat="o in items">
-                    <div class="col text-center">
+                    <div class="col text-left">
                         <h2>{{ o.name }}</h2>
                     </div>
                     <div class="col text-center">
                         <h2>{{ o.serial }}</h2>
                     </div>
-                    <div class="col text-center">
+                    <div class="col text-right">
                         {{ o.qtd }}
                     </div>
                 </div>
