@@ -8,16 +8,6 @@ angular.module('starter.controllers')
             $ionicLoading.show({
                template: 'Carregando...'
             });
-            $scope.doRefresh = function () {
-              getOrders().then(function (data) {
-                  $localStorage.setObject('orders',data.data);
-                  console.log('orders refresh',$localStorage.getObject('orders'));
-                  $scope.items = $localStorage.getObject('orders');
-                  $scope.$broadcast('scroll.refreshComplete');
-              },function (dataError) {
-                  $scope.$broadcast('scroll.refreshComplete');
-              });
-            };
 
             $scope.giveBack = function (o) {
                 $ionicPopup.confirm({

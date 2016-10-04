@@ -30,7 +30,7 @@ angular.module('starter.controllers')
 
             for (var i=0;i < orders.length;i++){
                 if (orders.items[i].id == $stateParams.id){
-                    $scope.order = orders.items[i];
+                    $scope.order = orders[i];
                 }
             }
             console.log($stateParams.id);
@@ -40,7 +40,7 @@ angular.module('starter.controllers')
             };
 
             $scope.openListProducts = function () {
-                $state.go('deliveryman.view_product_radio');
+                $state.go('deliveryman.view_product_radio',{id:$stateParams.id});
             };
 
             $scope.openProductDetail = function (i) {
@@ -77,7 +77,7 @@ angular.module('starter.controllers')
                                     item.auxiliary_id = item.id;
                                 });
                                 console.log(ax);
-                                DeliverymanOrder.updateStatus({id: orders.id}, {
+                                DeliverymanOrder.updateStatus({id: $stateParams.id}, {
                                     status: 2,
                                     lat: lat,
                                     long: long,

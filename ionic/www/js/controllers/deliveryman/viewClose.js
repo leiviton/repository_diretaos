@@ -38,7 +38,14 @@ angular.module('starter.controllers')
         // });
 
         $scope.openProduct= function (o) {
+            var order = $localStorage.getObject('order_close');
+
+            if (order.length!=0){
+                $cart.clear();
+            }
+
             $localStorage.setObject('order_close',o);
+
             switch (o.type) {
                 case 1:
                     $state.go('deliveryman.checkout_fibra',{id: o.id});

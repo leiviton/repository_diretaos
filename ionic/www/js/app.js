@@ -15,8 +15,8 @@ angular.module('starter', [
     'angular-oauth2','ngResource','ngCordova','pusher-angular'
 ])
     .constant('appConfig',{
-        baseUrl:'http://leiviton.com.br/direta_dev/public',
-        //baseUrl:'http://192.168.137.201:8000',
+        //baseUrl:'http://leiviton.com.br/direta_dev/public',
+        baseUrl:'http://www.direta.com.br/os/public',
         //baseUrl:'http://192.168.137.201:8000',
         pusherKey: '9da90fc97b93c4ce952a',
     })
@@ -85,10 +85,7 @@ angular.module('starter', [
                 // a much nicer keyboard experience.
                 cordova.plugins.Keyboard.disableScroll(true);
             }
-            if(window.StatusBar) {
-                //StatusBar.styleDefault();
-                StatusBar.styleBlackTranslucent();
-            }
+
             //banco local
             /*try {
                 db = $cordovaSQLite.openDB({name:"leiviton.db",location:'default'});
@@ -400,6 +397,17 @@ angular.module('starter', [
                 url:'/view_product_seguranca',
                 templateUrl: 'templates/deliveryman/product/view_product_seguranca.html',
                 controller: 'DeliverymanViewProductSegurancaCtrl'
+            })
+            .state('deliveryman.checkout_seguranca',{
+                cache:false,
+                url:'/checkout_seguranca/:id',
+                templateUrl: 'templates/deliveryman/checkout/checkout_seguranca.html',
+                controller: 'DeliverymanCheckoutSegurancaCtrl'
+            })
+            .state('deliveryman.checkout_item_detail_seguranca',{
+                url:'/checkout/seguranca/detail/:index',
+                templateUrl: 'templates/deliveryman/checkout/checkout_item_detail_seguranca.html',
+                controller: 'DeliverymanCheckoutDetailSegurancaCtrl'
             })
             .state('deliveryman.summary',{
                 cache: false,

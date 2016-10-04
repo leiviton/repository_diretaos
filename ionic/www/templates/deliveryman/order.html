@@ -1,7 +1,6 @@
 <ion-view>
     <ion-nav-title>Minhas Ordens</ion-nav-title>
     <ion-content class="padding has-header">
-        <ion-refresher pulling-text="Arraste para atualizar..." on-refresh="doRefresh()"></ion-refresher>
         <ion-list>
             <ion-item ng-repeat="o in items | orderBy:['-priority','created_at','district']" ng-click="openOrderDetail(o)">
                 <div class="row">

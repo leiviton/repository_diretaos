@@ -26,13 +26,15 @@ angular.module('starter.controllers')
             console.log('cart',cart);
             $scope.items = cart.items;
 
-            $scope.order = [];
+            $scope.order = orders;
 
             for (var i=0;i < orders.length;i++){
-                if (orders.items[i].id == $stateParams.id){
-                    $scope.order = orders.items[i];
+                if (orders[i].id == $stateParams.id){
+                    $scope.order = orders;
                 }
             }
+
+            console.log('order',$scope.order);
             console.log($stateParams.id);
             $scope.removeItem = function (i) {
                 $cart.removeItem(i);
@@ -77,7 +79,7 @@ angular.module('starter.controllers')
                                     item.auxiliary_id = item.id;
                                 });
                                 console.log(ax);
-                                DeliverymanOrder.updateStatus({id: orders.id}, {
+                                DeliverymanOrder.updateStatus({id: $stateParams.id}, {
                                     status: 2,
                                     lat: lat,
                                     long: long,

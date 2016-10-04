@@ -29,8 +29,8 @@ angular.module('starter.controllers')
             $scope.order = [];
 
             for (var i=0;i < orders.length;i++){
-                if (orders.items[i].id == $stateParams.id){
-                    $scope.order = orders.items[i];
+                if (orders[i].id == $stateParams.id){
+                    $scope.order = orders[i];
                 }
             }
             console.log($stateParams.id);
@@ -77,7 +77,7 @@ angular.module('starter.controllers')
                                     item.auxiliary_id = item.id;
                                 });
                                 console.log(ax);
-                                DeliverymanOrder.updateStatus({id: orders.id}, {
+                                DeliverymanOrder.updateStatus({id: $stateParams.id}, {
                                     status: 2,
                                     lat: lat,
                                     long: long,
@@ -85,11 +85,8 @@ angular.module('starter.controllers')
                                     items: o.items,
                                     auxiliary:ax.auxiliary
                                 },function (data) {
-                                    $scope.order = data;
-                                    $cart.clear();
-                                    console.log(data);
                                     $ionicLoading.hide();
-                                    $state.go('deliveryman.order');
+                                    $state.go('deliveryman.checkout_successful');
                                 });
                             }, function(err) {
 
