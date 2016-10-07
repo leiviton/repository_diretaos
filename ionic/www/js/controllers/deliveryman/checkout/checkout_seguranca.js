@@ -2,10 +2,10 @@ angular.module('starter.controllers')
     .controller('DeliverymanCheckoutSegurancaCtrl',[
         '$scope','$state','$stateParams','$cart','ClientOrder',
         '$ionicLoading','$ionicPopup','Cupom','$cordovaBarcodeScanner',
-        'User','$localStorage','DeliverymanOrder','$cordovaGeolocation',
+        'User','$localStorage','DeliverymanOrder','$cordovaGeolocation','ionicToast',
         function ($scope,$state,$stateParams,$cart,ClientOrder,
                   $ionicLoading,$ionicPopup,Cupom,$cordovaBarcodeScanner,
-                  User,$localStorage,DeliverymanOrder,$cordovaGeolocation) {
+                  User,$localStorage,DeliverymanOrder,$cordovaGeolocation,ionicToast) {
 
             User.authenticated({include:'client'},function (data) {
                 console.log(data.data);
@@ -68,16 +68,12 @@ angular.module('starter.controllers')
 
                         if (v.length==0){
                             $ionicLoading.hide();
-                            $ionicPopup.alert({
-                                title: 'Atenção',
-                                template: 'Você precisa adicionar ao menos um produto'
-                            })
+                            ionicToast.show('Voce não adicionou produtos a ordem', 'middle', false, 3500);
+
                         }else if ($scope.validation>0){
                             $ionicLoading.hide();
-                            $ionicPopup.alert({
-                                title: 'Atenção',
-                                template: 'Verifique se adicionou serial em todos os produtos'
-                            })
+                            ionicToast.show('Voce não adicionou serial em todos os produtos', 'middle', false, 3500);
+
 
                         }else if($scope.validation==0){
                             var posOptions = {timeout: 30000, enableHighAccuracy: false, maximumAge: 0};

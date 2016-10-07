@@ -48,7 +48,7 @@
                     <input type="text" placeholder="Descreva o serviço" ng-model="order.service" ng-required="true" ng-minlength="10">
                 </label>
             </form>
-            <button type="button" class="button button-calm button-full" ng-if="order.type==0" ng-disabled="formClose.$invalid" ng-click="goToDeliveryClose(order)">
+            <button type="button" class="button button-balanced button-full" ng-if="order.type>=4" ng-disabled="formClose.$invalid" ng-click="goToDeliveryClose(order)">
                 Fechar Ordem
             </button>
             <button type="button" class="button button-calm button-full"  ng-disabled="formClose.$invalid" ng-click="openProduct(order)">

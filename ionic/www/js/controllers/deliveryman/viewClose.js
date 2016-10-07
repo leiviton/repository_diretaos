@@ -57,7 +57,17 @@ angular.module('starter.controllers')
                 case 3:
                     $state.go('deliveryman.checkout_seguranca',{id: o.id});
                     break;
+                case 4:
+                    $state.go('deliveryman.checkout_fibra',{id: o.id});
+                    break;
+                case 5:
+                    $state.go('deliveryman.checkout_radio',{id: o.id});
+                    break;
+                case 6:
+                    $state.go('deliveryman.checkout_radio',{id: o.id});
+                    break;
                 default:
+                    $localStorage.setObject('order_close',null);
                     $ionicPopup.alert({
                         title: 'Informação',
                         template: 'Ocorreu um erro, tente novamente'

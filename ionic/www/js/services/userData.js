@@ -1,6 +1,6 @@
 angular.module('starter.services')
-    .factory('UserData',['$localStorage','User','OAuth','OAuthToken','$state','$ionicLoading','$ionicPopup','DeliverymanOrder',
-        function ($localStorage,User,OAuth,OAuthToken,$state,$ionicLoading,$ionicPopup,DeliverymanOrder) {
+    .factory('UserData',['$localStorage','User','OAuth','OAuthToken','$state','$ionicLoading','$ionicPopup','DeliverymanOrder','$redirect',
+        function ($localStorage,User,OAuth,OAuthToken,$state,$ionicLoading,$ionicPopup,DeliverymanOrder,$redirect) {
         var key = 'user';
         return {
             set: function (value) {
@@ -47,25 +47,19 @@ angular.module('starter.services')
 
                         });
                         $localStorage.setObject(key,data.data);
-                        if (data.data.role=='client'){
-                            $ionicLoading.hide();
-                            $state.go('client.checkout');
-                        }else{
-                            $ionicLoading.hide();
-                            $state.go('deliveryman.home');
-                        }
+                        $redirect.redirectAfterLogin();
                 },function (responseError) {
                     $localStorage.setObject(key,null);
                     OAuthToken.removeToken();
                     var login = $localStorage.getObject('login');
-                    if(login==null){
+
                         $ionicPopup.alert({
                             title:'Advertência',
                             template:'Usuário e/ou senha inválidos'
                         });
-                    }else{
-                        $state.go('deliveryman.home');
-                    }
+
+
+
                     $ionicLoading.hide();
                     console.debug(responseError);
                 });

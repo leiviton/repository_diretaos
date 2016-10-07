@@ -7,18 +7,23 @@
 angular.module('starter.controllers',[]);
 angular.module('starter.services',[]);
 angular.module('starter.filters',[]);
+angular.module('starter.run',[]);
 
 var db;
 
 angular.module('starter', [
-    'ionic','ionic.service.core','starter.controllers','starter.services','starter.filters',
-    'angular-oauth2','ngResource','ngCordova','pusher-angular','ionic-toast'
+    'ionic','ionic.service.core','starter.controllers','starter.services','starter.filters','starter.run',
+    'angular-oauth2','ngResource','ngCordova','pusher-angular','ionic-toast','permission','http-auth-interceptor'
 ])
     .constant('appConfig',{
         //baseUrl:'http://leiviton.com.br/direta_dev/public',
         baseUrl:'http://www.direta.com.br/os/public',
         //baseUrl:'http://192.168.137.201:8000',
         pusherKey: '9da90fc97b93c4ce952a',
+        redirectAfterLogin:{
+            client:'client.order',
+            deliveryman:'deliveryman.home'
+        }
     })
     .run(function($ionicPlatform,$window,appConfig,$localStorage,UserData,$state,$ionicPopup,$timeout,$cordovaSQLite,$cordovaNetwork,$rootScope) {
 
@@ -34,7 +39,7 @@ angular.module('starter', [
 
 
                     // listen for Online event
-                    $rootScope.$on('networkOffline', function(event, networkState){
+                    $rootScope.$on('networkOnline', function(event, networkState){
                         var onlineState = networkState;
                     });
 
@@ -260,7 +265,12 @@ angular.module('starter', [
                 cache:false,
                 url:'/client',
                 templateUrl:'templates/client/menu.html',
-                controller: 'ClientMenuCtrl'
+                controller: 'ClientMenuCtrl',
+                data:{
+                    permissions:{
+                        only:['client-role']
+                    }
+                }
             })
             .state('client.checkout',{
                 cache: false,
@@ -307,7 +317,12 @@ angular.module('starter', [
                 cache:false,
                 url:'/deliveryman',
                 templateUrl:'templates/deliveryman/menu.html',
-                controller: 'DeliverymanMenuCtrl'
+                controller: 'DeliverymanMenuCtrl',
+                data:{
+                    permissions:{
+                        only:['deliveryman-role']
+                    }
+                }
             })
             .state('deliveryman.home',{
                 cache:false,
@@ -449,6 +464,11 @@ angular.module('starter', [
                     writable:true
                 }
             });
+            return $delegate;
+        }]);
+
+        $provide.decorator('oauthInterceptor',['$delegate',function ($delegate) {
+            delete $delegate['responseError'];
             return $delegate;
         }]);
     });

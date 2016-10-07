@@ -3522,10 +3522,10 @@ ion-infinite-scroll {
   top: 144px; }
 
 .has-footer {
-  bottom: 51px; }
+  bottom: 40px; }
 
 .has-subfooter {
-  bottom: 102px; }
+  bottom: 91px; }
 
 .has-tabs,
 .bar-footer.has-tabs {
@@ -3536,10 +3536,10 @@ ion-infinite-scroll {
     height: auto; }
 
 .bar-subfooter.has-tabs {
-  bottom: 100px; }
+  bottom: 89px; }
 
 .has-footer.has-tabs {
-  bottom: 100px; }
+  bottom: 89px; }
 
 .pane {
   -webkit-transform: translate3d(0, 0, 0);
@@ -4293,12 +4293,12 @@ a.subdued {
   border-top-width: 1px;
   border-bottom-width: 0;
   background-position: top;
-  height: 51px; }
+  height: 40px; }
   .bar-footer.item-input-inset {
     position: absolute; }
   .bar-footer .title {
-    height: 50px;
-    line-height: 51px; }
+    height: 39px;
+    line-height: 40px; }
 
 .bar-tabs {
   padding: 0; }
@@ -4311,7 +4311,7 @@ a.subdued {
     line-height: 44px; }
 
 .bar-subfooter {
-  bottom: 51px;
+  bottom: 40px;
   height: 51px; }
   .bar-subfooter .title {
     height: 50px;
