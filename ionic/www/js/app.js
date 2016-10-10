@@ -12,8 +12,8 @@ angular.module('starter.run',[]);
 var db;
 
 angular.module('starter', [
-    'ionic','ionic.service.core','starter.controllers','starter.services','starter.filters','starter.run',
-    'angular-oauth2','ngResource','ngCordova','pusher-angular','ionic-toast','permission','http-auth-interceptor'
+    'ionic','ionic-toast','ionic.service.core','starter.controllers','starter.services','starter.filters','starter.run',
+    'angular-oauth2','ngResource','ngCordova','pusher-angular','permission','http-auth-interceptor','chart.js'
 ])
     .constant('appConfig',{
         //baseUrl:'http://leiviton.com.br/direta_dev/public',
@@ -226,6 +226,7 @@ angular.module('starter', [
         }
     })*/
     .config(function ($stateProvider, $urlRouterProvider,OAuthProvider,OAuthTokenProvider,appConfig,$provide){
+
         OAuthProvider.configure({
             baseUrl: appConfig.baseUrl,
             clientId: 'appid01',
@@ -239,9 +240,7 @@ angular.module('starter', [
                 secure: false
             }
         });
-
         $stateProvider
-
             .state('login',{
                 url:'/login',
                 templateUrl:'templates/login.html',

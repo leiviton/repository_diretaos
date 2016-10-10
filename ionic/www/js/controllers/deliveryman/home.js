@@ -2,10 +2,25 @@ angular.module('starter.controllers')
     .controller('DeliverymanHomeCtrl',[
         '$scope','$state','$ionicLoading','DeliverymanOrder','$localStorage','$ionicPopup','$timeout',
         function ($scope, $state,$ionicLoading,DeliverymanOrder,$localStorage,$ionicPopup,$timeout) {
-
             $scope.count = 0;
             $scope.countSinc = 0;
             $scope.countNot = 0;
+            $scope.data = [];
+            $scope.label = [];
+            $scope.color = [];
+            DeliverymanOrder.count({id:null,status:0},function (data) {
+                $localStorage.setObject('orders_pendentes_criticas',data[0]);
+            });
+            DeliverymanOrder.countD({id:null,status:0},function (data) {
+                $localStorage.setObject('orders_pendentes_alta',data[0]);
+            });
+            DeliverymanOrder.countMi({id:null,status:2},function (data) {
+                $localStorage.setObject('orders_fechadas_mes',data[0]);
+            });
+            DeliverymanOrder.countDi({id:null,status:2},function (data) {
+                $localStorage.setObject('orders_fechadas_dia',data[0]);
+            });
+
             $ionicLoading.show({
                 template: 'Sincronizando...'
             });
@@ -91,5 +106,30 @@ angular.module('starter.controllers')
 
                 $ionicLoading.hide();
             });
+
+            $scope.data = dataHoje();
+
+            function dataHoje() {
+                var data = new Date();
+                var dia = data.getDate();
+                var mes = data.getMonth() + 1;
+                if (dia < 10){
+                    dia = "0" + dia;
+                }
+                if (mes < 10) {
+                    mes = "0" + mes;
+                }
+                var ano = data.getFullYear();
+                var horas = new Date().getHours();
+                if (horas < 10) {
+                    horas = "0" + horas;
+                }
+                var minutos = new Date().getMinutes();
+                if (minutos < 10) {
+                    minutos = "0" + minutos;
+                }
+                var result = dia+"/"+mes+"/"+ano+" - "+horas + "h" + minutos;
+                return result;
+            }
 
     }]);

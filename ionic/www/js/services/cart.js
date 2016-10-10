@@ -7,6 +7,8 @@ angular.module('starter.services')
         var key4 = 'login', log = $localStorage.getObject(key4);
         var key5 = 'orders', orders = $localStorage.getObject(key5);
         var key6 = 'notification', notification = $localStorage.getObject(key6);
+        var key7 = 'notification_read', notificationread = $localStorage.getObject(key7);
+        var key8 = 'notification_conf', notificationconf = $localStorage.getObject(key8);
         if(!cartAux){
             initCart();
         }
@@ -28,6 +30,12 @@ angular.module('starter.services')
         if(!notification){
             initNot();
         }
+        if(!notificationread){
+            initNotRead();
+        }
+        if(!notificationconf){
+            initNotConf();
+        }
         this.clear = function () {
             initCart();
             initOc();
@@ -43,6 +51,16 @@ angular.module('starter.services')
         };
         this.getAux = function () {
             return $localStorage.getObject(key1);
+        };
+        this.getNotification = function () {
+            return $localStorage.getObject(key6);
+        };
+        this.getNot = function () {
+            return $localStorage.getObject(key7);
+        };
+
+        this.getNotConf = function () {
+            return $localStorage.getObject(key8);
         };
         this.getItem = function (i) {
             return this.get().items[i];
@@ -79,6 +97,38 @@ angular.module('starter.services')
             $localStorage.setObject(key1,cart);
         };
 
+        //notification
+        this.addNot = function (item) {
+            var cart = this.getNot(), itemAux, exists = false;
+            for (var index in cart.items){
+                itemAux = cart.items[index];
+                if (itemAux.id == item.id){
+                    exists = true;
+                    break;
+                }
+            }
+            if (!exists){
+                cart.items.push(item);
+            }
+            $localStorage.setObject(key7,cart);
+        };
+
+        //notificationConf
+        this.addNotConf = function (item) {
+            var cart = this.getNotConf(), itemAux, exists = false;
+            for (var index in cart.items){
+                itemAux = cart.items[index];
+                if (itemAux.id == item.id){
+                    exists = true;
+                    break;
+                }
+            }
+            if (!exists){
+                cart.items.push(item);
+            }
+            $localStorage.setObject(key8,cart);
+        };
+
         this.removeAux = function (i) {
             var aux = this.getAux();
             aux.auxiliar.splice(i,1);
@@ -89,6 +139,13 @@ angular.module('starter.services')
             cart.items.splice(i,1);
             cart.total = getTotal(cart.items);
             $localStorage.setObject(key,cart);
+        };
+
+        this.removeNotification = function (i) {
+            var cart = this.getNotification();
+            cart.items.splice(i,1);
+            cart.total = getTotal(cart.items);
+            $localStorage.setObject(key6,cart);
         };
 
         this.updateSerial = function(i, serial){
@@ -167,6 +224,18 @@ angular.module('starter.services')
 
         function initNot() {
             $localStorage.setObject(key6,{
+                items:[]
+            });
+        }
+
+        function initNotRead() {
+            $localStorage.setObject(key7,{
+                items:[]
+            });
+        }
+
+        function initNotConf() {
+            $localStorage.setObject(key8,{
                 items:[]
             });
         }
