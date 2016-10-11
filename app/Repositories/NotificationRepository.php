@@ -10,5 +10,5 @@ use Prettus\Repository\Contracts\RepositoryInterface;
  */
 interface NotificationRepository extends RepositoryInterface
 {
-    //
+    public function getByIDAndDeliveryman($id,$idDeliveryman);
 }

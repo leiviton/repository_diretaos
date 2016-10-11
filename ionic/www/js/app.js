@@ -343,7 +343,7 @@ angular.module('starter', [
             })
             .state('deliveryman.view_order',{
                 cache: false,
-                url:'/view_order/:id',
+                url:'/view_order/:id/:index}',
                 templateUrl: 'templates/deliveryman/view_order.html',
                 controller: 'DeliverymanViewOrderCtrl'
             })

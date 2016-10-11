@@ -8,7 +8,8 @@ angular.module('starter.services')
         var key5 = 'orders', orders = $localStorage.getObject(key5);
         var key6 = 'notification', notification = $localStorage.getObject(key6);
         var key7 = 'notification_read', notificationread = $localStorage.getObject(key7);
-        var key8 = 'notification_conf', notificationconf = $localStorage.getObject(key8);
+        var key8 = 'sincronizado', sinc = $localStorage.get(key8);
+        var key9 = 'orders_iniciadas', inic = $localStorage.get(key9);
         if(!cartAux){
             initCart();
         }
@@ -33,9 +34,13 @@ angular.module('starter.services')
         if(!notificationread){
             initNotRead();
         }
-        if(!notificationconf){
-            initNotConf();
+        if(!sinc){
+            initSinc();
         }
+        if(!inic){
+            initInic();
+        }
+
         this.clear = function () {
             initCart();
             initOc();
@@ -44,7 +49,11 @@ angular.module('starter.services')
         this.clearOrder = function () {
             initOrders();
             initLogin();
-            initNot()
+            initNot();
+        };
+
+        this.clearNotification = function () {
+            initNotRead();
         };
         this.get = function () {
             return $localStorage.getObject(key);
@@ -58,9 +67,11 @@ angular.module('starter.services')
         this.getNot = function () {
             return $localStorage.getObject(key7);
         };
-
-        this.getNotConf = function () {
+        this.getSinc = function () {
             return $localStorage.getObject(key8);
+        };
+        this.getOrder = function () {
+            return $localStorage.getObject(key5);
         };
         this.getItem = function (i) {
             return this.get().items[i];
@@ -98,7 +109,23 @@ angular.module('starter.services')
         };
 
         //notification
-        this.addNot = function (item) {
+        this.addNot = function (item,o) {
+            var cart = this.getNot(), itemAux, exists = false;
+            for (var index in cart.items){
+                itemAux = cart.items[index];
+                if (itemAux.id == item.id){
+                    itemAux.confirmation = o;
+                    exists = true;
+                    break;
+                }
+            }
+            if (!exists){
+                cart.items.push(item);
+            }
+            $localStorage.setObject(key7,cart);
+        };
+        //notificationConf
+        this.addIni = function (item) {
             var cart = this.getNot(), itemAux, exists = false;
             for (var index in cart.items){
                 itemAux = cart.items[index];
@@ -110,25 +137,8 @@ angular.module('starter.services')
             if (!exists){
                 cart.items.push(item);
             }
-            $localStorage.setObject(key7,cart);
+            $localStorage.setObject(key9,cart);
         };
-
-        //notificationConf
-        this.addNotConf = function (item) {
-            var cart = this.getNotConf(), itemAux, exists = false;
-            for (var index in cart.items){
-                itemAux = cart.items[index];
-                if (itemAux.id == item.id){
-                    exists = true;
-                    break;
-                }
-            }
-            if (!exists){
-                cart.items.push(item);
-            }
-            $localStorage.setObject(key8,cart);
-        };
-
         this.removeAux = function (i) {
             var aux = this.getAux();
             aux.auxiliar.splice(i,1);
@@ -144,8 +154,21 @@ angular.module('starter.services')
         this.removeNotification = function (i) {
             var cart = this.getNotification();
             cart.items.splice(i,1);
-            cart.total = getTotal(cart.items);
             $localStorage.setObject(key6,cart);
+        };
+
+        this.removeOrders = function (i) {
+            var cart = this.getOrder();
+            cart.items.splice(i,1);
+            $localStorage.setObject(key9,cart);
+        };
+
+        this.updateStatus = function(i, status){
+            var cart = this.getOrder(),
+                itemAux = cart.items[i];
+
+            itemAux.status = status;
+            $localStorage.setObject(key5,cart);
         };
 
         this.updateSerial = function(i, serial){
@@ -234,9 +257,14 @@ angular.module('starter.services')
             });
         }
 
-        function initNotConf() {
-            $localStorage.setObject(key8,{
+        function initSinc() {
+            $localStorage.set(key8,
+               '10/10/2016 15h00');
+        }
+
+        function initInic() {
+            $localStorage.setObject(key9,{
                 items:[]
-            });
+            })
         }
     }]);

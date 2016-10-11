@@ -12,6 +12,7 @@ use CodeDelivery\Repositories\AuxiliaryRepository;
 use CodeDelivery\Repositories\NotificationRepository;
 use CodeDelivery\Repositories\OrderRepository;
 use CodeDelivery\Repositories\UserRepository;
+use CodeDelivery\Services\NotificationService;
 use CodeDelivery\Services\OrderService;
 use DB;
 use Illuminate\Http\Request;
@@ -35,14 +36,18 @@ class DeliverymanCheckoutController extends Controller
      * @var NotificationRepository
      */
     private $notificationRepository;
-
+    /**
+     * @var NotificationService
+     */
+    private $notificationService;
 
 
     public function  __construct(
         OrderRepository $repository,
         UserRepository $userRepository,
         OrderService $orderService,
-        NotificationRepository $notificationRepository
+        NotificationRepository $notificationRepository,
+        NotificationService $notificationService
 
     )
     {
@@ -51,17 +56,32 @@ class DeliverymanCheckoutController extends Controller
         $this->orderService = $orderService;
 
         $this->notificationRepository = $notificationRepository;
+        $this->notificationService = $notificationService;
+    }
+
+    public function sincronizarNot(Request $request){
+        $read = $request->get('notification');
+        $id_user = Authorizer::getResourceOwnerId();
+        if($read || $read!=null){
+           foreach ($read as $not){
+                $id = $not['id'];
+                $r = $not['read'];
+                $c = $not['confirmation'];
+                $this->notificationService->update($id,$id_user,$r,$c);
+           }
+        }
+        return $this->countN();
     }
 
     public function index(){
         $id = Authorizer::getResourceOwnerId();
-        $status = 2;
         $orders = $this->repository
             ->skipPresenter(false)
             ->with(['items'])
-            ->scopeQuery(function ($query)use($id,$status){
-            return $query->where('user_deliveryman_id','=',$id)->where('status','<=',1);
-        })->paginate();
+            ->scopeQuery(function ($query)use($id){
+                return $query->where('user_deliveryman_id','=',$id)
+                    ->whereRaw('(status = ? or status = ?)',['Pendente','Iniciada']);
+            })->paginate();
 
         return $orders;
     }

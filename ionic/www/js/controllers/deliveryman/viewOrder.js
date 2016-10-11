@@ -12,6 +12,7 @@ angular.module('starter.controllers')
         $scope.exibir = [];
         $scope.link = "https://google.com/maps/place/";
 
+        console.log($stateParams.index);
         var orders = $localStorage.getObject('orders');
             $ionicLoading.show({
                template: 'Carregando...'
@@ -108,8 +109,16 @@ angular.module('starter.controllers')
                             .then(function (position) {
                                 var lat = position.coords.latitude;
                                 var long = position.coords.longitude;
-
-                                DeliverymanOrder.updateStatus({id: $stateParams.id}, {
+                                $cart.updateStatus($stateParams.index,'Iniciada');
+                                var item = {
+                                    id: $stateParams.id,
+                                    lat: lat,
+                                    long:long,
+                                    status: 'Iniciada'
+                                };
+                                $cart.addIni(item);
+                                $state.go('deliveryman.view_close', {id: $scope.order.id});
+                                /*DeliverymanOrder.updateStatus({id: $stateParams.id}, {
                                     devolver: null,
                                     status: 1,
                                     lat: lat,
@@ -119,12 +128,12 @@ angular.module('starter.controllers')
                                     $scope.equipe = $cart.getAux();
                                     $ionicLoading.hide();
                                     $state.go('deliveryman.view_close', {id: $scope.order.id});
-                                });
+                                });*/
                             }, function(err) {
                                 // error
                                 $ionicLoading.hide();
                             });
-                    } else {
+                    }else {
                         $ionicLoading.hide();
                     }
                 });

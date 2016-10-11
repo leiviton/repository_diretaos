@@ -46,6 +46,7 @@ angular.module('starter.services')
                             }
 
                         });
+                        $ionicLoading.hide();
                         $localStorage.setObject(key,data.data);
                         $redirect.redirectAfterLogin();
                 },function (responseError) {

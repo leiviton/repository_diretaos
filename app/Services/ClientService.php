@@ -25,7 +25,6 @@ class ClientService
 
     public function __construct(ClientRepository $clientRepository, UserRepository $userRepository)
     {
-
         $this->clientRepository = $clientRepository;
         $this->userRepository = $userRepository;
     }

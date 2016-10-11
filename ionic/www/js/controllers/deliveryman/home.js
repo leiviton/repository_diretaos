@@ -1,113 +1,116 @@
 angular.module('starter.controllers')
     .controller('DeliverymanHomeCtrl',[
-        '$scope','$state','$ionicLoading','DeliverymanOrder','$localStorage','$ionicPopup','$timeout',
-        function ($scope, $state,$ionicLoading,DeliverymanOrder,$localStorage,$ionicPopup,$timeout) {
+        '$scope','$state','$ionicLoading','DeliverymanOrder','$localStorage','$ionicPopup','$timeout','Sincronizar','$cart','$window',
+        function ($scope, $state,$ionicLoading,DeliverymanOrder,$localStorage,$ionicPopup,$timeout,Sincronizar,$cart,$window) {
             $scope.count = 0;
             $scope.countSinc = 0;
             $scope.countNot = 0;
             $scope.data = [];
             $scope.label = [];
             $scope.color = [];
-            DeliverymanOrder.count({id:null,status:0},function (data) {
-                $localStorage.setObject('orders_pendentes_criticas',data[0]);
-            });
-            DeliverymanOrder.countD({id:null,status:0},function (data) {
-                $localStorage.setObject('orders_pendentes_alta',data[0]);
-            });
-            DeliverymanOrder.countMi({id:null,status:2},function (data) {
-                $localStorage.setObject('orders_fechadas_mes',data[0]);
-            });
-            DeliverymanOrder.countDi({id:null,status:2},function (data) {
-                $localStorage.setObject('orders_fechadas_dia',data[0]);
-            });
 
-            $ionicLoading.show({
-                template: 'Sincronizando...'
-            });
 
-            $scope.sincronizar = function() {
-                $ionicPopup.confirm({
+
+
+            var orders = $localStorage.getObject('orders');
+            var not = $localStorage.getObject('notification').items;
+            $scope.countNot = not.length;
+            if (orders.items.length <= 0){
+                $scope.count = 0;
+            }else{
+                $scope.count = orders.items.length;
+            }
+            if (orders.items.length==0) {
+                $ionicPopup.alert({
                     title: 'Atenção',
-                    template: 'Deseja sincronizar?'
-                }).then(function(res) {
-                    if (res) {
-                        getOrders();
-                    }else {
-                        $ionicLoading.hide();
-                    }
-                });
+                    template: 'Não existem ordens pendentes'
+                })
+            }
+
+            var reload = function () {
+                $timeout(function () {
+                    $window.location.reload(true);
+                },100);
             };
 
-            function sincronizar(or) {
-                   return DeliverymanOrder.updateStatus({id: or.id}, {
-                            status: or.status,
-                            lat: or.lat,
-                            long: or.long
-                        }).$promise;
-            }
+            $scope.sincronizar = function() {
+                $ionicLoading.show({
+                    template: 'Sincronizando...'
+                });
+
+                DeliverymanOrder.count({id:null,status:0},function (data) {
+                    $localStorage.setObject('orders_pendentes_criticas',data[0]);
+                });
+                DeliverymanOrder.countD({id:null,status:0},function (data) {
+                    $localStorage.setObject('orders_pendentes_alta',data[0]);
+                });
+                DeliverymanOrder.countMi({id:null,status:2},function (data) {
+                    $localStorage.setObject('orders_fechadas_mes',data[0]);
+                });
+                DeliverymanOrder.countDi({id:null,status:2},function (data) {
+                    $localStorage.setObject('orders_fechadas_dia',data[0]);
+                });
+
+                var read = $cart.getNot().items;
+                var order = $cart.getOrder().items;
+                if(read.length!=0) {
+                    DeliverymanOrder.updateNotification({
+                        notification: read
+                    },function (data) {
+                        console.log(data);
+                        $localStorage.setObject('notification',{items:data.data});
+                        $cart.clearNotification();
+                        if (order.length==0){
+                            getOrders();
+                        }
+                        $ionicLoading.hide();
+                    });
+                }else{
+                    getNotification();
+                    if (order.length==0){
+                        getOrders();
+                    }
+                }
+                $localStorage.set('sincronizado',dataHoje());
+            };
 
             function getNotification() {
                 return DeliverymanOrder.countN({
                     id:null,
                     orderBy:'created_at',
                     sortedBy:'asc'
-                }).$promise;
+                },function (data) {
+                    $scope.notification = data.data;
+                    $localStorage.setObject('notification',{items:data.data})
+                    $ionicLoading.hide();
+                });
             }
 
-            getNotification().then(function (data) {
-                $scope.notification = data.data;
-                $localStorage.setObject('notification',{items:data.data})
-            });
 
-            getNotification();
+
             function getOrders() {
-                if($localStorage.getObject('orders_update').items.length>0) {
-                    console.log($localStorage.getObject('orders_update').items.length);
-                    var a = $localStorage.getObject('orders_update').items;
-                    for(var i = 0; i<a.length;i++){
-                        sincronizar(a[i]);
-                    }
-                    $localStorage.setObject('orders_update',{items:[]})
-                }
                 return DeliverymanOrder.query({
                     id:null,
                     orderBy:'created_at',
                     sortedBy:'asc'
-                }).$promise;
-            }
-
-            getOrders().then(function (data) {
-
-                $localStorage.setObject('orders',{items:data.data});
-                var orders = $localStorage.getObject('orders');
-                var o = $localStorage.getObject('orders_update').items;
-                $scope.countSinc = o.length;
-
-                var not = $localStorage.getObject('notification').items;
-                for (var i = 0; i<not.length;i++){
-                    if (not[i].bit_read==0){
-                        $scope.countNot++;
+                },function (data) {
+                    $localStorage.setObject('orders',{items:data.data});
+                    var orders = $localStorage.getObject('orders');
+                    var not = $localStorage.getObject('notification').items;
+                    $scope.countNot = not.length;
+                    if (orders.items.length <= 0){
+                        $scope.count = 0;
+                    }else{
+                        $scope.count = orders.items.length;
                     }
-                }
 
-                if (orders.items.length <= 0){
-                    $scope.count = 0;
-                }else{
-                    $scope.count = orders.items.length;
-                }
-                if (orders.items.length==0) {
-                    $ionicLoading.show({
-                        template: 'Não existe ordens abertas'
-                    });
-                }
-                console.log('orders',orders);
-                $ionicLoading.hide();
-            },function (dataError) {
-
-                $ionicLoading.hide();
-            });
-
-            $scope.data = dataHoje();
+                    console.log('orders',orders);
+                    $ionicLoading.hide();
+                },function (error) {
+                    $ionicLoading.hide();
+                });
+            }
+            $scope.data = $localStorage.get('sincronizado');
 
             function dataHoje() {
                 var data = new Date();
@@ -131,5 +134,5 @@ angular.module('starter.controllers')
                 var result = dia+"/"+mes+"/"+ano+" - "+horas + "h" + minutos;
                 return result;
             }
-
     }]);
+;

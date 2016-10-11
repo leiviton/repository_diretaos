@@ -41,6 +41,10 @@ angular.module('starter.services')
             countN:{
                 method: 'GET',
                 url: appConfig.baseUrl +'/api/deliveryman/countN'
+            },
+            updateNotification:{
+                method: 'PATCH',
+                url: appConfig.baseUrl +'/api/deliveryman/sincronizar'
             }
         });
 

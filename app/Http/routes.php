@@ -109,6 +109,8 @@ Route::group(['middleware'=>'cors'],function (){
             Route::get('radio','Api\Deliveryman\DeliverymanProductController@radio');
 
             Route::get('seguranca','Api\Deliveryman\DeliverymanProductController@seguranca');
+
+            Route::patch('sincronizar','Api\Deliveryman\DeliverymanCheckoutController@sincronizarNot');
            });
 
         Route::get('authenticated','Api\UserController@authenticated');

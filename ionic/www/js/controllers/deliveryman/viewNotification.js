@@ -10,8 +10,8 @@ angular.module('starter.controllers')
             }
             console.log('not',$scope.notification);
             $scope.confirmar = function (n,i) {
-                var not = {id:n.id,confirmation:dataHoje()};
-                $cart.addNotConf(not);
+                var not = {id:n.id};
+                $cart.addNot(not,dataHoje());
                 $cart.removeNotification(i);
                 $state.go('deliveryman.notification');
             };

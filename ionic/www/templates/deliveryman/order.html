@@ -2,7 +2,7 @@
     <ion-nav-title>Minhas Ordens</ion-nav-title>
     <ion-content class="padding has-header">
         <ion-list>
-            <ion-item collection-repeat="o in items | orderBy:['-priority','created_at','district']" ng-click="openOrderDetail(o)">
+            <ion-item collection-repeat="o in items | orderBy:['-priority','created_at','district']" ng-click="openOrderDetail(o,$index)">
                 <div class="row">
                     <div class="col">
                         <h2>{{o.created_at.date|limitTo: 10 | date: '   dd/MM/yyyy'}}</h2>

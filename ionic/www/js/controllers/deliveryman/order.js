@@ -44,22 +44,17 @@ angular.module('starter.controllers')
             };
             $scope.openOrderDetail = function (order,index) {
                 console.log(order);
+                console.log(index)
+                var i = index;
                 if (order.status == 'Iniciada') {
-                    $state.go('deliveryman.view_close', {id: order.id, index: index});
+                    $state.go('deliveryman.view_close', {id: order.id,index: i});
                 }else {
-                    $state.go('deliveryman.view_order', {id: order.id, index: index});
+                    $state.go('deliveryman.view_order', {id: order.id,index: i});
                 }
             };
             function getOrders() {
-                return DeliverymanOrder.query({
-                    id:null,
-                    orderBy:'created_at',
-                    sortedBy:'desc'
-                }).$promise;
-            }
-
-            getOrders().then(function (data) {
-                if(data.data.length==0){
+                $scope.items = $localStorage.getObject('orders').items;
+                if($scope.items.length==0){
                     $ionicPopup.alert({
                         title: 'Atenção',
                         template: 'Não existe novas Ordens'
@@ -71,13 +66,10 @@ angular.module('starter.controllers')
                         }
                     });
                 }
-                $localStorage.setObject('orders',{items:data.data});
 
-                $scope.items = $localStorage.getObject('orders').items;
                 $ionicLoading.hide();
-            },function (dataError) {
-                $ionicLoading.hide();
-            });
+            }
+
             getOrders();
 
 
