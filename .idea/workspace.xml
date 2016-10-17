@@ -1,14 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="0d56e061-ef30-4d02-bf0f-6373519a1623" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ionic/www/js/controllers/deliveryman/home.js" afterPath="$PROJECT_DIR$/ionic/www/js/controllers/deliveryman/home.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ionic/www/js/controllers/deliveryman/sincronizar.js" afterPath="$PROJECT_DIR$/ionic/www/js/controllers/deliveryman/sincronizar.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ionic/www/js/controllers/deliveryman/viewClose.js" afterPath="$PROJECT_DIR$/ionic/www/js/controllers/deliveryman/viewClose.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ionic/www/js/services/cart.js" afterPath="$PROJECT_DIR$/ionic/www/js/services/cart.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ionic/www/js/services/sincronizar.js" afterPath="$PROJECT_DIR$/ionic/www/js/services/sincronizar.js" />
-    </list>
+    <list default="true" id="0d56e061-ef30-4d02-bf0f-6373519a1623" name="Default" comment="" />
     <ignored path="laravel-codedelivery.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path=".idea/dataSources.local.xml" />
@@ -14814,11 +14807,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="viewClose.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="viewClose.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ionic/www/js/controllers/deliveryman/viewClose.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="246">
               <caret line="85" column="23" selection-start-line="85" selection-start-column="23" selection-end-line="85" selection-end-column="23" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name=".env" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/.env">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="136">
+              <caret line="8" column="25" selection-start-line="8" selection-start-column="25" selection-end-line="8" selection-end-column="25" />
               <folding />
             </state>
           </provider>
@@ -14860,7 +14863,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/ionic/www/templates/deliveryman/product/view_product_seguranca.html" />
         <option value="$PROJECT_DIR$/ionic/www/templates/deliveryman/product/view_product_fibra.html" />
         <option value="$PROJECT_DIR$/ionic/config.xml" />
         <option value="$PROJECT_DIR$/ionic/www/templates/deliveryman/checkout/checkout_item_detail_radio.html" />
@@ -14911,6 +14913,7 @@
         <option value="$PROJECT_DIR$/ionic/www/js/services/sincronizar.js" />
         <option value="$PROJECT_DIR$/ionic/www/js/services/cart.js" />
         <option value="$PROJECT_DIR$/ionic/www/js/controllers/deliveryman/viewClose.js" />
+        <option value="$PROJECT_DIR$/.env" />
       </list>
     </option>
   </component>
@@ -15244,12 +15247,12 @@
       <workItem from="1476182948047" duration="4850000" />
       <workItem from="1476368067246" duration="59000" />
       <workItem from="1476368326038" duration="69000" />
-      <workItem from="1476701837515" duration="10814000" />
+      <workItem from="1476701837515" duration="11484000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="456963000" />
+    <option name="totallyTimeSpent" value="457633000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
@@ -15436,13 +15439,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="238">
           <caret line="32" column="52" selection-start-line="32" selection-start-column="52" selection-end-line="32" selection-end-column="52" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/.env">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
@@ -15679,6 +15675,14 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="246">
           <caret line="85" column="23" selection-start-line="85" selection-start-column="23" selection-end-line="85" selection-end-column="23" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.env">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="8" column="25" selection-start-line="8" selection-start-column="25" selection-end-line="8" selection-end-column="25" />
           <folding />
         </state>
       </provider>
