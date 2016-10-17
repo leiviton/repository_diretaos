@@ -67,8 +67,13 @@ angular.module('starter.services')
         this.getNot = function () {
             return $localStorage.getObject(key7);
         };
-        this.getSinc = function () {
-            return $localStorage.getObject(key8);
+
+        //get orders
+        this.getInic = function () {
+            return $localStorage.getObject(key9);
+        };
+        this.getClose = function () {
+            return $localStorage.getObject(key3);
         };
         this.getOrder = function () {
             return $localStorage.getObject(key5);
@@ -126,7 +131,7 @@ angular.module('starter.services')
         };
         //notificationConf
         this.addIni = function (item) {
-            var cart = this.getNot(), itemAux, exists = false;
+            var cart = this.getInic(), itemAux, exists = false;
             for (var index in cart.items){
                 itemAux = cart.items[index];
                 if (itemAux.id == item.id){
@@ -138,6 +143,21 @@ angular.module('starter.services')
                 cart.items.push(item);
             }
             $localStorage.setObject(key9,cart);
+        };
+
+        this.addClose = function (item) {
+            var cart = this.getClose(), itemAux, exists = false;
+            for (var index in cart.items){
+                itemAux = cart.items[index];
+                if (itemAux.id == item.id){
+                    exists = true;
+                    break;
+                }
+            }
+            if (!exists){
+                cart.items.push(item);
+            }
+            $localStorage.setObject(key3,cart);
         };
         this.removeAux = function (i) {
             var aux = this.getAux();
@@ -157,10 +177,11 @@ angular.module('starter.services')
             $localStorage.setObject(key6,cart);
         };
 
+
         this.removeOrders = function (i) {
             var cart = this.getOrder();
             cart.items.splice(i,1);
-            $localStorage.setObject(key9,cart);
+            $localStorage.setObject(key5,cart);
         };
 
         this.updateStatus = function(i, status){

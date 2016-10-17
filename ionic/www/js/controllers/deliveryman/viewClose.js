@@ -37,7 +37,7 @@ angular.module('starter.controllers')
         //     $ionicLoading.hide();
         // });
 
-            ionicToast.show('Ordem '+$scope.order.number_os_sise+' inicializada com sucesso', 'bottom', false, 3500);
+        ionicToast.show('Ordem '+$scope.order.number_os_sise+' inicializada com sucesso', 'bottom', false, 3500);
         $scope.openProduct= function (o) {
             var order = $localStorage.getObject('order_close');
 
@@ -80,12 +80,11 @@ angular.module('starter.controllers')
                 title: 'Atenção',
                 template: 'Deseja fechar esta Ordem?'
             }).then(function(res) {
-                $ionicLoading.show({
-                    template: 'Enviando...'
-                });
                 if(res) {
+                    $ionicLoading.show({
+                        template: 'Enviando...'
+                    });
                     var posOptions = {timeout: 30000, enableHighAccuracy: false, maximumAge: 0};
-
                     $cordovaGeolocation
                         .getCurrentPosition(posOptions)
                         .then(function (position) {
@@ -98,19 +97,32 @@ angular.module('starter.controllers')
                             angular.forEach(ax.auxiliary,function (item) {
                                 item.auxiliary_id = item.id;
                             });
-                            console.log(ax);
-                            DeliverymanOrder.updateStatus({id: $stateParams.id}, {
-                                status: 2,
+
+                            var or = {
+                                id: $stateParams.id,
                                 lat: lat,
                                 long: long,
-                                service: o.service,
-                                auxiliary:ax.auxiliary
-                            },function (data) {
-                                $scope.order = data;
-                                console.log(data);
-                                $ionicLoading.hide();
-                                $state.go('deliveryman.order');
-                            });
+                                items:null,
+                                service: o.service
+                            };
+
+                            $cart.addClose(or);
+                            $cart.removeOrders($stateParams.index);
+                            ionicLoading.hide();
+                            $state.go('deliveryman.home');
+
+                            // DeliverymanOrder.updateStatus({id: $stateParams.id}, {
+                            //     status: 2,
+                            //     lat: lat,
+                            //     long: long,
+                            //     service: o.service,
+                            //     auxiliary:ax.auxiliary
+                            // },function (data) {
+                            //     $scope.order = data;
+                            //     console.log(data);
+                            //     $ionicLoading.hide();
+                            //     $state.go('deliveryman.order');
+                            // });
                         }, function(err) {
                             // error
                             $ionicLoading.hide();

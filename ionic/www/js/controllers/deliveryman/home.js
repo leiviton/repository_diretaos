@@ -1,76 +1,18 @@
 angular.module('starter.controllers')
     .controller('DeliverymanHomeCtrl',[
-        '$scope','$state','$ionicLoading','DeliverymanOrder','$localStorage','$ionicPopup','$timeout','Sincronizar','$cart','$window','$redirect',
-        function ($scope, $state,$ionicLoading,DeliverymanOrder,$localStorage,$ionicPopup,$timeout,Sincronizar,$cart,$window,$redirect) {
-            $scope.count = 0;
-            $scope.countSinc = 0;
-            $scope.countNot = 0;
-            $scope.data = [];
-            $scope.label = [];
-            $scope.color = [];
-
-
-
-
-            var orders = $localStorage.getObject('orders');
-            var not = $localStorage.getObject('notification').items;
-            $scope.countNot = not.length;
-            if (orders.items.length <= 0){
-                $scope.count = 0;
-            }else{
-                $scope.count = orders.items.length;
-            }
-
-            if (orders.items.length==0) {
-                $ionicPopup.alert({
-                    title: 'Atenção',
-                    template: 'Não existem ordens pendentes'
-                })
-            }
-
+        '$scope','$ionicLoading','$localStorage','Sincronizar','$redirect','$timeout',
+        function ($scope, $ionicLoading,$localStorage,Sincronizar,$redirect,$timeout) {
             $scope.sincronizar = function() {
                 $ionicLoading.show({
-                    template: 'Sincronizando...'
+                    template: 'Sincronizando...',
+                    duration:5000
                 });
-
                 Sincronizar.sincronizar();
-                $scope.notification = $localStorage.getObject('notification');
-                $redirect.redirectSincronizar();
-                $ionicLoading.hide();
+                $timeout(function(){
+                    $redirect.redirectSincronizar()},
+                    5000);
             };
-
-            function getNotification() {
-
-            }
-
-
-
-            function getOrders() {
-                return DeliverymanOrder.query({
-                    id:null,
-                    orderBy:'created_at',
-                    sortedBy:'asc'
-                },function (data) {
-                    $localStorage.setObject('orders',{items:data.data});
-                    var orders = $localStorage.getObject('orders');
-                    var not = $localStorage.getObject('notification').items;
-                    $scope.countNot = not.length;
-                    if (orders.items.length <= 0){
-                        $scope.count = 0;
-                    }else{
-                        $scope.count = orders.items.length;
-                    }
-
-                    console.log('orders',orders);
-                    $ionicLoading.hide();
-                },function (error) {
-                    $ionicLoading.hide();
-                });
-            }
+            $scope.countNot = $localStorage.getObject('notification').items.length;
             $scope.data = $localStorage.get('sincronizado');
-
-            function dataHoje() {
-
-            }
+            $scope.count = $localStorage.get('qtdOrder');
     }]);
-;

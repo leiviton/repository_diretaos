@@ -1,9 +1,9 @@
 angular.module('starter.services')
-    .factory('Sincronizar',['$cart','$localStorage','DeliverymanOrder','$state','$redirect'
-            ,function ($cart,$localStorage,DeliverymanOrder,$state,$redirect) {
-
+    .factory('Sincronizar',['$cart','$localStorage','DeliverymanOrder','$state','$redirect','$timeout','$ionicLoading'
+            ,function ($cart,$localStorage,DeliverymanOrder,$state,$redirect,$timeout,$ionicLoading) {
             return {
                     sincronizar: function () {
+
                             DeliverymanOrder.count({id:null,status:0},function (data) {
                                     $localStorage.setObject('orders_pendentes_criticas',data[0]);
                             });
@@ -17,8 +17,24 @@ angular.module('starter.services')
                                     $localStorage.setObject('orders_fechadas_dia',data[0]);
                             });
 
+                            if($cart.getInic().items.length>0){
+                                    var orders = $cart.getInic().items;
+                                    for(var i = 0; i < orders.length; i++){
+                                            DeliverymanOrder.updateStatus({id: orders[i].id},{
+                                                    status:1,
+                                                    lat: orders[i].lat,
+                                                    long: orders[i].long
+                                            });
+                                    }
+                                    this.getOrders();
+                                    $localStorage.setObject('orders_iniciadas',{items:[]});
+                            }else{
+                                  this.getOrders();
+                            }
+
                             var read = $cart.getNot().items;
                             var order = $cart.getOrder().items;
+
                             if(read.length!=0) {
                                     DeliverymanOrder.updateNotification({
                                             notification: read
@@ -26,9 +42,6 @@ angular.module('starter.services')
                                             console.log(data);
                                             $localStorage.setObject('notification',{items:data.data});
                                             $cart.clearNotification();
-                                            if (order.length==0){
-                                                    $redirect.redirectAfterLogin();
-                                            }
 
                                     });
                             }else{
@@ -38,6 +51,18 @@ angular.module('starter.services')
                                     }
                             }
                             $localStorage.set('sincronizado',this.dataHoje());
+                    },
+                    getOrders: function () {
+                           return DeliverymanOrder.query({
+                                    id:null,
+                                    orderBy:'created_at',
+                                    sortedBy:'asc'
+                            },function (data) {
+                                    $localStorage.setObject('orders',{items:data.data});
+                                    $localStorage.set('qtdOrder',data.data.length);
+                            },function (error) {
+                                    console.log('error',error);
+                            });
                     },
                     getNotification: function () {
                             return DeliverymanOrder.countN({
@@ -69,6 +94,9 @@ angular.module('starter.services')
                             }
                             var result = dia+"/"+mes+"/"+ano+" - "+horas + "h" + minutos;
                             return result;
+                    },
+                    countOrder: function () {
+                            return $localStorage.get('qtdOrder');
                     }
             }
 }]);
