@@ -5,4 +5,8 @@ angular.module('starter.services')
             var user = $localStorage.getObject('user');
             $state.go(appConfig.redirectAfterLogin[user.role]);
         };
+
+        this.redirectSincronizar = function () {
+            $state.go('deliveryman.sincronizar');
+        }
     }]);

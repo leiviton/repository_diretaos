@@ -329,6 +329,12 @@ angular.module('starter', [
                 templateUrl:'templates/deliveryman/home.html',
                 controller:'DeliverymanHomeCtrl'
             })
+            .state('deliveryman.sincronizar',{
+                cache:false,
+                url:'/sincronizar',
+                templateUrl:'templates/deliveryman/sincronizar.html',
+                controller:'SincronizarCtrl'
+            })
             .state('deliveryman.notification',{
                 cache: false,
                 url:'/notification',
@@ -343,13 +349,13 @@ angular.module('starter', [
             })
             .state('deliveryman.view_order',{
                 cache: false,
-                url:'/view_order/:id/:index}',
+                url:'/view_order/:id/:index',
                 templateUrl: 'templates/deliveryman/view_order.html',
                 controller: 'DeliverymanViewOrderCtrl'
             })
             .state('deliveryman.view_close',{
                 cache: false,
-                url:'/view_close/:id',
+                url:'/view_close/:id/:index',
                 templateUrl: 'templates/deliveryman/view_order_close.html',
                 controller: 'DeliverymanViewCloseCtrl'
             })

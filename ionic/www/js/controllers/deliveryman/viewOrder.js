@@ -117,7 +117,7 @@ angular.module('starter.controllers')
                                     status: 'Iniciada'
                                 };
                                 $cart.addIni(item);
-                                $state.go('deliveryman.view_close', {id: $scope.order.id});
+                                $state.go('deliveryman.view_close', {id: $scope.order.id,index:$stateParams.index});
                                 /*DeliverymanOrder.updateStatus({id: $stateParams.id}, {
                                     devolver: null,
                                     status: 1,
