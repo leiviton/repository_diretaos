@@ -15,6 +15,7 @@ angular.module('starter.controllers')
             });
 
             $scope.validation = 0;
+            var indice = $localStorage.get('close_index');
 
             var aux = $cart.getAux();
             if(aux.auxiliar.length == 0 || aux.auxiliar==null){
@@ -110,7 +111,7 @@ angular.module('starter.controllers')
                                     };
 
                                     $cart.addClose(or);
-                                    $cart.removeOrders($stateParams.index);
+                                    $cart.removeOrders(indice);
                                     $ionicLoading.hide();
                                     $state.go('deliveryman.checkout_successful');
                                     console.log(ax);

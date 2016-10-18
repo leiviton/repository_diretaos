@@ -100,24 +100,22 @@ class OrderService{
         $action['deliveryman_id'] = $idDeliveryman;
         switch ((int)$status) {
             case 0:
-                $order->status = $status;
+                $order->status = 'Pendente';
                 $action['key'] = "Visita";
                 $action['data'] = date("d/m/Y H:i:s");
                 $action['action'] = "Visita ao cliente $order->name da $order->number_os_sise";
                 $action['geo_location'] = $lat.','.$long;
                 $action['link_geo'] = 'https://google.com/maps/place/'.$lat.','.$long;
                 $order->actions()->create($action);
-               /*$this->pushProcessor->notify([$order->deliveryman->device_token],[
-                    'message'=>"Você visitou o cliente {$order->name} ás {$hora} do dia {$data}"
-                ]);*/
                 $order->save();
                 break;
             case 1:
-                $order->status = $status;
+                $order->status = 'Iniciada';
                 $action['key'] = "Iniciar";
                 $action['data'] = date("d/m/Y H:i:s");
                 $action['action'] = "Iniciou a ordem $order->number_os_sise";
                 $action['geo_location'] = $lat.','.$long;
+                $action['link_geo'] = 'https://google.com/maps/place/'.$lat.','.$long;
                 $order->actions()->create($action);
                 if((int)($order->status == 1 && !$order->hash)){
                     $order->hash = md5((new \DateTime())->getTimestamp());
@@ -125,11 +123,12 @@ class OrderService{
                 $order->save();
                 break;
             case 2:
-                $order->status = $status;
-                $action['key'] = "Fechar";
+                $order->status = 'Executada';
+                $action['key'] = "Executada";
                 $action['data'] = date("d/m/Y H:i:s");
-                $action['action'] = "Fechou a ordem $order->number_os_sise";
+                $action['action'] = "Executou a ordem $order->number_os_sise";
                 $action['geo_location'] = $lat.','.$long;
+                $action['link_geo'] = 'https://google.com/maps/place/'.$lat.','.$long;
                 $order->actions()->create($action);
                 $order->service = $service;
                 $auxiliares = $ax;
@@ -147,20 +146,17 @@ class OrderService{
                 $order->save();
                 break;
             case 3:
-                $order->status = $status;
+                $order->status = 'Aguardando PCP';
                 $action['key'] = "Devolucao";
                 $action['data'] = date("d/m/Y H:i:s");
                 $action['action'] = "Devolução da $order->number_os_sise para o PCP";
                 $action['geo_location'] = $lat.','.$long;
+                $action['link_geo'] = 'https://google.com/maps/place/'.$lat.','.$long;
                 $order->actions()->create($action);
-                /*$this->pushProcessor->notify([$order->deliveryman->device_token],[
-                    'message'=>"Você devolveu a orderm {$order->number_os_sise} para o PCP, aguarde o retorno da gerencia"
-                ]);*/
                 $order->save();
                 break;
         }
         return $order;
-
     }
 
 

@@ -17,7 +17,7 @@ angular.module('starter', [
 ])
     .constant('appConfig',{
         //baseUrl:'http://leiviton.com.br/direta_dev/public',
-        baseUrl:'http://www.direta.com.br/os/public',
+        baseUrl:'http://186.233.72.22/public',
         //baseUrl:'http://192.168.137.201:8000',
         pusherKey: '9da90fc97b93c4ce952a',
         redirectAfterLogin:{

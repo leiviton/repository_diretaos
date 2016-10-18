@@ -2,7 +2,8 @@ angular.module('starter.services')
     .service('$cart',['$localStorage',function ($localStorage) {
         var key = 'cart', cartAux = $localStorage.getObject(key);
         var key1 = 'auxiliar', aux = $localStorage.getObject(key1);
-        var key2 = 'orders_update', oax = $localStorage.getObject(key2);
+        var key2 = 'orders_close', oax = $localStorage.getObject(key2);
+        var key10 = 'close_index', index = $localStorage.getObject(key10);
         var key3 = 'order_close', oc = $localStorage.getObject(key3);
         var key4 = 'login', log = $localStorage.getObject(key4);
         var key5 = 'orders', orders = $localStorage.getObject(key5);
@@ -12,6 +13,9 @@ angular.module('starter.services')
         var key9 = 'orders_iniciadas', inic = $localStorage.get(key9);
         if(!cartAux){
             initCart();
+        }
+        if(!index){
+            initIndex();
         }
         if(!aux){
             initAux();
@@ -44,12 +48,15 @@ angular.module('starter.services')
         this.clear = function () {
             initCart();
             initOc();
-            initOx();
         };
         this.clearOrder = function () {
             initOrders();
             initLogin();
             initNot();
+        };
+
+        this.clearIndex = function () {
+            initIndex();
         };
 
         this.clearNotification = function () {
@@ -73,7 +80,7 @@ angular.module('starter.services')
             return $localStorage.getObject(key9);
         };
         this.getClose = function () {
-            return $localStorage.getObject(key3);
+            return $localStorage.getObject(key2);
         };
         this.getOrder = function () {
             return $localStorage.getObject(key5);
@@ -157,7 +164,7 @@ angular.module('starter.services')
             if (!exists){
                 cart.items.push(item);
             }
-            $localStorage.setObject(key3,cart);
+            $localStorage.setObject(key2,cart);
         };
         this.removeAux = function (i) {
             var aux = this.getAux();
@@ -287,5 +294,8 @@ angular.module('starter.services')
             $localStorage.setObject(key9,{
                 items:[]
             })
+        }
+        function initIndex() {
+            $localStorage.set(key10,null)
         }
     }]);

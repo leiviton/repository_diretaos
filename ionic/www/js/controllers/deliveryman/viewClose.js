@@ -40,12 +40,18 @@ angular.module('starter.controllers')
         ionicToast.show('Ordem '+$scope.order.number_os_sise+' inicializada com sucesso', 'bottom', false, 3500);
         $scope.openProduct= function (o) {
             var order = $localStorage.getObject('order_close');
-
+            var indice = $localStorage.get('close_index');
             if (order.length!=0){
                 $cart.clear();
             }
 
+            if(indice != null){
+                $cart.clearIndex();
+            }
+
+
             $localStorage.setObject('order_close',o);
+            $localStorage.set('close_index',$stateParams.index);
 
             switch (o.type) {
                 case 1:
@@ -110,7 +116,7 @@ angular.module('starter.controllers')
                             $cart.addClose(or);
                             $cart.removeOrders($stateParams.index);
                             $ionicLoading.hide();
-                            $state.go('deliveryman.home');
+                            $state.go('deliveryman.order');
 
                             // DeliverymanOrder.updateStatus({id: $stateParams.id}, {
                             //     status: 2,
