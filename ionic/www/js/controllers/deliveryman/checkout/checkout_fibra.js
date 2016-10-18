@@ -127,7 +127,6 @@ angular.module('starter.controllers')
                                     //     $state.go('deliveryman.checkout_successful');
                                     // });
                                 }, function(err) {
-
                                     $ionicLoading.hide();
                                 });
                         }

@@ -33,7 +33,7 @@ class OrderTransformer extends TransformerAbstract
             'name' =>$model->name,
             'phone1' => $model->phone1,
             'phone2' => $model->phone2,
-            'type' => $model->type,
+            'type' =>(int) $model->type,
             'cep' => $model->zipcode,
             'address' => $model->address,
             'address_number'=>$model->address_number,
