@@ -6,6 +6,7 @@ angular.module('starter.controllers')
             $scope.items = cart.items;
             $scope.order = $localStorage.getObject('order_close');
             $cart.clear();
+            $cart.clearIndex();
 
             ionicToast.show('Você finalizou a ordem '+$scope.order.number_os_sise+' .', 'bottom', false, 3500);
             $ionicHistory.clearHistory();

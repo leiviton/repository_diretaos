@@ -112,6 +112,17 @@ angular.module('starter.controllers')
 
                                     $cart.addClose(or);
                                     $cart.removeOrders(indice);
+                                    var qtd = $localStorage.get('qtdOrder');
+                                    var ofd = $localStorage.get('orders_fechadas_dia') + 1;
+                                    var ofm = $localStorage.get('orders_fechadas_mes') + 1;
+
+                                    $localStorage.set('orders_fechadas_dia',ofd);
+                                    $localStorage.set('orders_fechadas_mes',ofm);
+
+                                    if(qtd > 0){
+                                        var q = qtd - 1;
+                                        $localStorage.set('qtdOrder',q);
+                                    }
                                     $ionicLoading.hide();
                                     $state.go('deliveryman.checkout_successful');
                                     console.log(ax);

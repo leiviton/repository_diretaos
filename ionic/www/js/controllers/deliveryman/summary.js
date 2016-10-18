@@ -12,27 +12,27 @@ angular.module('starter.controllers')
             $scope.series = [];
 
 
-                $scope.mes = $localStorage.getObject('orders_pendentes_criticas');
+                $scope.mes = $localStorage.get('orders_pendentes_criticas');
                 $scope.data1.push($scope.mes);
                 $scope.label.push('Prioridade Crítica');
                 $scope.color.push('#EF473A');
                 $scope.serie.push($scope.mes);
 
-                $scope.dia = $localStorage.getObject('orders_pendentes_alta');
+                $scope.dia = $localStorage.get('orders_pendentes_alta');
                 $scope.data1.push($scope.dia);
                 $scope.label.push('Prioridade Média');
                 $scope.color.push('#FFC900');
                 $scope.serie.push($scope.dia);
 
 
-                $scope.mesI = $localStorage.getObject('orders_fechadas_mes');
+                $scope.mesI = $localStorage.get('orders_fechadas_mes');
                 $scope.data.push($scope.mesI);
                 $scope.labels.push('Fechadas no mês');
                 $scope.colors.push('#33CD5F');
                 $scope.series.push($scope.mesI);
 
 
-                $scope.diaI = $localStorage.getObject('orders_fechadas_dia');
+                $scope.diaI = $localStorage.get('orders_fechadas_dia');
                 if ($scope.mesI > $scope.diaI) {
                     $scope.menorP = true;
                 } else {

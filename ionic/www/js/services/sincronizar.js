@@ -3,71 +3,9 @@ angular.module('starter.services')
             ,function ($cart,$localStorage,DeliverymanOrder,$state,$redirect,$timeout,$ionicLoading) {
             return {
                     sincronizar: function () {
-
-                            DeliverymanOrder.count({id:null,status:0},function (data) {
-                                    $localStorage.setObject('orders_pendentes_criticas',data[0]);
-                            });
-                            DeliverymanOrder.countD({id:null,status:0},function (data) {
-                                    $localStorage.setObject('orders_pendentes_alta',data[0]);
-                            });
-                            DeliverymanOrder.countMi({id:null,status:2},function (data) {
-                                    $localStorage.setObject('orders_fechadas_mes',data[0]);
-                            });
-                            DeliverymanOrder.countDi({id:null,status:2},function (data) {
-                                    $localStorage.setObject('orders_fechadas_dia',data[0]);
-                            });
-
-                            if($cart.getInic().items.length>0){
-                                    var orders = $cart.getInic().items;
-                                    for(var i = 0; i < orders.length; i++){
-                                            DeliverymanOrder.updateStatus({id: orders[i].id},{
-                                                    status:1,
-                                                    lat: orders[i].lat,
-                                                    long: orders[i].long
-                                            });
-                                    }
-                                    this.getOrders();
-                                    $localStorage.setObject('orders_iniciadas',{items:[]});
-                            }else{
-                                  this.getOrders();
-                            }
-
-                            if($cart.getClose().items.length>0){
-                                    var ord = $cart.getClose().items;
-                                    for(var i = 0; i < ord.length; i++){
-                                            DeliverymanOrder.updateStatus({id: ord[i].id},{
-                                                    status:2,
-                                                    lat: ord[i].lat,
-                                                    long: ord[i].long,
-                                                    items: ord[i].items,
-                                                    service: ord[i].service,
-                                                    auxiliary:ord[i].auxiliary
-                                            });
-                                    }
-                                    this.getOrders();
-                                    $localStorage.setObject('orders_close',{items:[]});
-                            }else{
-                                    this.getOrders();
-                            }
-
-                            var read = $cart.getNot().items;
-                            var order = $cart.getOrder().items;
-
-                            if(read.length!=0) {
-                                    DeliverymanOrder.updateNotification({
-                                            notification: read
-                                    },function (data) {
-                                            console.log(data);
-                                            $localStorage.setObject('notification',{items:data.data});
-                                            $cart.clearNotification();
-
-                                    });
-                            }else{
-                                    this.getNotification();
-                                    if (order.length==0){
-                                            $redirect.redirectAfterLogin();
-                                    }
-                            }
+                            this.iniciaOrder();
+                            this.countOrder();
+                            this.getOrders();
                             $localStorage.set('sincronizado',this.dataHoje());
                     },
                     getOrders: function () {
@@ -83,13 +21,26 @@ angular.module('starter.services')
                             });
                     },
                     getNotification: function () {
-                            return DeliverymanOrder.countN({
-                                    id:null,
-                                    orderBy:'created_at',
-                                    sortedBy:'asc'
-                            },function (data) {
-                                    $localStorage.setObject('notification',{items:data.data});
-                            });
+                            var read = $cart.getNot().items;
+
+                            if(read.length!=0) {
+                                    DeliverymanOrder.updateNotification({
+                                            notification: read
+                                    },function (data) {
+                                            console.log(data);
+                                            $localStorage.setObject('notification',{items:data.data});
+                                            $cart.clearNotification();
+
+                                    });
+                            }else {
+                                    DeliverymanOrder.countN({
+                                            id: null,
+                                            orderBy: 'created_at',
+                                            sortedBy: 'asc'
+                                    }, function (data) {
+                                            $localStorage.setObject('notification', {items: data.data});
+                                    });
+                            }
                     },
                     dataHoje: function () {
                             var data = new Date();
@@ -114,7 +65,47 @@ angular.module('starter.services')
                             return result;
                     },
                     countOrder: function () {
-                            return $localStorage.get('qtdOrder');
+                            DeliverymanOrder.count({id:null,status:0},function (data) {
+                                    $localStorage.setObject('orders_pendentes_criticas',data[0]);
+                            });
+                            DeliverymanOrder.countD({id:null,status:0},function (data) {
+                                    $localStorage.setObject('orders_pendentes_alta',data[0]);
+                            });
+                            DeliverymanOrder.countMi({id:null,status:2},function (data) {
+                                    $localStorage.setObject('orders_fechadas_mes',data[0]);
+                            });
+                            DeliverymanOrder.countDi({id:null,status:2},function (data) {
+                                    $localStorage.setObject('orders_fechadas_dia',data[0]);
+                            });
+                    },
+                    iniciaOrder: function () {
+                            if($cart.getInic().items.length!=0){
+                                    var orders = $cart.getInic().items;
+                                    for(var i = 0; i < orders.length; i++){
+                                            DeliverymanOrder.updateStatus({id: orders[i].id},{
+                                                    status:1,
+                                                    lat: orders[i].lat,
+                                                    long: orders[i].long
+                                            });
+                                    }
+                                    $localStorage.setObject('orders_iniciadas',{items:[]});
+                            }
+                    },
+                    closeOrder: function () {
+                            if($cart.getClose().items.length!=0){
+                                    var ord = $cart.getClose().items;
+                                    for(var i = 0; i < ord.length; i++){
+                                            DeliverymanOrder.updateStatus({id: ord[i].id},{
+                                                    status:2,
+                                                    lat: ord[i].lat,
+                                                    long: ord[i].long,
+                                                    items: ord[i].items,
+                                                    service: ord[i].service,
+                                                    auxiliary:ord[i].auxiliary
+                                            });
+                                    }
+                                    $localStorage.setObject('orders_close',{items:[]});
+                            }
                     }
             }
 }]);

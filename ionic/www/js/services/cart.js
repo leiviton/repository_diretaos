@@ -3,7 +3,7 @@ angular.module('starter.services')
         var key = 'cart', cartAux = $localStorage.getObject(key);
         var key1 = 'auxiliar', aux = $localStorage.getObject(key1);
         var key2 = 'orders_close', oax = $localStorage.getObject(key2);
-        var key10 = 'close_index', index = $localStorage.getObject(key10);
+        var key10 = 'close_index', index = $localStorage.get(key10);
         var key3 = 'order_close', oc = $localStorage.getObject(key3);
         var key4 = 'login', log = $localStorage.getObject(key4);
         var key5 = 'orders', orders = $localStorage.getObject(key5);
@@ -11,6 +11,8 @@ angular.module('starter.services')
         var key7 = 'notification_read', notificationread = $localStorage.getObject(key7);
         var key8 = 'sincronizado', sinc = $localStorage.get(key8);
         var key9 = 'orders_iniciadas', inic = $localStorage.get(key9);
+
+
         if(!cartAux){
             initCart();
         }

@@ -115,6 +115,11 @@ angular.module('starter.controllers')
 
                             $cart.addClose(or);
                             $cart.removeOrders($stateParams.index);
+                            var qtd = $localStorage.get('qtdOrder');
+                            if(qtd > 0){
+                                var q = qtd - 1;
+                                $localStorage.set('qtdOrder',q);
+                            }
                             $ionicLoading.hide();
                             $state.go('deliveryman.order');
 

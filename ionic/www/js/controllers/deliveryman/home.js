@@ -7,11 +7,24 @@ angular.module('starter.controllers')
                     template: 'Sincronizando...',
                     duration:5000
                 });
-                Sincronizar.sincronizar();
+
+                Sincronizar.iniciaOrder();
+
+                Sincronizar.countOrder();
+
+                Sincronizar.getNotification();
+
+                Sincronizar.closeOrder();
+
+                Sincronizar.getOrders();
+
+                $localStorage.set('sincronizado',Sincronizar.dataHoje());
+
                 $timeout(function(){
                     $redirect.redirectSincronizar()},
                     5000);
             };
+
             $scope.countNot = $localStorage.getObject('notification').items.length;
             $scope.data = $localStorage.get('sincronizado');
             $scope.count = $localStorage.get('qtdOrder');
