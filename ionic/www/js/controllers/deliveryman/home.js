@@ -7,19 +7,7 @@ angular.module('starter.controllers')
                     template: 'Sincronizando...',
                     duration:5000
                 });
-
-                Sincronizar.iniciaOrder();
-
-                Sincronizar.countOrder();
-
-                Sincronizar.getNotification();
-
-                Sincronizar.closeOrder();
-
-                Sincronizar.getOrders();
-
-                $localStorage.set('sincronizado',Sincronizar.dataHoje());
-
+                Sincronizar.sincronizar();
                 $timeout(function(){
                     $redirect.redirectSincronizar()},
                     5000);

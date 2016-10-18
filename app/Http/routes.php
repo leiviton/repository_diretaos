@@ -110,7 +110,7 @@ Route::group(['middleware'=>'cors'],function (){
 
             Route::get('seguranca','Api\Deliveryman\DeliverymanProductController@seguranca');
 
-            Route::patch('sincronizar','Api\Deliveryman\DeliverymanCheckoutController@sincronizarNot');
+            Route::patch('sincronizar','Api\Deliveryman\DeliverymanCheckoutController@sincronizar');
            });
 
         Route::get('authenticated','Api\UserController@authenticated');

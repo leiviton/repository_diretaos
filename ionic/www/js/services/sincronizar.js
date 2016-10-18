@@ -3,9 +3,41 @@ angular.module('starter.services')
             ,function ($cart,$localStorage,DeliverymanOrder,$state,$redirect,$timeout,$ionicLoading) {
             return {
                     sincronizar: function () {
-                            this.iniciaOrder();
-                            this.countOrder();
-                            this.getOrders();
+                            var read = [];
+                            var order = [];
+                            var orini = [];
+
+                            if ($cart.getNot().items.length > 0){
+                                    read = $cart.getNot().items;
+                            }else{
+                                    read = null;
+                            }
+
+
+                            if ($cart.getClose.items>0){
+                                    order = $cart.getClose().items;
+                            }else{
+                                    order = null;
+                            }
+
+                            if($cart.getInic().items>0){
+                                    orini = $cart.getInic().items;
+                            }else{
+                                    orini = null;
+                            }
+
+
+                            if(read.length!=0) {
+                                    DeliverymanOrder.updateNotification({
+                                            notification: read,
+                                            order: order,
+                                            orin: orini
+                                    },function (data) {
+                                            console.log(data);
+                                            $cart.clearNotification();
+
+                                    });
+                            }
                             $localStorage.set('sincronizado',this.dataHoje());
                     },
                     getOrders: function () {
@@ -21,18 +53,7 @@ angular.module('starter.services')
                             });
                     },
                     getNotification: function () {
-                            var read = $cart.getNot().items;
 
-                            if(read.length!=0) {
-                                    DeliverymanOrder.updateNotification({
-                                            notification: read
-                                    },function (data) {
-                                            console.log(data);
-                                            $localStorage.setObject('notification',{items:data.data});
-                                            $cart.clearNotification();
-
-                                    });
-                            }else {
                                     DeliverymanOrder.countN({
                                             id: null,
                                             orderBy: 'created_at',
@@ -40,7 +61,6 @@ angular.module('starter.services')
                                     }, function (data) {
                                             $localStorage.setObject('notification', {items: data.data});
                                     });
-                            }
                     },
                     dataHoje: function () {
                             var data = new Date();

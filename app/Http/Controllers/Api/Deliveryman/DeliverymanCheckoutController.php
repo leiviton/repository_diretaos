@@ -59,8 +59,10 @@ class DeliverymanCheckoutController extends Controller
         $this->notificationService = $notificationService;
     }
 
-    public function sincronizarNot(Request $request){
+    public function sincronizar(Request $request){
         $read = $request->get('notification');
+        $orders = $request->get('orders');
+        $orini = $request->get('orini');
         $id_user = Authorizer::getResourceOwnerId();
         if($read || $read!=null){
            foreach ($read as $not){
@@ -70,7 +72,17 @@ class DeliverymanCheckoutController extends Controller
                 $this->notificationService->update($id,$id_user,$r,$c);
            }
         }
-        return $this->countN();
+        if($orini || $orini!=null){
+            foreach ($orini as $o){
+                $this->updateStatus($o);
+            }
+        }
+        if($orders || $orders!=null){
+            foreach ($orders as $o){
+                $this->updateStatus($o);
+            }
+        }
+        return $this->index();
     }
 
     public function index(){
@@ -94,23 +106,23 @@ class DeliverymanCheckoutController extends Controller
             ->getByIdAndDeliveryman($id,$idDeliveryman);
     }
 
-    public function updateStatus(Request $request,$id){
+    public function updateStatus($order){
         $idDeliveryman = Authorizer::getResourceOwnerId();
         $auxiliarys = null;
-        if ($request->get('auxiliary')!=null){
-            $auxiliarys = $request->get('auxiliary');
+        if ($order->auxiliary!=null){
+            $auxiliarys = $order->auxiliary;
         }
 
         $items = null;
-        if ($request->get('items')!=null){
-            $items = $request->get('items');
+        if ($order->items!=null){
+            $items = $order->items;
         }
 
-        return $this->orderService->updateStatus($id,$idDeliveryman,
-            $request->get('status'),
-            $request->get('lat'),
-            $request->get('long'),
-            $request->get('service'),
+        return $this->orderService->updateStatus($order->id,$idDeliveryman,
+            $order->status,
+            $order->lat,
+            $order->long,
+            $order->service,
             $auxiliarys,
             $items
         );
