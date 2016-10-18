@@ -73,11 +73,13 @@ class DeliverymanCheckoutController extends Controller
            }
         }
 
-        if($orini || $orini!=null){
+        if($orini || $orini != null){
+
             foreach ($orini as $or){
                 $this->updateStatus($or);
             }
         }
+
         if($orders || $orders!=null){
             foreach ($orders as $o){
                 $this->updateStatus($o);
