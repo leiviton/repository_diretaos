@@ -72,9 +72,10 @@ class DeliverymanCheckoutController extends Controller
                 $this->notificationService->update($id,$id_user,$r,$c);
            }
         }
+
         if($orini || $orini!=null){
-            foreach ($orini as $o){
-                $this->updateStatus($o);
+            foreach ($orini as $or){
+                $this->updateStatus($or);
             }
         }
         if($orders || $orders!=null){
