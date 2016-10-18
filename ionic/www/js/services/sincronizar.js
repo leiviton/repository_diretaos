@@ -45,7 +45,7 @@ angular.module('starter.services')
                                             });
                                     }
                                     this.getOrders();
-                                    $localStorage.setObject('order_close',{items:[]});
+                                    $localStorage.setObject('orders_close',{items:[]});
                             }else{
                                     this.getOrders();
                             }
