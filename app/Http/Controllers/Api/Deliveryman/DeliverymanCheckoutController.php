@@ -77,6 +77,9 @@ class DeliverymanCheckoutController extends Controller
 
         if($orini && $orini <> null){
             foreach ($orini as $or){
+                $or['service']=null;
+                $or['items']=null;
+                $or['auxiliary']=null;
                 $this->updateStatus($or);
             }
         }
