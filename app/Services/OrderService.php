@@ -132,13 +132,13 @@ class OrderService{
                 $order->actions()->create($action);
                 $order->service = $service;
                 $auxiliares = $ax;
-                if ($auxiliares!=null) {
+                if ($auxiliares<>null) {
                     foreach ($auxiliares as $axs) {
                         $order->auxiliarys()->create($axs);
                     }
                 }
                 $ite = $items;
-                if ($ite!=null){
+                if ($ite<>null){
                     foreach ($ite as $i){
                         $order->items()->create($i);
                     }

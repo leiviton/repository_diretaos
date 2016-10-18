@@ -64,9 +64,9 @@ class DeliverymanCheckoutController extends Controller
         $orders = $request->get('orders');
         $orini = $request->get('orini');
 
-        
+
         $id_user = Authorizer::getResourceOwnerId();
-        if($read || $read!=null){
+        if($read && $read<>null){
            foreach ($read as $not){
                 $id = $not['id'];
                 $r = $not['read'];
@@ -75,13 +75,13 @@ class DeliverymanCheckoutController extends Controller
            }
         }
 
-        /*if($orini || $orini != null){
+        if($orini && $orini <> null){
             foreach ($orini as $or){
                 $this->updateStatus($or);
             }
-        }*/
+        }
 
-        if($orders || $orders!=null){
+        if($orders && $orders <> null){
             foreach ($orders as $o){
                 $this->updateStatus($o);
             }
@@ -113,7 +113,7 @@ class DeliverymanCheckoutController extends Controller
     public function updateStatus($order){
         $idDeliveryman = Authorizer::getResourceOwnerId();
         $auxiliarys = null;
-        if ($order['auxiliary']!=null){
+        if ($order['auxiliary']!= null){
             $auxiliarys = $order['auxiliary'];
         }
 
