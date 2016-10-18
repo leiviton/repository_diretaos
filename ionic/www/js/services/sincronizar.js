@@ -14,30 +14,30 @@ angular.module('starter.services')
                             }
 
 
-                            if ($cart.getClose.items>0){
+                            if ($cart.getClose().items.length > 0){
                                     order = $cart.getClose().items;
                             }else{
                                     order = null;
                             }
 
-                            if($cart.getInic().items>0){
+                            if($cart.getInic().items.length > 0){
                                     orini = $cart.getInic().items;
                             }else{
                                     orini = null;
                             }
 
-
-                            if(read.length!=0) {
-                                    DeliverymanOrder.updateNotification({
+                            DeliverymanOrder.updateNotification({
                                             notification: read,
                                             order: order,
-                                            orin: orini
+                                            orini: orini
                                     },function (data) {
                                             console.log(data);
-                                            $cart.clearNotification();
+                                            $localStorage.setObject('orders',{items:data.data});
+                                            $localStorage.set('qtdOrder',data.data.length);
+                                            $cart.clearClose();
 
                                     });
-                            }
+
                             $localStorage.set('sincronizado',this.dataHoje());
                     },
                     getOrders: function () {

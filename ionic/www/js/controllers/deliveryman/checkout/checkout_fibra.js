@@ -107,7 +107,8 @@ angular.module('starter.controllers')
                                         long: long,
                                         service: orders.service,
                                         items: o.items,
-                                        auxiliary:ax.auxiliary
+                                        auxiliary:ax.auxiliary,
+                                        status: 2
                                     };
 
                                     $cart.addClose(or);

@@ -109,20 +109,20 @@ class DeliverymanCheckoutController extends Controller
     public function updateStatus($order){
         $idDeliveryman = Authorizer::getResourceOwnerId();
         $auxiliarys = null;
-        if ($order->auxiliary!=null){
-            $auxiliarys = $order->auxiliary;
+        if ($order['auxiliary']!=null){
+            $auxiliarys = $order['auxiliary'];
         }
 
         $items = null;
-        if ($order->items!=null){
-            $items = $order->items;
+        if ($order['items']!=null){
+            $items = $order['items'];
         }
 
-        return $this->orderService->updateStatus($order->id,$idDeliveryman,
-            $order->status,
-            $order->lat,
-            $order->long,
-            $order->service,
+        return $this->orderService->updateStatus($order['id'],$idDeliveryman,
+            $order['status'],
+            $order['lat'],
+            $order['long'],
+            $order['service'],
             $auxiliarys,
             $items
         );

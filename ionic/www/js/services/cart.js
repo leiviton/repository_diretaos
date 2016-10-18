@@ -57,6 +57,12 @@ angular.module('starter.services')
             initNot();
         };
 
+        this.clearClose = function () {
+            initInic();
+            initOx();
+            initNotRead();
+        };
+
         this.clearIndex = function () {
             initIndex();
         };
@@ -74,15 +80,15 @@ angular.module('starter.services')
             return $localStorage.getObject(key6);
         };
         this.getNot = function () {
-            return $localStorage.getObject(key7);
+            return $localStorage.getObject(key7);//notification_read
         };
 
         //get orders
         this.getInic = function () {
-            return $localStorage.getObject(key9);
+            return $localStorage.getObject(key9);//orders_iniciadas
         };
         this.getClose = function () {
-            return $localStorage.getObject(key2);
+            return $localStorage.getObject(key2);//orders_close
         };
         this.getOrder = function () {
             return $localStorage.getObject(key5);
