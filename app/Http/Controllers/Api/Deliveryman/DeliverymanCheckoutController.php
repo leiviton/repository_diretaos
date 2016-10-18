@@ -130,21 +130,21 @@ class DeliverymanCheckoutController extends Controller
     }
     public function count(Request $request){
         $idDeliveryman= Authorizer::getResourceOwnerId();
-        return (int) $this->repository->skipPresenter(false)->countM($idDeliveryman,$request->get('status'));
+        return (int) $this->repository->countM($idDeliveryman,$request->get('status'));
     }
 
     public function countD(Request $request){
         $idDeliveryman= Authorizer::getResourceOwnerId();
-        return (int) $this->repository->skipPresenter(false)->countD($idDeliveryman,$request->get('status'));
+        return (int) $this->repository->countD($idDeliveryman,$request->get('status'));
     }
     public function countMi(Request $request){
         $idDeliveryman= Authorizer::getResourceOwnerId();
-        return (int) $this->repository->skipPresenter(false)->countMi($idDeliveryman,$request->get('status'));
+        return (int) $this->repository->countMi($idDeliveryman,$request->get('status'));
     }
 
     public function countDi(Request $request){
         $idDeliveryman= Authorizer::getResourceOwnerId();
-        return (int) $this->repository->skipPresenter(false)->countDi($idDeliveryman,$request->get('status'));
+        return (int) $this->repository->countDi($idDeliveryman,$request->get('status'));
     }
 
     public function geo(Request $request, Geo $geo, $id){

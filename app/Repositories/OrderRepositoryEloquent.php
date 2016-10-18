@@ -43,7 +43,7 @@ class OrderRepositoryEloquent extends BaseRepository implements OrderRepository
 
     public function countM($id,$status){
 
-        return $this->model
+        return (int) $this->model
             ->where('user_deliveryman_id',$id)
             ->whereRaw('(status = ? or status = ?) and priority = ?',['Pendente','Iniciada','Critica'])
             ->get()->count();
@@ -51,7 +51,7 @@ class OrderRepositoryEloquent extends BaseRepository implements OrderRepository
 
     public function countD($id,$status){
 
-        return $this->model
+        return (int) $this->model
             ->where('user_deliveryman_id',$id)
             ->whereRaw('(status = ? or status = ?) and priority =?',['Pendente','Iniciada','Alta'])
             ->get()->count();
@@ -60,13 +60,13 @@ class OrderRepositoryEloquent extends BaseRepository implements OrderRepository
 
     public function countDi($id,$status){
 
-        return $this->model->where('updated_at', '>=', Carbon::now()->startOfDay())
+        return (int) $this->model->where('updated_at', '>=', Carbon::now()->startOfDay())
             ->where('user_deliveryman_id',$id)->where('status','Executada')->get()->count();
 
     }
     public function countMi($id,$status){
 
-        return $this->model->where('updated_at', '>=', Carbon::now()->startOfMonth())
+        return (int) $this->model->where('updated_at', '>=', Carbon::now()->startOfMonth())
             ->where('user_deliveryman_id',$id)
             ->where('status','Executada')->get()->count();
     }
