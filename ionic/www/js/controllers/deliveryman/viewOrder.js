@@ -114,8 +114,7 @@ angular.module('starter.controllers')
                                     id: $stateParams.id,
                                     lat: lat,
                                     long:long,
-                                    status: 1,
-                                    auxiliary: null
+                                    status: 1
                                 };
                                 $cart.addIni(item);
                                 $state.go('deliveryman.view_close', {id: $scope.order.id,index:$stateParams.index});
