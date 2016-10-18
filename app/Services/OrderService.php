@@ -93,7 +93,7 @@ class OrderService{
     }
 
     public function updateStatus($id,$idDeliveryman,$status,$lat,$long,$service=null,$ax=null,$items=null){
-        $order = $this->orderRepository->getByIDAndDeliveryman($id,$idDeliveryman);
+        $order = $this->orderRepository->getByIDAndDeliveryman((int)$id,$idDeliveryman);
 
         $order->flag_sincronizado = 0;
         $action = [];

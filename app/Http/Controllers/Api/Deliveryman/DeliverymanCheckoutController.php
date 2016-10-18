@@ -112,9 +112,9 @@ class DeliverymanCheckoutController extends Controller
 
     public function updateStatus($order){
         $idDeliveryman = Authorizer::getResourceOwnerId();
-        $auxiliarys = null;
-        if ($order['auxiliary']!= null){
-            $auxiliarys = $order['auxiliary'];
+        $auxiliarys = $order['auxiliary'];
+        if ($auxiliarys != null){
+            $aux = $order['auxiliary'];
         }
 
         $items = null;
@@ -127,7 +127,7 @@ class DeliverymanCheckoutController extends Controller
             $order['lat'],
             $order['long'],
             $order['service'],
-            $auxiliarys,
+            $aux,
             $items
         );
 
