@@ -49,22 +49,22 @@ angular.module('starter.controllers')
 
             switch (o.type) {
                 case 1:
-                    $state.go('deliveryman.checkout_fibra',{id: o.id});
+                    $state.go('deliveryman.checkout_fibra',{id: o.id,index: $stateParams.index});
                     break;
                 case 2:
-                    $state.go('deliveryman.checkout_radio',{id: o.id});
+                    $state.go('deliveryman.checkout_radio',{id: o.id,index: $stateParams.index});
                     break;
                 case 3:
-                    $state.go('deliveryman.checkout_seguranca',{id: o.id});
+                    $state.go('deliveryman.checkout_seguranca',{id: o.id,index: $stateParams.index});
                     break;
                 case 4:
-                    $state.go('deliveryman.checkout_fibra',{id: o.id});
+                    $state.go('deliveryman.checkout_fibra',{id: o.id,index: $stateParams.index});
                     break;
                 case 5:
-                    $state.go('deliveryman.checkout_radio',{id: o.id});
+                    $state.go('deliveryman.checkout_radio',{id: o.id,index: $stateParams.index});
                     break;
                 case 6:
-                    $state.go('deliveryman.checkout_radio',{id: o.id});
+                    $state.go('deliveryman.checkout_radio',{id: o.id,index: $stateParams.index});
                     break;
                 default:
                     $localStorage.setObject('order_close',null);
@@ -103,12 +103,13 @@ angular.module('starter.controllers')
                                 lat: lat,
                                 long: long,
                                 items:null,
-                                service: o.service
+                                service: o.service,
+                                auxiliary:ax.auxiliary
                             };
 
                             $cart.addClose(or);
                             $cart.removeOrders($stateParams.index);
-                            ionicLoading.hide();
+                            $ionicLoading.hide();
                             $state.go('deliveryman.home');
 
                             // DeliverymanOrder.updateStatus({id: $stateParams.id}, {

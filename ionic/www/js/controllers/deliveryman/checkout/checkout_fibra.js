@@ -99,18 +99,32 @@ angular.module('starter.controllers')
                                     angular.forEach(ax.auxiliary,function (item) {
                                         item.auxiliary_id = item.id;
                                     });
-                                    console.log(ax);
-                                    DeliverymanOrder.updateStatus({id: $stateParams.id}, {
-                                        status: 2,
+
+                                    var or = {
+                                        id: $stateParams.id,
                                         lat: lat,
                                         long: long,
                                         service: orders.service,
                                         items: o.items,
                                         auxiliary:ax.auxiliary
-                                    },function (data) {
-                                        $ionicLoading.hide();
-                                        $state.go('deliveryman.checkout_successful');
-                                    });
+                                    };
+
+                                    $cart.addClose(or);
+                                    $cart.removeOrders($stateParams.index);
+                                    $ionicLoading.hide();
+                                    $state.go('deliveryman.checkout_successful');
+                                    console.log(ax);
+                                    // DeliverymanOrder.updateStatus({id: $stateParams.id}, {
+                                    //     status: 2,
+                                    //     lat: lat,
+                                    //     long: long,
+                                    //     service: orders.service,
+                                    //     items: o.items,
+                                    //     auxiliary:ax.auxiliary
+                                    // },function (data) {
+                                    //     $ionicLoading.hide();
+                                    //     $state.go('deliveryman.checkout_successful');
+                                    // });
                                 }, function(err) {
 
                                     $ionicLoading.hide();

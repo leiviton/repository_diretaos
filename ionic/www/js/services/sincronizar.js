@@ -32,6 +32,24 @@ angular.module('starter.services')
                                   this.getOrders();
                             }
 
+                            if($cart.getClose().items.length>0){
+                                    var ord = $cart.getClose().items;
+                                    for(var i = 0; i < ord.length; i++){
+                                            DeliverymanOrder.updateStatus({id: ord[i].id},{
+                                                    status:2,
+                                                    lat: ord[i].lat,
+                                                    long: ord[i].long,
+                                                    items: ord[i].items,
+                                                    service: ord[i].service,
+                                                    auxiliary:ord[i].auxiliary
+                                            });
+                                    }
+                                    this.getOrders();
+                                    $localStorage.setObject('order_close',{items:[]});
+                            }else{
+                                    this.getOrders();
+                            }
+
                             var read = $cart.getNot().items;
                             var order = $cart.getOrder().items;
 

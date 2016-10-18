@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="0d56e061-ef30-4d02-bf0f-6373519a1623" name="Default" comment="" />
+    <list default="true" id="0d56e061-ef30-4d02-bf0f-6373519a1623" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ionic/www/js/controllers/deliveryman/checkout/checkout_fibra.js" afterPath="$PROJECT_DIR$/ionic/www/js/controllers/deliveryman/checkout/checkout_fibra.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ionic/www/js/controllers/deliveryman/viewClose.js" afterPath="$PROJECT_DIR$/ionic/www/js/controllers/deliveryman/viewClose.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ionic/www/js/services/sincronizar.js" afterPath="$PROJECT_DIR$/ionic/www/js/services/sincronizar.js" />
+    </list>
     <ignored path="laravel-codedelivery.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path=".idea/dataSources.local.xml" />
@@ -14797,6 +14802,16 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="order.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/ionic/www/js/controllers/deliveryman/order.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="277">
+              <caret line="51" column="81" selection-start-line="51" selection-start-column="81" selection-end-line="51" selection-end-column="81" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ionic/www/index.html">
           <provider selected="true" editor-type-id="text-editor">
@@ -14810,18 +14825,18 @@
       <file leaf-file-name="viewClose.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ionic/www/js/controllers/deliveryman/viewClose.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="246">
-              <caret line="85" column="23" selection-start-line="85" selection-start-column="23" selection-end-line="85" selection-end-column="23" />
+            <state relative-caret-position="277">
+              <caret line="101" column="52" selection-start-line="101" selection-start-column="52" selection-end-line="101" selection-end-column="52" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name=".env" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/.env">
+      <file leaf-file-name="viewProductFibra.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/ionic/www/js/controllers/deliveryman/product/viewProductFibra.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="136">
-              <caret line="8" column="25" selection-start-line="8" selection-start-column="25" selection-end-line="8" selection-end-column="25" />
+            <state relative-caret-position="357">
+              <caret line="21" column="70" selection-start-line="21" selection-start-column="70" selection-end-line="21" selection-end-column="70" />
               <folding />
             </state>
           </provider>
@@ -14830,8 +14845,8 @@
       <file leaf-file-name="view_order_close.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ionic/www/templates/deliveryman/view_order_close.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-510">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+            <state relative-caret-position="152">
+              <caret line="41" column="20" selection-start-line="41" selection-start-column="20" selection-end-line="41" selection-end-column="20" />
               <folding />
             </state>
           </provider>
@@ -14842,6 +14857,26 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="170">
               <caret line="70" column="20" selection-start-line="70" selection-start-column="20" selection-end-line="70" selection-end-column="20" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="sincronizar.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/ionic/www/js/services/sincronizar.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="255">
+              <caret line="39" column="68" selection-start-line="39" selection-start-column="68" selection-end-line="39" selection-end-column="68" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="checkout_fibra.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/ionic/www/js/controllers/deliveryman/checkout/checkout_fibra.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="170">
+              <caret line="106" column="64" selection-start-line="106" selection-start-column="64" selection-end-line="106" selection-end-column="64" />
               <folding />
             </state>
           </provider>
@@ -14863,7 +14898,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/ionic/www/templates/deliveryman/product/view_product_fibra.html" />
         <option value="$PROJECT_DIR$/ionic/config.xml" />
         <option value="$PROJECT_DIR$/ionic/www/templates/deliveryman/checkout/checkout_item_detail_radio.html" />
         <option value="$PROJECT_DIR$/ionic/www/templates/deliveryman/checkout/checkout_item_detail_seguranca.html" />
@@ -14872,7 +14906,6 @@
         <option value="$PROJECT_DIR$/ionic/ionic.config.json" />
         <option value="$PROJECT_DIR$/ionic/www/lib/ionic/scss/_variables.scss" />
         <option value="$PROJECT_DIR$/ionic/www/js/controllers/deliveryman/checkout/checkoutSuccessful.js" />
-        <option value="$PROJECT_DIR$/ionic/www/js/controllers/deliveryman/checkout/checkout_fibra.js" />
         <option value="$PROJECT_DIR$/ionic/www/js/controllers/deliveryman/menu.js" />
         <option value="$PROJECT_DIR$/ionic/www/templates/deliveryman/checkout/checkout_item_detail.html" />
         <option value="$PROJECT_DIR$/ionic/scss/ionic.app.scss" />
@@ -14910,10 +14943,12 @@
         <option value="$PROJECT_DIR$/ionic/www/js/services/redirect.js" />
         <option value="$PROJECT_DIR$/ionic/www/js/controllers/deliveryman/sincronizar.js" />
         <option value="$PROJECT_DIR$/ionic/www/js/controllers/deliveryman/home.js" />
-        <option value="$PROJECT_DIR$/ionic/www/js/services/sincronizar.js" />
         <option value="$PROJECT_DIR$/ionic/www/js/services/cart.js" />
-        <option value="$PROJECT_DIR$/ionic/www/js/controllers/deliveryman/viewClose.js" />
         <option value="$PROJECT_DIR$/.env" />
+        <option value="$PROJECT_DIR$/ionic/www/js/services/sincronizar.js" />
+        <option value="$PROJECT_DIR$/ionic/www/js/controllers/deliveryman/checkout/checkout_fibra.js" />
+        <option value="$PROJECT_DIR$/ionic/www/js/controllers/deliveryman/viewClose.js" />
+        <option value="$PROJECT_DIR$/ionic/www/js/controllers/deliveryman/product/viewProductFibra.js" />
       </list>
     </option>
   </component>
@@ -15247,12 +15282,12 @@
       <workItem from="1476182948047" duration="4850000" />
       <workItem from="1476368067246" duration="59000" />
       <workItem from="1476368326038" duration="69000" />
-      <workItem from="1476701837515" duration="11484000" />
+      <workItem from="1476701837515" duration="14225000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="457633000" />
+    <option name="totallyTimeSpent" value="460374000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
@@ -15316,13 +15351,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/Http/Middleware/OAuthCheckRole.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-153">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/Http/Middleware/RedirectIfAuthenticated.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -15376,13 +15404,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="79">
           <caret line="34" column="0" selection-start-line="34" selection-start-column="0" selection-end-line="34" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ionic/www/js/controllers/deliveryman/checkout/checkout_fibra.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="75" column="0" selection-start-line="75" selection-start-column="0" selection-end-line="75" selection-end-column="0" />
         </state>
       </provider>
     </entry>
@@ -15591,34 +15612,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ionic/www/js/services/sincronizar.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="493">
-          <caret line="29" column="77" selection-start-line="29" selection-start-column="77" selection-end-line="29" selection-end-column="77" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/ionic/www/js/controllers/deliveryman/viewOrder.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="357">
           <caret line="116" column="54" selection-start-line="116" selection-start-column="54" selection-end-line="116" selection-end-column="54" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ionic/www/js/controllers/deliveryman/sincronizar.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="13" column="51" selection-start-line="13" selection-start-column="51" selection-end-line="13" selection-end-column="51" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ionic/www/js/controllers/deliveryman/order.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="277">
-          <caret line="51" column="81" selection-start-line="51" selection-start-column="81" selection-end-line="51" selection-end-column="81" />
           <folding />
         </state>
       </provider>
@@ -15647,14 +15644,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ionic/www/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="523">
-          <caret line="77" column="19" selection-start-line="77" selection-start-column="19" selection-end-line="77" selection-end-column="19" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/ionic/www/js/services/cart.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="170">
@@ -15663,26 +15652,74 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/.env">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="5" column="21" selection-start-line="5" selection-start-column="21" selection-end-line="5" selection-end-column="21" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ionic/www/js/controllers/deliveryman/sincronizar.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="221">
+          <caret line="13" column="51" selection-start-line="13" selection-start-column="51" selection-end-line="13" selection-end-column="51" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ionic/www/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="523">
+          <caret line="77" column="19" selection-start-line="77" selection-start-column="19" selection-end-line="77" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ionic/www/js/services/sincronizar.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="39" column="68" selection-start-line="39" selection-start-column="68" selection-end-line="39" selection-end-column="68" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ionic/www/js/controllers/deliveryman/checkout/checkout_fibra.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="106" column="64" selection-start-line="106" selection-start-column="64" selection-end-line="106" selection-end-column="64" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/ionic/www/templates/deliveryman/view_order_close.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-510">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        <state relative-caret-position="152">
+          <caret line="41" column="20" selection-start-line="41" selection-start-column="20" selection-end-line="41" selection-end-column="20" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ionic/www/js/controllers/deliveryman/order.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="277">
+          <caret line="51" column="81" selection-start-line="51" selection-start-column="81" selection-end-line="51" selection-end-column="81" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/ionic/www/js/controllers/deliveryman/viewClose.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="246">
-          <caret line="85" column="23" selection-start-line="85" selection-start-column="23" selection-end-line="85" selection-end-column="23" />
+        <state relative-caret-position="277">
+          <caret line="101" column="52" selection-start-line="101" selection-start-column="52" selection-end-line="101" selection-end-column="52" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/.env">
+    <entry file="file://$PROJECT_DIR$/ionic/www/js/controllers/deliveryman/product/viewProductFibra.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="8" column="25" selection-start-line="8" selection-start-column="25" selection-end-line="8" selection-end-column="25" />
+        <state relative-caret-position="357">
+          <caret line="21" column="70" selection-start-line="21" selection-start-column="70" selection-end-line="21" selection-end-column="70" />
           <folding />
         </state>
       </provider>
