@@ -63,6 +63,8 @@ class DeliverymanCheckoutController extends Controller
         $read = $request->get('notification');
         $orders = $request->get('orders');
         $orini = $request->get('orini');
+
+        dd($orini);
         $id_user = Authorizer::getResourceOwnerId();
         if($read || $read!=null){
            foreach ($read as $not){
