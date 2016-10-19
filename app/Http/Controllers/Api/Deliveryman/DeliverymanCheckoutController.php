@@ -80,12 +80,14 @@ class DeliverymanCheckoutController extends Controller
                 $or['service']=null;
                 $or['items']=null;
                 $or['auxiliary']=null;
+                $or['status']=1;
                 $this->updateStatus($or);
             }
         }
 
         if($orders && $orders <> null){
             foreach ($orders as $o){
+                $o['status'] = 2;
                 $this->updateStatus($o);
             }
         }
