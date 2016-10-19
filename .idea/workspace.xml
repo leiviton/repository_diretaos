@@ -14843,8 +14843,8 @@
       <file leaf-file-name="DeliverymanCheckoutController.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/Http/Controllers/Api/Deliveryman/DeliverymanCheckoutController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="404">
-              <caret line="89" column="33" selection-start-line="89" selection-start-column="33" selection-end-line="89" selection-end-column="33" />
+            <state relative-caret-position="132">
+              <caret line="82" column="32" selection-start-line="82" selection-start-column="16" selection-end-line="82" selection-end-column="32" />
               <folding />
             </state>
           </provider>
@@ -15300,12 +15300,12 @@
       <workItem from="1476368326038" duration="69000" />
       <workItem from="1476701837515" duration="14225000" />
       <workItem from="1476787645432" duration="17063000" />
-      <workItem from="1476895612385" duration="101000" />
+      <workItem from="1476895612385" duration="845000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="477538000" />
+    <option name="totallyTimeSpent" value="478282000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
@@ -15731,8 +15731,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/Http/Controllers/Api/Deliveryman/DeliverymanCheckoutController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="404">
-          <caret line="89" column="33" selection-start-line="89" selection-start-column="33" selection-end-line="89" selection-end-column="33" />
+        <state relative-caret-position="132">
+          <caret line="82" column="32" selection-start-line="82" selection-start-column="16" selection-end-line="82" selection-end-column="32" />
           <folding />
         </state>
       </provider>

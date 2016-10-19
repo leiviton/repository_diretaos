@@ -87,7 +87,7 @@ class DeliverymanCheckoutController extends Controller
 
         if($orders && $orders <> null){
             foreach ($orders as $o){
-                $o['status'] = 2;
+
                 $this->updateStatus($o);
             }
         }
