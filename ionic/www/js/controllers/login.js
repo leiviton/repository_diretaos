@@ -7,6 +7,7 @@ angular.module('starter.controllers')
             password: ''
         };
         $scope.login = function () {
+
             UserData.login($scope.user);
         };
     }]);

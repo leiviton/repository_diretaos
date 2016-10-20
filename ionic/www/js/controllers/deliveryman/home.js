@@ -1,13 +1,17 @@
 angular.module('starter.controllers')
     .controller('DeliverymanHomeCtrl',[
-        '$scope','$ionicLoading','$localStorage','Sincronizar','$redirect','$timeout',
-        function ($scope, $ionicLoading,$localStorage,Sincronizar,$redirect,$timeout) {
+        '$scope','$ionicLoading','$localStorage','$redirect','$timeout','UserData',
+        function ($scope, $ionicLoading,$localStorage,$redirect,$timeout,UserData) {
+            var login = $localStorage.getObject('login');
+
             $scope.sincronizar = function() {
+                if(login!=null){
+                    UserData.login(login);
+                }
                 $ionicLoading.show({
                     template: 'Sincronizando...',
                     duration:5000
                 });
-                Sincronizar.sincronizar();
                 $timeout(function(){
                     $redirect.redirectSincronizar()},
                     5000);

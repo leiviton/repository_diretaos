@@ -35,7 +35,7 @@ angular.module('starter', [
 
                     var isOnline = $cordovaNetwork.isOnline();
 
-                    var isOffline = $cordovaNetwork.isOffline();
+                    var isOffline =$cordovaNetwork.isOffline();
 
 
                     // listen for Online event
@@ -48,7 +48,9 @@ angular.module('starter', [
                         var offlineState = networkState;
                     });
 
-                if(isOffline){
+
+
+                if(isOffline==true){
                         var login = $localStorage.getObject('login');
                         console.log('login',login);
                         if (login!=null){
@@ -56,7 +58,7 @@ angular.module('starter', [
                         }else {
                             $state.go('login');
                         }
-                    }else {
+                    }else if (isOnline==true){
                         var login = $localStorage.getObject('login');
                         console.log('login',login);
                         if (login!=null){
@@ -65,7 +67,7 @@ angular.module('starter', [
                             $state.go('login')
                         }
 
-                        /*Ionic.io();
+                        Ionic.io();
                         var push = new Ionic.Push({
                             debug:true,
                             onNotification: function (message) {
@@ -77,7 +79,7 @@ angular.module('starter', [
                         });
                         push.register(function (token) {
                             $localStorage.set('device_token',token.token);
-                        });*/
+                        });
                     }
 
 
@@ -90,141 +92,8 @@ angular.module('starter', [
                 // a much nicer keyboard experience.
                 cordova.plugins.Keyboard.disableScroll(true);
             }
-
-            //banco local
-            /*try {
-                db = $cordovaSQLite.openDB({name:"leiviton.db",location:'default'});
-            } catch (error) {
-                alert(error);
-            }
-
-            //tabela de orders
-            $cordovaSQLite.execute(db,
-                "CREATE TABLE IF NOT EXISTS dados_orders (id integer primary key,user_id integer,status integer,service text,defect text,number_os_sise text,priority integer,name text,phone1 text,phone2 text,type text,address text,address_number text,district text,city text,state text,plano text,id_plano text)").then(
-                function(res) {
-                    console.log(res);
-                },
-                function(err) {
-                    console.log('ERROR: '+err.message);
-                }
-            );
-
-            $cordovaSQLite.execute(db,
-                "CREATE TABLE IF NOT EXISTS orders_iniciadas (id integer,user_id integer,status integer,service text,geo text)").then(
-                function(res) {
-                    console.log(res);
-                },
-                function(err) {
-                    console.log('ERROR: '+err.message);
-                }
-            );
-
-            $cordovaSQLite.execute(db,
-                "CREATE TABLE IF NOT EXISTS orders_fechadas (id integer,user_id integer,status integer,service text,number_os_sise text,geo text)").then(
-                function(res) {
-                    console.log(res);
-                },
-                function(err) {
-                    console.log('ERROR: '+err.message);
-                }
-            );
-
-            $cordovaSQLite.execute(db,
-                "CREATE TABLE IF NOT EXISTS orders_devolvidas (id integer,user_id integer,status integer,number_os_sise text)").then(
-                function(res) {
-                    console.log(res);
-                },
-                function(err) {
-                    console.log('ERROR: '+err.message);
-                }
-            );
-
-            $cordovaSQLite.execute(db,
-                "CREATE TABLE IF NOT EXISTS orders_visitas (id integer,user_id integer,status integer,data text,geo text,number_os_sise text)").then(
-                function(res) {
-                    console.log(res);
-                },
-                function(err) {
-                    console.log('ERROR: '+err.message);
-                }
-            );
-
-            $cordovaSQLite.execute(db,
-                "CREATE TABLE IF NOT EXISTS usuario (id integer,username text,password text)").then(
-                function(res) {
-                    console.log(res);
-                },
-                function(err) {
-                    console.log('ERROR: '+err.message);
-                }
-            );
-
-            /*$cordovaSQLite.execute(db,"DELETE FROM dados_orders",[])
-                .then(function(res) {
-                    console.log(res);
-                });*/
         });
     })
-    /*.factory('orderFactory', function($cordovaSQLite) {
-        //db = $cordovaSQLite.openDB({name:"leiviton.db",location:'default'});
-        return {
-            insert: function (o) {
-                console.log('o', o);
-                var id = o.id, user_id = o.user_id;
-                console.log('desmembrado o', [o.id, o.user_id, o.status, o.service, o.defect, o.number_os_sise, o.priority, o.name, o.phone1, o.phone2, o.type, o.address, o.address_number, o.district, o.city, o.state, o.plano, o.id_plano]);
-                var query = "INSERT INTO dados_orders (id,user_id,status,service,defect,number_os_sise,priority,name,phone1,phone2,type,address,address_number,district,city,state,plano,id_plano) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
-                var values = [o.id, o.user_id, o.status, o.service, o.defect, o.number_os_sise, o.priority, o.name, o.phone1, o.phone2, o.type, o.address, o.address_number, o.district, o.city, o.state, o.plano, o.id_plano];
-                $cordovaSQLite.execute(db, query, values)
-                    .then(
-                        function (res) {
-                            console.log('INSERTED ID: ' + res.insertId);
-                        },
-                        function (err) {
-                            console.log('ERROR: ' + err.message);
-                        }
-                    );
-
-            },
-            select: function () {
-                $cordovaSQLite.execute(db, "SELECT * FROM dados_orders", [])
-                    .then(function (res) {
-                        if (res.rows.length > 0) {
-                            var first = [];
-                            for (var i = 0; i < res.rows.length; i++) {
-                                first[i] = res.rows.item(i);
-                                console.log('dados',first[i]);
-                            }
-                            return first;
-                        } else {
-                            console.log('nada encontrado')
-                        }
-                    });
-            },
-            delete: function (id) {
-                var query = "DELETE FROM dados_orders WHERE id=?";
-                $cordovaSQLite.execute(db, query, [id]).then(
-                    function (res) {
-                        console.log(res);
-                    },
-                    function (err) {
-                        console.log('ERRO:', err);
-                    }
-                );
-            },
-            update: function (id, status, service) {
-                var query = "UPDATE dados_orders SET status=?,service=? WHERE id=?";
-                var values = [status, service, id];
-                $cordovaSQLite.execute(db, query, values).then(
-                    function (res) {
-                        console.log(res);
-                    },
-                    function (err) {
-                        console.log('ERRO:', err);
-                    }
-                );
-            }
-        }
-    })*/
     .config(function ($stateProvider, $urlRouterProvider,OAuthProvider,OAuthTokenProvider,appConfig,$provide){
 
         OAuthProvider.configure({

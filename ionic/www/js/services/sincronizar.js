@@ -1,6 +1,6 @@
 angular.module('starter.services')
-    .factory('Sincronizar',['$cart','$localStorage','DeliverymanOrder','$state','$redirect','$timeout','$ionicLoading'
-            ,function ($cart,$localStorage,DeliverymanOrder,$state,$redirect,$timeout,$ionicLoading) {
+    .factory('Sincronizar',['$cart','$localStorage','DeliverymanOrder','$ionicPopup','$redirect','$timeout','$ionicLoading'
+            ,function ($cart,$localStorage,DeliverymanOrder,$ionicPopup,$redirect,$timeout,$ionicLoading) {
             return {
                     sincronizar: function () {
                             var read = [];
@@ -12,7 +12,6 @@ angular.module('starter.services')
                             }else{
                                     read = null;
                             }
-
 
                             if ($cart.getClose().items.length > 0){
                                     order = $cart.getClose().items;
@@ -28,15 +27,22 @@ angular.module('starter.services')
 
                             DeliverymanOrder.updateNotification({
                                             notification: read,
-                                            order: order,
+                                            orders: order,
                                             orini: orini
                                     },function (data) {
-                                            console.log(data);
+                                            console.log('sincronizado',data);
+                                            this.countOrder();
                                             $localStorage.setObject('orders',{items:data.data});
                                             $localStorage.set('qtdOrder',data.data.length);
                                             $cart.clearClose();
 
-                                    });
+                                    },function (error) {
+                                            $ionicPopup.alert({
+                                                    title: 'Atenção',
+                                                    template: 'Não foi possivel comunicar, verifique sua internet'
+                                            });
+
+                            });
 
                             $localStorage.set('sincronizado',this.dataHoje());
                     },
@@ -85,17 +91,17 @@ angular.module('starter.services')
                             return result;
                     },
                     countOrder: function () {
-                            DeliverymanOrder.count({id:null,status:0},function (data) {
+                           return DeliverymanOrder.count({id:null,status:0},function (data) {
                                     $localStorage.setObject('orders_pendentes_criticas',data[0]);
-                            });
-                            DeliverymanOrder.countD({id:null,status:0},function (data) {
-                                    $localStorage.setObject('orders_pendentes_alta',data[0]);
-                            });
-                            DeliverymanOrder.countMi({id:null,status:2},function (data) {
-                                    $localStorage.setObject('orders_fechadas_mes',data[0]);
-                            });
-                            DeliverymanOrder.countDi({id:null,status:2},function (data) {
-                                    $localStorage.setObject('orders_fechadas_dia',data[0]);
+                                           DeliverymanOrder.countD({id:null,status:0},function (data) {
+                                                   $localStorage.setObject('orders_pendentes_alta',data[0]);
+                                                   DeliverymanOrder.countMi({id:null,status:2},function (data) {
+                                                           $localStorage.setObject('orders_fechadas_mes',data[0]);
+                                                           DeliverymanOrder.countDi({id:null,status:2},function (data) {
+                                                                   $localStorage.setObject('orders_fechadas_dia',data[0]);
+                                                           });
+                                                   });
+                                           });
                             });
                     },
                     iniciaOrder: function () {
