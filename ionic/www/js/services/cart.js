@@ -3,16 +3,38 @@ angular.module('starter.services')
         var key = 'cart', cartAux = $localStorage.getObject(key);
         var key1 = 'auxiliar', aux = $localStorage.getObject(key1);
         var key2 = 'orders_close', oax = $localStorage.getObject(key2);
-        var key10 = 'close_index', index = $localStorage.get(key10);
         var key3 = 'order_close', oc = $localStorage.getObject(key3);
         var key4 = 'login', log = $localStorage.getObject(key4);
         var key5 = 'orders', orders = $localStorage.getObject(key5);
         var key6 = 'notification', notification = $localStorage.getObject(key6);
         var key7 = 'notification_read', notificationread = $localStorage.getObject(key7);
         var key8 = 'sincronizado', sinc = $localStorage.get(key8);
-        var key9 = 'orders_iniciadas', inic = $localStorage.get(key9);
-
-
+        var key9 = 'orders_iniciadas', inic = $localStorage.getObject(key9);
+        var key10 = 'close_index', index = $localStorage.get(key10);
+        var key11 = 'qtdOrder', qtd = $localStorage.get(key11);
+        var key12 = 'produtos_fibra', prodfb = $localStorage.getObject(key12);
+        var key13 = 'produtos_radio', prodrd = $localStorage.getObject(key13);
+        var key14 = 'produtos_seguranca', prodsg = $localStorage.getObject(key14);
+        var key15 = 'orders_devolvidas', odev = $localStorage.getObject(key15);
+        var key16 = 'visitas',v = $localStorage.getObject(key16);
+        if(!v){
+            initVisita();
+        }
+        if(!odev){
+            initDevol();
+        }
+        if(!qtd){
+            initQtd();
+        }
+        if(!prodfb){
+            initFibra();
+        }
+        if(!prodrd){
+            initRadio();
+        }
+        if(!prodsg){
+            initSeguranca();
+        }
         if(!cartAux){
             initCart();
         }
@@ -53,7 +75,6 @@ angular.module('starter.services')
         };
         this.clearOrder = function () {
             initOrders();
-            initLogin();
             initNot();
         };
 
@@ -61,6 +82,8 @@ angular.module('starter.services')
             initInic();
             initOx();
             initNotRead();
+            initDevol();
+            initVisita();
         };
 
         this.clearIndex = function () {
@@ -84,6 +107,12 @@ angular.module('starter.services')
         };
 
         //get orders
+        this.getVisita = function () {
+            return $localStorage.getObject(key16);//visita
+        };
+        this.getDevol = function () {
+            return $localStorage.getObject(key15);//orders_devolvidas
+        };
         this.getInic = function () {
             return $localStorage.getObject(key9);//orders_iniciadas
         };
@@ -144,7 +173,7 @@ angular.module('starter.services')
             }
             $localStorage.setObject(key7,cart);
         };
-        //notificationConf
+        //iniciadas
         this.addIni = function (item) {
             var cart = this.getInic(), itemAux, exists = false;
             for (var index in cart.items){
@@ -159,7 +188,7 @@ angular.module('starter.services')
             }
             $localStorage.setObject(key9,cart);
         };
-
+        //add orders fechadas
         this.addClose = function (item) {
             var cart = this.getClose(), itemAux, exists = false;
             for (var index in cart.items){
@@ -174,11 +203,37 @@ angular.module('starter.services')
             }
             $localStorage.setObject(key2,cart);
         };
+        //add orders devolvidas
+        this.addDevol = function (item) {
+            var cart = this.getDevol(), itemAux, exists = false;
+            for (var index in cart.items){
+                itemAux = cart.items[index];
+                if (itemAux.id == item.id){
+                    exists = true;
+                    break;
+                }
+            }
+            if (!exists){
+                cart.items.push(item);
+            }
+            $localStorage.setObject(key15,cart);
+        };
+        //add orders visitas
+        this.addVisitas = function (item) {
+            var cart = this.getVisita(), itemAux;
+            for (var index in cart.items){
+                itemAux = cart.items[index];
+            }
+            cart.items.push(item);
+
+            $localStorage.setObject(key16,cart);
+        };
         this.removeAux = function (i) {
             var aux = this.getAux();
             aux.auxiliar.splice(i,1);
             $localStorage.setObject(key1,aux);
         };
+
         this.removeItem = function (i) {
             var cart = this.get();
             cart.items.splice(i,1);
@@ -191,7 +246,6 @@ angular.module('starter.services')
             cart.items.splice(i,1);
             $localStorage.setObject(key6,cart);
         };
-
 
         this.removeOrders = function (i) {
             var cart = this.getOrder();
@@ -223,7 +277,6 @@ angular.module('starter.services')
             $localStorage.setObject(key,cart);
         };
 
-
         this.removeCupom = function () {
             var cart = this.get();
             cart.cupom = {
@@ -233,7 +286,6 @@ angular.module('starter.services')
             $localStorage.setObject(key,cart);
 
         };
-
 
         function calculateSubtotal(item) {
             return item.price * item.qtd;
@@ -305,5 +357,39 @@ angular.module('starter.services')
         }
         function initIndex() {
             $localStorage.set(key10,null)
+        }
+
+        function initQtd() {
+            $localStorage.set(key11,0)
+        }
+
+        function initFibra() {
+            $localStorage.setObject(key12,{
+                items:[]
+            })
+        }
+
+        function initRadio() {
+            $localStorage.setObject(key13,{
+                items:[]
+            })
+        }
+
+        function initSeguranca() {
+            $localStorage.setObject(key14,{
+                items:[]
+            })
+        }
+
+        function initDevol() {
+            $localStorage.setObject(key15,{
+                items:[]
+            })
+        }
+
+        function initVisita() {
+            $localStorage.setObject(key16,{
+                items:[]
+            })
         }
     }]);

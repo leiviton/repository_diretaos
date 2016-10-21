@@ -9,13 +9,12 @@ angular.module('starter.controllers')
                template: 'Carregando...'
             });
 
-            Product.radio(function (data) {
-                $scope.products = data.data;
-                console.log(data.data);
+            function getProducts() {
+                $scope.products = $localStorage.getObject('produtos_radio').items;
+                console.log('getProducts',$scope.products);
                 $ionicLoading.hide();
-            },function (dataError) {
-                $ionicLoading.hide();
-            });
+            }
+            getProducts();
 
             $scope.addItem = function (item) {
                 item.qtd = 1;

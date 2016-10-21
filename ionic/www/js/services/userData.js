@@ -1,6 +1,6 @@
 angular.module('starter.services')
-    .factory('UserData',['$localStorage','User','OAuth','OAuthToken','$state','$ionicLoading','$ionicPopup','DeliverymanOrder','$redirect','Sincronizar','$cordovaNetwork',
-        function ($localStorage,User,OAuth,OAuthToken,$state,$ionicLoading,$ionicPopup,DeliverymanOrder,$redirect,Sincronizar,$cordovaNetwork) {
+    .factory('UserData',['$localStorage','User','OAuth','OAuthToken','$state','$ionicLoading','$ionicPopup','DeliverymanOrder','$redirect','Sincronizar','$timeout',
+        function ($localStorage,User,OAuth,OAuthToken,$state,$ionicLoading,$ionicPopup,DeliverymanOrder,$redirect,Sincronizar,$timeout) {
         var key = 'user';
 
 
@@ -14,21 +14,23 @@ angular.module('starter.services')
             login: function (o) {
 
                     $ionicLoading.show({
-                        template: 'Aguarde'
+                        template: 'Sincronizando...',
+                        duration:4000
                     });
                     var promise = OAuth.getAccessToken(o);
-                    $localStorage.setObject('login',o);
                     promise
                         .then(function (data) {
+                            $localStorage.setObject('login',o);
                             return User.authenticated({include:'client'}).$promise;
                         })
                         .then(function (data) {
                             Sincronizar.sincronizar();
-                            $ionicLoading.hide();
                             $localStorage.setObject(key,data.data);
-                            $redirect.redirectAfterLogin();
+                            $timeout(function(){
+                                    $redirect.redirectSincronizar()},
+                                3000);
                         },function (responseError) {
-                            $localStorage.setObject(key,null);
+                            $localStorage.setObject('login',null);
                             OAuthToken.removeToken();
                             $ionicPopup.alert({
                                 title:'Advertência',

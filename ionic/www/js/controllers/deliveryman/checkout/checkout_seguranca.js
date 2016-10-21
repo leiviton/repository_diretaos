@@ -2,17 +2,12 @@ angular.module('starter.controllers')
     .controller('DeliverymanCheckoutSegurancaCtrl',[
         '$scope','$state','$stateParams','$cart','ClientOrder',
         '$ionicLoading','$ionicPopup','Cupom','$cordovaBarcodeScanner',
-        'User','$localStorage','DeliverymanOrder','$cordovaGeolocation','ionicToast',
+        'User','$localStorage','DeliverymanOrder','$cordovaGeolocation','ionicToast','Sincronizar',
         function ($scope,$state,$stateParams,$cart,ClientOrder,
                   $ionicLoading,$ionicPopup,Cupom,$cordovaBarcodeScanner,
-                  User,$localStorage,DeliverymanOrder,$cordovaGeolocation,ionicToast) {
+                  User,$localStorage,DeliverymanOrder,$cordovaGeolocation,ionicToast,Sincronizar) {
 
-            User.authenticated({include:'client'},function (data) {
-                console.log(data.data);
-            },function (responseError) {
-                console.log(responseError);
-            });
-
+            var indice = $localStorage.get('close_index');
 
             $scope.validation = 0;
 
@@ -76,7 +71,7 @@ angular.module('starter.controllers')
 
 
                         }else if($scope.validation==0){
-                            var posOptions = {timeout: 30000, enableHighAccuracy: false, maximumAge: 0};
+                            var posOptions = {timeout: 30000, enableHighAccuracy: true, maximumAge: 0};
 
                             $cordovaGeolocation
                                 .getCurrentPosition(posOptions)
@@ -97,19 +92,29 @@ angular.module('starter.controllers')
                                         item.auxiliary_id = item.id;
                                     });
                                     console.log(ax);
-                                    DeliverymanOrder.updateStatus({id: $stateParams.id}, {
-                                        status: 2,
+                                    var or = {
+                                        id: $stateParams.id,
                                         lat: lat,
                                         long: long,
                                         service: orders.service,
                                         items: o.items,
-                                        auxiliary:ax.auxiliary
-                                    },function (data) {
-                                        $ionicLoading.hide();
-                                        $state.go('deliveryman.checkout_successful');
-                                    });
-                                }, function(err) {
+                                        auxiliary:ax.auxiliary,
+                                        status: 2,
+                                        close: Sincronizar.dataHojeSql()
+                                    };
 
+                                    $cart.addClose(or);
+                                    $cart.removeOrders(indice);
+                                    var qtd = $localStorage.get('qtdOrder');
+
+                                    if(qtd > 0){
+                                        var q = qtd - 1;
+                                        $localStorage.set('qtdOrder',q);
+                                    }
+                                    $ionicLoading.hide();
+                                    $state.go('deliveryman.checkout_successful');
+                                    console.log(ax);
+                                }, function(err) {
                                     $ionicLoading.hide();
                                 });
                         }

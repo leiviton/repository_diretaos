@@ -92,17 +92,18 @@ class OrderService{
         }
     }
 
-    public function updateStatus($id,$idDeliveryman,$status,$lat,$long,$service=null,$ax=null,$items=null){
+    public function updateStatus($id,$idDeliveryman,$status,$lat,$long,$service=null,$ax=null,$items=null,$sinc,$inic=null,$close=null,$v=null){
         $order = $this->orderRepository->getByIDAndDeliveryman((int)$id,$idDeliveryman);
 
         $order->flag_sincronizado = 0;
+        $order->sinc_at = $sinc;
         $action = [];
         $action['deliveryman_id'] = $idDeliveryman;
         switch ((int)$status) {
             case 0:
                 $order->status = 'Pendente';
                 $action['key'] = "Visita";
-                $action['data'] = date("d/m/Y H:i:s");
+                $action['data'] = $v;
                 $action['action'] = "Visita ao cliente $order->name da $order->number_os_sise";
                 $action['geo_location'] = $lat.','.$long;
                 $action['link_geo'] = 'https://google.com/maps/place/'.$lat.','.$long;
@@ -111,6 +112,7 @@ class OrderService{
                 break;
             case 1:
                 $order->status = 'Iniciada';
+                $order->ini_at = $inic;
                 $action['key'] = "Iniciar";
                 $action['data'] = date("d/m/Y H:i:s");
                 $action['action'] = "Iniciou a ordem $order->number_os_sise";
@@ -124,6 +126,7 @@ class OrderService{
                 break;
             case 2:
                 $order->status = 'Executada';
+                $order->close_at = $close;
                 $action['key'] = "Executada";
                 $action['data'] = date("d/m/Y H:i:s");
                 $action['action'] = "Executou a ordem $order->number_os_sise";

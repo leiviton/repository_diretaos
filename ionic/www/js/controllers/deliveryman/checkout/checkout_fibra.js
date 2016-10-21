@@ -2,17 +2,11 @@ angular.module('starter.controllers')
     .controller('DeliverymanCheckoutFibraCtrl',[
         '$scope','$state','$stateParams','$cart','ClientOrder',
         '$ionicLoading','$ionicPopup','Cupom','$cordovaBarcodeScanner',
-        'User','$localStorage','DeliverymanOrder','$cordovaGeolocation','ionicToast',
+        'User','$localStorage','DeliverymanOrder','$cordovaGeolocation','ionicToast','Sincronizar',
         function ($scope,$state,$stateParams,$cart,ClientOrder,
                   $ionicLoading,$ionicPopup,Cupom,$cordovaBarcodeScanner,
-                  User,$localStorage,DeliverymanOrder,$cordovaGeolocation,ionicToast) {
+                  User,$localStorage,DeliverymanOrder,$cordovaGeolocation,ionicToast,Sincronizar) {
 
-
-            User.authenticated({include:'client'},function (data) {
-                console.log(data.data);
-            },function (responseError) {
-                console.log(responseError);
-            });
 
             $scope.validation = 0;
             var indice = $localStorage.get('close_index');
@@ -80,7 +74,7 @@ angular.module('starter.controllers')
                             ionicToast.show('Voce não adicionou serial em todos os produtos', 'middle', false, 3500);
 
                         }else if($scope.validation==0){
-                            var posOptions = {timeout: 30000, enableHighAccuracy: false, maximumAge: 0};
+                            var posOptions = {timeout: 30000, enableHighAccuracy: true, maximumAge: 0};
 
                             $cordovaGeolocation
                                 .getCurrentPosition(posOptions)
@@ -108,7 +102,8 @@ angular.module('starter.controllers')
                                         service: orders.service,
                                         items: o.items,
                                         auxiliary:ax.auxiliary,
-                                        status: 2
+                                        status: 2,
+                                        close: Sincronizar.dataHojeSql()
                                     };
 
                                     $cart.addClose(or);

@@ -18,7 +18,10 @@ class Order extends Model implements Transformable
         'service',
         'defect',
         'number_os_sise',
-        'zipcode'
+        'zipcode',
+        'close_at',
+        'ini_at',
+        'sinc_at'
     ];
 
     public function items(){

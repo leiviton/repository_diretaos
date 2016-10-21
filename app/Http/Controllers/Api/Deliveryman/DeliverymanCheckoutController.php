@@ -63,7 +63,9 @@ class DeliverymanCheckoutController extends Controller
         $read = $request->get('notification');
         $orders = $request->get('orders');
         $orini = $request->get('orini');
-
+        $ordevol = $request->get('ordevol');
+        $visita = $request->get('visita');
+        $sinc_at = $request->get('sinc_at');
 
         $id_user = Authorizer::getResourceOwnerId();
         if($read && $read<>null){
@@ -75,19 +77,47 @@ class DeliverymanCheckoutController extends Controller
            }
         }
 
+        if($visita && $visita <> null){
+            foreach ($visita as $v){
+                $v['service']=null;
+                $v['items']=null;
+                $v['auxiliary']=null;
+                $v['status']=0;
+                $v['inic']=null;
+                $v['close']=null;
+                $this->updateStatus($v,$sinc_at);
+            }
+        }
+
+        if($ordevol && $ordevol <> null){
+            foreach ($ordevol as $od){
+                $od['service']=null;
+                $od['items']=null;
+                $od['auxiliary']=null;
+                $od['status']=3;
+                $od['inic']=null;
+                $od['close']=null;
+                $this->updateStatus($od,$sinc_at);
+            }
+        }
+
         if($orini && $orini <> null){
             foreach ($orini as $or){
                 $or['service']=null;
                 $or['items']=null;
                 $or['auxiliary']=null;
                 $or['status']=1;
-                $this->updateStatus($or);
+                $or['close']=null;
+                $or['data']=null;
+                $this->updateStatus($or,$sinc_at);
             }
         }
 
         if($orders && $orders <> null){
             foreach ($orders as $o){
-                $this->updateStatus($o);
+                $o['inic']=null;
+                $o['data']=null;
+                $this->updateStatus($o,$sinc_at);
             }
         }
         return $this->index();
@@ -100,7 +130,7 @@ class DeliverymanCheckoutController extends Controller
             ->with(['items'])
             ->scopeQuery(function ($query)use($id){
                 return $query->where('user_deliveryman_id','=',$id)
-                    ->whereRaw('(status = ? or status = ?)',['Pendente','Iniciada']);
+                    ->whereRaw('(status = ? or status = ?)',['Pendente','Iniciada'])->orderBy('priority','desc')->orderBy('created_at','asc');
             })->paginate();
 
         return $orders;
@@ -114,7 +144,7 @@ class DeliverymanCheckoutController extends Controller
             ->getByIdAndDeliveryman($id,$idDeliveryman);
     }
 
-    public function updateStatus($order){
+    public function updateStatus($order,$sinc){
         $idDeliveryman = Authorizer::getResourceOwnerId();
         $auxiliarys = $order['auxiliary'];
 
@@ -133,7 +163,11 @@ class DeliverymanCheckoutController extends Controller
             $order['long'],
             $order['service'],
             $auxiliarys,
-            $items
+            $items,
+            $sinc,
+            $order['inic'],
+            $order['close'],
+            $order['data']
         );
 
 

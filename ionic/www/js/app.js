@@ -17,7 +17,7 @@ angular.module('starter', [
 ])
     .constant('appConfig',{
         //baseUrl:'http://leiviton.com.br/direta_dev/public',
-        baseUrl:'http://186.233.72.22/public',
+        baseUrl:'http://direta.com.br/os/public',
         //baseUrl:'http://192.168.137.201:8000',
         pusherKey: '9da90fc97b93c4ce952a',
         redirectAfterLogin:{
@@ -64,9 +64,8 @@ angular.module('starter', [
                         if (login!=null){
                             UserData.login(login);
                         }else {
-                            $state.go('login')
+                            $state.go('login');
                         }
-
                         Ionic.io();
                         var push = new Ionic.Push({
                             debug:true,
@@ -81,8 +80,6 @@ angular.module('starter', [
                             $localStorage.set('device_token',token.token);
                         });
                     }
-
-
                 // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
                 // for form inputs)
                 cordova.plugins.Keyboard.hideKeyboardAccessoryBar(false);

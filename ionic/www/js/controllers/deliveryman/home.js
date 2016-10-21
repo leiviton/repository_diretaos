@@ -8,15 +8,7 @@ angular.module('starter.controllers')
                 if(login!=null){
                     UserData.login(login);
                 }
-                $ionicLoading.show({
-                    template: 'Sincronizando...',
-                    duration:5000
-                });
-                $timeout(function(){
-                    $redirect.redirectSincronizar()},
-                    5000);
             };
-
             $scope.countNot = $localStorage.getObject('notification').items.length;
             $scope.data = $localStorage.get('sincronizado');
             $scope.count = $localStorage.get('qtdOrder');

@@ -1,9 +1,9 @@
 angular.module('starter.controllers')
     .controller('DeliverymanViewCloseCtrl',[
         '$scope','$state','$stateParams','DeliverymanOrder','$ionicLoading',
-        '$cordovaGeolocation','$ionicPopup','$cart','UserData','$localStorage','ionicToast',
+        '$cordovaGeolocation','$ionicPopup','$cart','UserData','$localStorage','ionicToast','Sincronizar',
         function ($scope,$state, $stateParams, DeliverymanOrder,$ionicLoading
-            ,$cordovaGeolocation,$ionicPopup,$cart,UserData,$localStorage,ionicToast) {
+            ,$cordovaGeolocation,$ionicPopup,$cart,UserData,$localStorage,ionicToast,Sincronizar) {
         var watch;
         $scope.user = UserData.get();
         var orders = $localStorage.getObject('orders');
@@ -108,6 +108,7 @@ angular.module('starter.controllers')
                                 id: $stateParams.id,
                                 lat: lat,
                                 long: long,
+                                close: Sincronizar.dataHojeSql(),
                                 items:null,
                                 service: o.service,
                                 auxiliary:ax.auxiliary

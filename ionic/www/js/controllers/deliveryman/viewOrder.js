@@ -1,9 +1,9 @@
 angular.module('starter.controllers')
     .controller('DeliverymanViewOrderCtrl',[
                   '$scope','$state','$stateParams','DeliverymanOrder','$ionicLoading',
-        '$cordovaGeolocation','$ionicPopup','$cart','$localStorage','$order',
+        '$cordovaGeolocation','$ionicPopup','$cart','$localStorage','$order','Sincronizar',
         function ($scope,$state, $stateParams, DeliverymanOrder,$ionicLoading,
-                  $cordovaGeolocation,$ionicPopup,$cart,$localStorage,$order) {
+                  $cordovaGeolocation,$ionicPopup,$cart,$localStorage,$order,Sincronizar) {
         var item = [];
         $scope.order = [];
         $scope.equipe = [];
@@ -31,11 +31,8 @@ angular.module('starter.controllers')
                     order.city +' - '+
                     order.state;
                 console.log('address',address);
-                //createMarkerClient(address);
                 $scope.link = "https://google.com/maps/place/"+address;
             }
-
-
 
             if ($scope.order.actions.data.length>0) {
                 $scope.actions = $scope.order.actions.data;
@@ -54,14 +51,13 @@ angular.module('starter.controllers')
         $scope.goToOrder = function () {
             $ionicPopup.confirm({
                 title: 'Atenção',
-                template: 'Cliente não se encontra?',
-                cssClass: 'animated fadeInDown'
+                template: 'Cliente não se encontra?'
             }).then(function(res) {
                 if(res) {
                     $ionicLoading.show({
                         template: 'Gravando visita'
                     });
-                    var posOptions = {timeout: 30000, enableHighAccuracy: false, maximumAge: 0};
+                    var posOptions = {timeout: 30000, enableHighAccuracy: true, maximumAge: 0};
 
                     $cordovaGeolocation
                         .getCurrentPosition(posOptions)
@@ -69,17 +65,16 @@ angular.module('starter.controllers')
                             var lat = position.coords.latitude;
                             var long = position.coords.longitude;
 
-                            DeliverymanOrder.updateStatus({id: $stateParams.id}, {
-                                devolver: null,
-                                status: 0,
+                            var item = {
+                                id: $stateParams.id,
                                 lat: lat,
-                                long: long
-                            },function (data) {
-                                $scope.order = data;
-                                $scope.equipe = $cart.getAux();
-                                $ionicLoading.hide();
-                                $state.go('deliveryman.order');
-                            });
+                                long:long,
+                                status: 0,
+                                data: Sincronizar.dataHoje()
+                            };
+                            $cart.addVisitas(item);
+                            $state.go('deliveryman.order');
+
                         }, function(err) {
                             // error
                             $ionicLoading.hide();
@@ -102,7 +97,7 @@ angular.module('starter.controllers')
                         $ionicLoading.show({
                             template: 'Iniciando'
                         });
-                        var posOptions = {timeout: 30000, enableHighAccuracy: false, maximumAge: 0};
+                        var posOptions = {timeout: 30000, enableHighAccuracy: true, maximumAge: 0};
 
                         $cordovaGeolocation
                             .getCurrentPosition(posOptions)
@@ -114,21 +109,11 @@ angular.module('starter.controllers')
                                     id: $stateParams.id,
                                     lat: lat,
                                     long:long,
-                                    status: 1
+                                    status: 1,
+                                    inic: Sincronizar.dataHojeSql()
                                 };
                                 $cart.addIni(item);
                                 $state.go('deliveryman.view_close', {id: $scope.order.id,index:$stateParams.index});
-                                /*DeliverymanOrder.updateStatus({id: $stateParams.id}, {
-                                    devolver: null,
-                                    status: 1,
-                                    lat: lat,
-                                    long: long
-                                },function (data) {
-                                    $scope.order = data;
-                                    $scope.equipe = $cart.getAux();
-                                    $ionicLoading.hide();
-                                    $state.go('deliveryman.view_close', {id: $scope.order.id});
-                                });*/
                             }, function(err) {
                                 // error
                                 $ionicLoading.hide();
@@ -148,7 +133,7 @@ angular.module('starter.controllers')
                         $ionicLoading.show({
                             template: 'Notificando PCP'
                         });
-                        var posOptions = {timeout: 30000, enableHighAccuracy: false, maximumAge: 0};
+                        var posOptions = {timeout: 30000, enableHighAccuracy: true, maximumAge: 0};
                         $cordovaGeolocation
                             .getCurrentPosition(posOptions)
                             .then(function (position) {
@@ -156,28 +141,21 @@ angular.module('starter.controllers')
                                 var long = position.coords.longitude;
 
                                 console.log(lat,long);
-
-
                                 item = {
                                     id:$stateParams.id,
                                     lat:lat,
                                     long:long,
                                     status:3
                                 };
-                                DeliverymanOrder.updateStatus({id: $stateParams.id}, {
-                                    status: 3,
-                                    lat: lat,
-                                    long: long
-                                },function (data) {
-                                    $order.addItem(item);
-                                    $order.removeItem($stateParams.index);
-                                    //$localStorage.setObject('orders_update',{items:{}});
-                                    console.log('update',$localStorage.getObject('orders_update'));
-
-                                    console.log(data);
-                                    $ionicLoading.hide();
-                                    $state.go('deliveryman.home');
-                                });
+                                $cart.addDevol(item);
+                                $cart.removeOrders($stateParams.index);
+                                var qtd = $localStorage.get('qtdOrder');
+                                if(qtd > 0){
+                                    var q = qtd - 1;
+                                    $localStorage.set('qtdOrder',q);
+                                }
+                                $ionicLoading.hide();
+                                $state.go('deliveryman.order');
                             }, function(err) {
                                 // error
                                 $ionicLoading.hide();

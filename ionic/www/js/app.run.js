@@ -22,7 +22,7 @@ angular.module('starter.run').run(['$state','PermissionStore','RoleStore','OAuth
             }
             return user.role == 'deliveryman';
         });
-        RoleStore.defineRole('deliveryman-role',['user-permission','deliveryman-permission']);
+        RoleStore.defineRole('deliveryman-role',['deliveryman-permission']);
 
         PermissionStore.definePermission('adm-permission',function () {
             var user = UserData.get();
