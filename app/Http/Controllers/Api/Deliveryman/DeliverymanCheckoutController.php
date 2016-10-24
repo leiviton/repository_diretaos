@@ -108,7 +108,6 @@ class DeliverymanCheckoutController extends Controller
                 $or['auxiliary']=null;
                 $or['status']=1;
                 $or['close']=null;
-                $or['data']=null;
                 $this->updateStatus($or,$sinc_at);
             }
         }
@@ -116,7 +115,6 @@ class DeliverymanCheckoutController extends Controller
         if($orders && $orders <> null){
             foreach ($orders as $o){
                 $o['inic']=null;
-                $o['data']=null;
                 $this->updateStatus($o,$sinc_at);
             }
         }

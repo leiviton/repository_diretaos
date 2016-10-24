@@ -17,8 +17,12 @@ angular.module('starter.services')
         var key14 = 'produtos_seguranca', prodsg = $localStorage.getObject(key14);
         var key15 = 'orders_devolvidas', odev = $localStorage.getObject(key15);
         var key16 = 'visitas',v = $localStorage.getObject(key16);
+        var key17 = 'auxiliary',a = $localStorage.getObject(key17);
         if(!v){
             initVisita();
+        }
+        if(!a){
+            initAuxiliary();
         }
         if(!odev){
             initDevol();
@@ -76,6 +80,7 @@ angular.module('starter.services')
         this.clearOrder = function () {
             initOrders();
             initNot();
+            initQtd();
         };
 
         this.clearClose = function () {
@@ -124,6 +129,9 @@ angular.module('starter.services')
         };
         this.getItem = function (i) {
             return this.get().items[i];
+        };
+        this.getQtd = function () {
+            return $localStorage.get(key11);
         };
         this.addItem = function (item) {
             var cart = this.get(), itemAux, exists = false;
@@ -268,6 +276,11 @@ angular.module('starter.services')
             $localStorage.setObject(key,cart);
         };
 
+        this.setQtd = function (value) {
+            var qtd = value;
+            $localStorage.set(key11,qtd);
+        };
+
         this.setCupom = function (code,value) {
             var cart = this.get();
             cart.cupom = {
@@ -360,7 +373,7 @@ angular.module('starter.services')
         }
 
         function initQtd() {
-            $localStorage.set(key11,0)
+            $localStorage.set(key11,null);
         }
 
         function initFibra() {
@@ -391,5 +404,11 @@ angular.module('starter.services')
             $localStorage.setObject(key16,{
                 items:[]
             })
+        }
+
+        function initAuxiliary(){
+            $localStorage.setObject(key17, {
+                items:[]
+            });
         }
     }]);

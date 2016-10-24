@@ -8,6 +8,7 @@ angular.module('starter.controllers')
             $scope.logout = function () {
                 $cart.clear();
                 $cart.clearOrder();
+                $cart.clearClose();
                 OAuthToken.removeToken();
                 $ionicHistory.clearCache();
                 $ionicHistory.clearHistory();

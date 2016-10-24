@@ -100,7 +100,8 @@ angular.module('starter.controllers')
                                         items: o.items,
                                         auxiliary:ax.auxiliary,
                                         status: 2,
-                                        close: Sincronizar.dataHojeSql()
+                                        close: Sincronizar.dataHojeSql(),
+                                        data: Sincronizar.dataHoje()
                                     };
 
                                     $cart.addClose(or);

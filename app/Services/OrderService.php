@@ -114,7 +114,7 @@ class OrderService{
                 $order->status = 'Iniciada';
                 $order->ini_at = $inic;
                 $action['key'] = "Iniciar";
-                $action['data'] = date("d/m/Y H:i:s");
+                $action['data'] = $v;
                 $action['action'] = "Iniciou a ordem $order->number_os_sise";
                 $action['geo_location'] = $lat.','.$long;
                 $action['link_geo'] = 'https://google.com/maps/place/'.$lat.','.$long;
@@ -128,7 +128,7 @@ class OrderService{
                 $order->status = 'Executada';
                 $order->close_at = $close;
                 $action['key'] = "Executada";
-                $action['data'] = date("d/m/Y H:i:s");
+                $action['data'] = $v;
                 $action['action'] = "Executou a ordem $order->number_os_sise";
                 $action['geo_location'] = $lat.','.$long;
                 $action['link_geo'] = 'https://google.com/maps/place/'.$lat.','.$long;
@@ -151,7 +151,7 @@ class OrderService{
             case 3:
                 $order->status = 'Aguardando PCP';
                 $action['key'] = "Devolucao";
-                $action['data'] = date("d/m/Y H:i:s");
+                $action['data'] = $v;
                 $action['action'] = "Devolução da $order->number_os_sise para o PCP";
                 $action['geo_location'] = $lat.','.$long;
                 $action['link_geo'] = 'https://google.com/maps/place/'.$lat.','.$long;

@@ -3,11 +3,7 @@ angular.module('starter.controllers')
         '$scope','$state','$cart','DeliverymanOrder','$ionicLoading','$ionicPopup','Cupom','$cordovaBarcodeScanner','User',
         function ($scope,$state,$cart,DeliverymanOrder,$ionicLoading,$ionicPopup,Cupom,$cordovaBarcodeScanner,User) {
 
-        User.authenticated({include:'client'},function (data) {
-            console.log(data.data);
-        },function (responseError) {
-           console.log(responseError);
-        });
+
         var aux = $cart.getAux();
         $scope.items = aux.auxiliar;
 

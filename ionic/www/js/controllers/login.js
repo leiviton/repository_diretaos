@@ -6,22 +6,17 @@ angular.module('starter.controllers')
             username: '',
             password: ''
         };
-
         var log = $localStorage.getObject('login');
+
         $scope.login = function () {
-                console.log($scope.user.username);
-                console.log(log);
-            if(log!=null) {
+            if(log!==null) {
                 if ($scope.user.username === log.username && $scope.user.password === log.password) {
-                    console.log('logou')
+                    console.log('logou');
                     $redirect.redirectAfterLogin();
                 } else {
-                    $ionicPopup.alert({
-                        title: 'Atenção',
-                        template: 'Usuário e/ou senha inválidos'
-                    });
+                    UserData.login($scope.user);
                 }
-            }else{
+            }else if(log===null){
                 UserData.login($scope.user);
             }
         };

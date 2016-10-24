@@ -1,22 +1,14 @@
 angular.module('starter.controllers')
     .controller('DeliverymanViewAuxiliaryCtrl',[
-        '$scope','$state','Auxiliary','$ionicLoading','$cart',
-        function ($scope, $state, Auxiliary,$ionicLoading,$cart) {
+        '$scope','$state','Auxiliary','$ionicLoading','$cart','$localStorage',
+        function ($scope, $state, Auxiliary,$ionicLoading,$cart,$localStorage) {
 
-        $scope.auxiliary = [];
-        $ionicLoading.show({
-           template: 'Carregando...'
-        });
-        Auxiliary.query(function (data) {
-            console.log(data);
-            $scope.auxiliary = data.data;
-            $ionicLoading.hide();
-        },function (dataError) {
-            $ionicLoading.hide();
-        });
+            $scope.auxiliary = [];
 
-        $scope.addItem = function (auxiliary,order) {
-            $cart.addAux(auxiliary);
-            $state.go('deliveryman.checkout');
-        };
+            $scope.auxiliary = $localStorage.getObject('auxiliary').items;
+
+            $scope.addItem = function (auxiliary) {
+                $cart.addAux(auxiliary);
+                $state.go('deliveryman.checkout');
+            };
     }]);

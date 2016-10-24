@@ -1,6 +1,6 @@
 angular.module('starter.services')
-    .factory('Sincronizar',['$cart','$localStorage','DeliverymanOrder','$ionicPopup','Product'
-            ,function ($cart,$localStorage,DeliverymanOrder,$ionicPopup,Product) {
+    .factory('Sincronizar',['$cart','$localStorage','DeliverymanOrder','$ionicPopup','Product','Auxiliary'
+            ,function ($cart,$localStorage,DeliverymanOrder,$ionicPopup,Product,Auxiliary) {
             return {
                     sincronizar: function () {
                             var read = [];
@@ -50,9 +50,9 @@ angular.module('starter.services')
                                             visita: visita,
                                             sinc_at: sinc
                                     },function (data) {
-                                            console.log('sincronizado',data);
+                                            console.log('sincronizado',data.meta.pagination.count);
                                             $localStorage.setObject('orders',{items:data.data});
-                                            $localStorage.set('qtdOrder',data.data.length);
+                                            $cart.setQtd(data.meta.pagination.count);
                                             $cart.clearClose();
 
                                             DeliverymanOrder.count({id:null,status:0},function (data) {
@@ -75,6 +75,9 @@ angular.module('starter.services')
                                             });
                                             Product.seguranca(function (data) {
                                                     $localStorage.setObject('produtos_seguranca',{items:data.data});
+                                            });
+                                            Auxiliary.query(function (data) {
+                                                $localStorage.setObject('auxiliary',{items:data.data});
                                             });
                                     },function (error) {
                                                     $ionicPopup.alert({

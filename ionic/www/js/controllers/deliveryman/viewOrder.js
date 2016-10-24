@@ -110,7 +110,8 @@ angular.module('starter.controllers')
                                     lat: lat,
                                     long:long,
                                     status: 1,
-                                    inic: Sincronizar.dataHojeSql()
+                                    inic: Sincronizar.dataHojeSql(),
+                                    data: Sincronizar.dataHoje()
                                 };
                                 $cart.addIni(item);
                                 $state.go('deliveryman.view_close', {id: $scope.order.id,index:$stateParams.index});
@@ -145,7 +146,8 @@ angular.module('starter.controllers')
                                     id:$stateParams.id,
                                     lat:lat,
                                     long:long,
-                                    status:3
+                                    status:3,
+                                    data: Sincronizar.dataHoje()
                                 };
                                 $cart.addDevol(item);
                                 $cart.removeOrders($stateParams.index);
