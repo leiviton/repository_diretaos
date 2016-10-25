@@ -7,7 +7,6 @@ angular.module('starter.controllers')
 
             $scope.auxiliary = $localStorage.getObject('auxiliary').items;
             
-
             $scope.addItem = function (auxiliary) {
                 $cart.addAux(auxiliary);
                 $state.go('deliveryman.checkout');
