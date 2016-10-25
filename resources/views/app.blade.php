@@ -40,7 +40,6 @@
 
 			<div class="collapse navbar-collapse" id="navbar">
 				<ul class="nav navbar-nav">
-					<li><a href="{{ url('/') }}">Home</a></li>
 					@if(Auth::user())
 						@if(Auth::user()->role == 'admin')
 							<li><a href="{{ route('admin.categories.index') }}"></a></li>
