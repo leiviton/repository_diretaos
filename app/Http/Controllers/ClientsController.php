@@ -37,10 +37,13 @@ class ClientsController extends Controller
     {
         $data = $request->all();
 
-        $this->clientService->create($data);
+        if($this->clientService->create($data)){
+            flash()->success('Salvo com sucesso!');
+        }else{
+            flash()->error('Não foi possivel salvar, tente novamente!');
+        }
 
         return redirect()->route('admin.clients.index');
-
     }
 
     public function edit($id)
@@ -55,7 +58,11 @@ class ClientsController extends Controller
     {
         $data = $request->all();
 
-        $this->clientService->update($data, $id);
+        if($this->clientService->update($data, $id)){
+            flash()->success('Salvo com sucesso!');
+        }else{
+            flash()->error('Não foi possivel salvar, tente novamente!');
+        }
 
         return redirect()->route('admin.clients.index');
     }

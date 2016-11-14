@@ -40,7 +40,12 @@ class OrdersController extends Controller
 
     public function update(Request $request, $id){
         $data = $request->all();
-        $this->repository->update($data,$id);
+
+        if( $this->repository->update($data,$id)){
+            flash()->success('Salvo com sucesso!');
+        }else{
+            flash()->error('Não foi possivel salvar, tente novamente!');
+        }
 
         return redirect()->route('admin.orders.index');
     }

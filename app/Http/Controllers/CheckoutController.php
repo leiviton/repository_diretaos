@@ -64,7 +64,11 @@ class CheckoutController extends Controller
         $data = $request->all();
         $clientId = $this->userRepository->find(Auth::user()->id)->client->id;
         $data['client_id'] = $clientId;
-        $this->orderService->create($data);
+        if($this->orderService->create($data)){
+            flash()->success('Salvo com sucesso!');
+        }else{
+            flash()->error('Não foi possivel salvar, tente novamente!');
+        }
 
         return redirect()->route('customer.order.index');
     }

@@ -30,8 +30,11 @@ class CupomsController extends Controller
     public function store(AdminCupomRequest $request)
     {
         $data = $request->all();
-
-        $this->repository->create($data);
+        if($this->repository->create($data)){
+            flash()->success('Salvo com sucesso!');
+        }else{
+            flash()->error('Não foi possivel salvar, tente novamente!');
+        }
 
         return redirect()->route('admin.cupoms.index');
 
@@ -49,7 +52,11 @@ class CupomsController extends Controller
     {
         $data = $request->all();
 
-        $this->repository->update($data, $id);
+        if( $this->repository->update($data, $id)){
+            flash()->success('Salvo com sucesso!');
+        }else{
+            flash()->error('Não foi possivel salvar, tente novamente!');
+        }
 
         return redirect()->route('admin.categories.index');
     }

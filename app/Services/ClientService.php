@@ -35,6 +35,8 @@ class ClientService
         $userId = $this->clientRepository->find($id, ['user_id'])->user_id;
 
         $this->userRepository->update($data['user'], $userId);
+
+        return true;
     }
 
     public function create(array $data){
@@ -43,5 +45,7 @@ class ClientService
 
         $data['user_id'] = $user->id;
         $this->clientRepository->create($data);
+
+        return true;
     }
 }

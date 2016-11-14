@@ -41,15 +41,16 @@ class ProductsController extends Controller
     {
         $data = $request->all();
 
-        $this->repository->create($data);
-
+        if(  $this->repository->create($data)){
+            flash()->success('Salvo com sucesso!');
+        }else{
+            flash()->error('Não foi possivel salvar, tente novamente!');
+        }
         return redirect()->route('admin.products.index');
-
     }
 
     public function edit($id)
     {
-
         $product = $this->repository->find($id);
 
         $categories = $this->categoryRepository->lists('name','id');
@@ -61,7 +62,12 @@ class ProductsController extends Controller
     {
         $data = $request->all();
 
-        $this->repository->update($data, $id);
+        if($this->repository->update($data, $id)){
+            flash()->success('Salvo com sucesso!');
+        }else{
+            flash()->error('Não foi possivel salvar, tente novamente!');
+        }
+
 
         return redirect()->route('admin.products.index');
     }

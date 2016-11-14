@@ -15,6 +15,10 @@ Route::get('/', function () {
     return view('auth.login');
 });
 
+Route::get('/dashboard', function () {
+    return view('home');
+});
+
 Route::group(['prefix'=>'admin','middleware'=>'auth.checkrole:admin','as'=>'admin.'],function () {
 
     //routes category
@@ -29,7 +33,6 @@ Route::group(['prefix'=>'admin','middleware'=>'auth.checkrole:admin','as'=>'admi
     Route::get('clients/edit/{id}', ['as' => 'clients.edit', 'uses' => 'ClientsController@edit']);
     Route::post('clients/update/{id}', ['as' => 'clients.update', 'uses' => 'ClientsController@update']);
     Route::post('clients/store', ['as' => 'clients.store', 'uses' => 'ClientsController@store']);
-
     //products
     Route::get('products', ['as' => 'products.index', 'uses' => 'ProductsController@index']);
     Route::get('products/create', ['as' => 'products.create', 'uses' => 'ProductsController@create']);

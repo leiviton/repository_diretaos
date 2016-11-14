@@ -1,61 +1,53 @@
 @extends('app')
 
 @section('content')
-<div class="container-fluid login">
-	<div class="row">
-		<div class="col-md-8 col-md-offset-2">
-			<div class="panel panel-primary">
-				<div class="panel-heading">Acesso Restrito</div>
-				<div class="panel-body">
-					@if (count($errors) > 0)
-						<div class="alert alert-danger">
-							<strong>Whoops!</strong> There were some problems with your input.<br><br>
-							<ul>
-								@foreach ($errors->all() as $error)
-									<li>{{ $error }}</li>
-								@endforeach
-							</ul>
-						</div>
-					@endif
+	<div class="full-page" data-image='../../assets/img/login.jpeg'>
+		<!--   you can change the color of the filter page using: data-color="blue | purple | green | orange | red | rose " -->
+		<div class="content">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-4 col-sm-6 col-md-offset-4 col-sm-offset-3">
+						<form class="login" method="POST" action="{{ url('/auth/login') }}">
+							{!! csrf_field() !!}
+							<div class="card card-login">
+								<div class="card-header text-center" data-background-color="blue">
+									<h4 class="card-title">Login</h4>
+								</div>
+								<div class="card-content">
+									<div class="input-group">
+                                            <span class="input-group-addon">
+                                                <i class="material-icons">face</i>
+                                            </span>
+										<div class="form-group label-floating is-empty">
+											<label class="control-label">Seu login</label>
+											<input type="text" class="form-control" name="email" value="{{ old('email') }}">
+											<span class="material-input"></span>
+										</div>
+									</div>
+									<div class="input-group">
+                                            <span class="input-group-addon">
+                                                <i class="material-icons">lock_outline</i>
+                                            </span>
+										<div class="form-group label-floating is-empty">
+											<label class="control-label">Password</label>
+											<input type="password" class="form-control" name="password">
+											<span class="material-input"></span>
+										</div>
+									</div>
 
-					<form class="form-horizontal" role="form" method="POST" action="{{ url('/auth/login') }}">
-						{!! csrf_field() !!}
+								</div>
+								<div class="footer text-center">
 
-						<div class="form-group">
-							<label class="col-md-4 control-label">E-Mail</label>
-							<div class="col-md-6">
-								<input type="email" class="form-control" name="email" value="{{ old('email') }}">
-							</div>
-						</div>
+									<button type="submit" class="btn btn-info">Entrar</button>
 
-						<div class="form-group">
-							<label class="col-md-4 control-label">Senha</label>
-							<div class="col-md-6">
-								<input type="password" class="form-control" name="password">
-							</div>
-						</div>
-
-						<div class="form-group">
-							<div class="col-md-6 col-md-offset-4">
-								<div class="checkbox">
-									<label>
-										<input type="checkbox" name="remember"> Lembrar-me?
-									</label>
+									<a class="btn btn-danger btn-simple" href="{{ url('/password/email') }}">Esqueceu senha?</a>
 								</div>
 							</div>
-						</div>
-
-						<div class="form-group">
-							<div class="col-md-6 col-md-offset-4">
-								<button type="submit" class="btn btn-primary">Entrar</button>
-
-								<a class="btn btn-link" href="{{ url('/password/email') }}">Esqueceu senha?</a>
-							</div>
-						</div>
-					</form>
+						</form>
+					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-</div>
+
 @endsection
