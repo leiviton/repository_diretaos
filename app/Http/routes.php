@@ -19,6 +19,7 @@ Route::get('/dashboard', function () {
     return view('home');
 });
 
+Route::get('home',['as'=>'home.index','uses'=>'HomeController@index']);
 Route::group(['prefix'=>'admin','middleware'=>'auth.checkrole:admin','as'=>'admin.'],function () {
 
     //routes category

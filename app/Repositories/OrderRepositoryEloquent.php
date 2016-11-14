@@ -71,7 +71,19 @@ class OrderRepositoryEloquent extends BaseRepository implements OrderRepository
             ->where('status','Executada')->get()->count();
     }
 
+    public function orders_abertas(){
+        return (int) $this->model->whereRaw('(status = ? or status = ?)',['Pendente','Iniciada'])->get()->count();
+    }
 
+    public function orders_dia(){
+        return (int) $this->model->where('updated_at', '>=', Carbon::now()->startOfDay())
+            ->whereRaw('(status = ? or status = ?)',['Pendente','Iniciada'])->get()->count();
+    }
+
+    public function orders_dia_fechadas(){
+        return (int) $this->model->where('updated_at', '>=', Carbon::now()->startOfDay())
+            ->where('status','Executada')->get()->count();
+    }
     /**
      * Specify Model class name
      *

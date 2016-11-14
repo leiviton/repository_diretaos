@@ -30,6 +30,10 @@ class UserRepositoryEloquent extends BaseRepository implements UserRepository
        return $this->model->where(['role'=>'deliveryman'])->lists('name','id');
     }
 
+    public function countUsers(){
+        return $this->model->where(['role'=>'deliveryman'])->get()->count();
+    }
+
     /**
      * Boot up the repository, pushing criteria
      */
