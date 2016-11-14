@@ -18,17 +18,18 @@
                                 <div class="col-md-5">
                                     <div class="form-group label-floating">
                                         <label class="control-label">Status</label>
-                                        {!! Form::select('status',$list_status,null,['class'=>'form-control']) !!}
+                                        {!! Form::select('status',$list_status,null,['class'=>'form-control','id'=>'status']) !!}
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <div class="form-group label-floating">
                                         <label class="control-label">Técnico</label>
-                                        {!! Form::select('user_deliveryman_id',$deliveryman,null,['class'=>'form-control']) !!}
+                                        {!! Form::select('user_deliveryman_id',$deliveryman,null,['class'=>'form-control','id'=>'user_deliveryman_id']) !!}
                                     </div>
                                 </div>
+                                <div class="clearfix"></div>
                                 <div class="form-group">
-                                    {!! Form::submit('Salvar',['class'=>'btn btn-primary pull-right']) !!}
+                                    {!! Form::submit('Salvar',['class'=>'btn btn-primary pull-left','id'=>'submit']) !!}
                                 </div>
                             </div>
                             {!! Form::close() !!}

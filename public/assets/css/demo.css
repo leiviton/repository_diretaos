@@ -13,7 +13,10 @@
     }
 }
 
-
+#category{
+    margin-left: 15px;
+    color: #fff;
+}
 
 .login{
     margin-top: 100px !important;

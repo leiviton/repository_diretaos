@@ -42,7 +42,7 @@
 				<ul class="nav navbar-nav">
 					@if(Auth::user())
 						@if(Auth::user()->role == 'admin')
-							<li><a href="{{ route('admin.categories.index') }}"></a></li>
+							<li><a href="{{ route('admin.categories.index') }}">Categorias</a></li>
 							<li><a href="{{ route('admin.products.index') }}">Produtos</a></li>
 							<li><a href="{{ route('admin.clients.index') }}">Clientes</a></li>
 							<li><a href="{{ route('admin.orders.index') }}">Ordens</a></li>

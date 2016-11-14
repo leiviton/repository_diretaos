@@ -1,19 +1,19 @@
-<div class="form-group col-md-3">
-    {!! Form::label('Category_id','Categoria:') !!}
+<div class="form-group label-floating col-md-5">
+    <label class="control-label">Categoria</label>
     {!! Form::select('category_id',$categories,null,['class'=>'form-control']) !!}
 </div>
 <div class="clearfix"></div>
-<div class="form-group col-md-4">
-    {!! Form::label('Name','Nome:') !!}
+<div class="form-group label-floating col-md-4">
+    <label class="control-label">Produto</label>
     {!! Form::text('name',null,['class'=>'form-control']) !!}
 </div>
 <div class="clearfix"></div>
-<div class="form-group col-md-6">
-    {!! Form::label('Description','Descrição:') !!}
+<div class="form-group label-floating col-md-6">
+    <label class="control-label">Descrição</label>
     {!! Form::textarea('description',null,['class'=>'form-control']) !!}
 </div>
 <div class="clearfix"></div>
-<div class="form-group col-md-2">
-    {!! Form::label('Price','Descrição:') !!}
+<div class="form-group label-floating col-md-2">
+    <label class="control-label">Preço</label>
     {!! Form::text  ('price',null,['class'=>'form-control']) !!}
 </div>

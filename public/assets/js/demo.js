@@ -10,6 +10,21 @@ $().ready(function(){
 
 });
 
+$(document).ready(function() {
+    $('#submit').on('submit', function (e) {
+        e.preventDefault();
+        var status = $('#status').val();
+        var user_deliveryman_id = $('#user_deliveryman_id').val();
+        var host = 'http://192.168.137.201:8000/';
+        $.ajax({
+            type: "PATH",
+            url: host + '/admin/orders/update/',
+            data: {status: status, user_deliveryman_id: user_deliveryman_id},
+            success: demo.showNotification('top','left','success','Salvo com sucesso!!!')
+        });
+    });
+});
+
 type = ['','info','success','warning','danger'];
 
 
