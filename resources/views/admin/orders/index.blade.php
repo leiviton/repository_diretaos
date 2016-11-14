@@ -44,12 +44,14 @@
                                         @endif
                                     </td>
                                     <td>
-                                        @if($order->status == 0)
+                                        @if($order->status == 'Pendente')
                                             <span class="label label-danger">Pendente</span>
-                                        @elseif($order->status == 1)
+                                        @elseif($order->status == 'Iniciada')
                                             <span class="label label-warning">Iniada</span>
-                                        @else
-                                            <span class="label label-success">Fechada</span>
+                                        @elseif($order->status == 'Executada')
+                                            <span class="label label-success">Executada</span>
+                                        @elseif($order->status == 'Aguardando PCP')
+                                            <span class="label label-info">Aguardando PCP</span>
                                         @endif
                                     </td>
                                     <td class="text-center">

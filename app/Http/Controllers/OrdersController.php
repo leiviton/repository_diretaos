@@ -32,7 +32,7 @@ class OrdersController extends Controller
     }
 
     public function edit($id, UserRepository $userRepository){
-        $list_status = [0=>'Pendente',1=>'Iniciada',2=>'Finalizada'];
+        $list_status = ['Pendente'=>'Pendente','Iniciada'=>'Iniciada','Executada'=>'Executada','Aguardando PCP'=>'Aguardando PCP'];
         $order = $this->repository->find($id);
         $deliveryman = $userRepository->getDeliverymen();
         return view('admin.orders.edit',compact('order','list_status','deliveryman'));
