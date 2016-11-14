@@ -15,9 +15,7 @@ Route::get('/', function () {
     return view('auth.login');
 });
 
-Route::get('/dashboard', function () {
-    return view('home');
-});
+Route::get('/dashboard',['as'=>'home.index','uses'=>'HomeController@index']);
 
 Route::get('home',['as'=>'home.index','uses'=>'HomeController@index']);
 Route::group(['prefix'=>'admin','middleware'=>'auth.checkrole:admin','as'=>'admin.'],function () {
