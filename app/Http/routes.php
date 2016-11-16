@@ -11,7 +11,6 @@
 |
 */
 
-use JasperPHP\JasperPHP;
 
 Route::get('reports/xml', 'ReportsController@jsonToPdf');
 

@@ -77,8 +77,8 @@
                     </div>
                 </li>
             @elseif(Auth::user()->role == 'client')
-                <li class="active-pro">
-                    <a href="upgrade.html">
+                <li>
+                    <a href="{{ route('customer.order.index') }}">
                         <i class="material-icons">unarchive</i>
                         <p>Minhas orderns</p>
                     </a>
