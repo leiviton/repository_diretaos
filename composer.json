@@ -16,7 +16,8 @@
         "barryvdh/laravel-cors": "0.7.x",
         "pusher/pusher-php-server": "~2.0",
         "dmitrovskiy/ionic-push-php": "^1.0.0",
-        "eduardokum/laravel-boleto": "^0.4.0"
+        "eduardokum/laravel-boleto": "^0.4.0",
+        "geekcom/phpjasper": "^1.6"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

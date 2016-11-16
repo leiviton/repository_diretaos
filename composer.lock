@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "761057eed4565e0bbfb9456c596156c8",
-    "content-hash": "02bd38499e616bdd84148657e2388aa7",
+    "hash": "5ba1a3d78c5059731533a00915f1639b",
+    "content-hash": "2c013f290b20953c620f05d7e125721a",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -442,6 +442,61 @@
                 "laravel-boleto"
             ],
             "time": "2016-10-26 11:05:05"
+        },
+        {
+            "name": "geekcom/phpjasper",
+            "version": "v1.6",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/geekcom/phpjasper.git",
+                "reference": "85ec7d4e54fea1ae700115f2376a236ce14b3169"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/geekcom/phpjasper/zipball/85ec7d4e54fea1ae700115f2376a236ce14b3169",
+                "reference": "85ec7d4e54fea1ae700115f2376a236ce14b3169",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "JasperPHP": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Leandro Bitencourt",
+                    "email": "leandrocintrabitencourt@gmail.com",
+                    "homepage": "http://www.leandrobitencourt.zz.mu",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Daniel Rodrigues",
+                    "email": "danielrodrigues-ti@hotmail.com",
+                    "homepage": "https://olamundophp.wordpress.com/",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Create Reports in PHP/Laravel with JasperReports",
+            "homepage": "https://github.com/geekcom/phpjasper",
+            "keywords": [
+                "jasper",
+                "jasperreports",
+                "java",
+                "json",
+                "pdf",
+                "php",
+                "reports",
+                "xml"
+            ],
+            "time": "2016-10-28 02:15:58"
         },
         {
             "name": "guzzlehttp/guzzle",

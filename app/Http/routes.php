@@ -11,6 +11,10 @@
 |
 */
 
+use JasperPHP\JasperPHP;
+
+Route::get('reports/xml', 'ReportsController@jsonToPdf');
+
 Route::get('/', function () {
     return view('auth.login');
 });
