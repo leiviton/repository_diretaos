@@ -4,6 +4,7 @@
 	<div class="content">
 		<div class="container-fluid">
 			<div class="row">
+				@if(Auth::user()->role == 'admin')
 				<div class="col-lg-3 col-md-6 col-sm-6">
 					<div class="card card-stats">
 						<div class="card-header" data-background-color="orange">
@@ -52,7 +53,57 @@
 					</div>
 				</div>
 			</div>
+			@endif
+			@if(Auth::user()->role == 'client')
+				<div class="col-lg-3 col-md-6 col-sm-6">
+					<div class="card card-stats">
+						<div class="card-header" data-background-color="orange">
+							<i class="material-icons">content_copy</i>
+						</div>
+						<div class="card-content">
+							<p class="category">Solicitações</p>
+							<h3 class="title">{{$abertas}}</h3>
+						</div>
 
+					</div>
+				</div>
+				<div class="col-lg-3 col-md-6 col-sm-6">
+					<div class="card card-stats">
+						<div class="card-header" data-background-color="green">
+							<i class="material-icons">store</i>
+						</div>
+						<div class="card-content">
+							<p class="category">Faturas abertas</p>
+							<h3 class="title">{{$dia}}</h3>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-3 col-md-6 col-sm-6">
+					<div class="card card-stats">
+						<div class="card-header" data-background-color="red">
+							<i class="material-icons">info_outline</i>
+						</div>
+						<div class="card-content">
+							<p class="category">Planos</p>
+							<h3 class="title">{{$fechadas}}</h3>
+						</div>
+
+					</div>
+				</div>
+
+				<div class="col-lg-3 col-md-6 col-sm-6">
+					<div class="card card-stats">
+						<div class="card-header" data-background-color="blue">
+							<i class="material-icons">face</i>
+						</div>
+						<div class="card-content">
+							<p class="category">Usuarios</p>
+							<h3 class="title">{{$users}}</h3>
+						</div>
+					</div>
+				</div>
+		</div>
+		@endif
 			<div class="row">
 				<div class="col-md-4">
 					<div class="card">

@@ -10,6 +10,8 @@ class Action extends Model implements Transformable
 {
     use TransformableTrait;
 
+    protected $table = 'actions';
+
     protected $fillable = [
         'deliveryman_id',
         'order_id',

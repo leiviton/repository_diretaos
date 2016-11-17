@@ -83,6 +83,12 @@
                         <p>Minhas orderns</p>
                     </a>
                 </li>
+                        <li>
+                            <a href="{{ route('customer.order.index') }}">
+                                <i class="material-icons">unarchive</i>
+                                <p>Minhas orderns</p>
+                            </a>
+                        </li>
         @endif
     @endif
             </ul>
