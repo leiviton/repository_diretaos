@@ -11,6 +11,8 @@ angular.module('starter.controllers')
             $scope.validation = 0;
             var indice = $localStorage.get('close_index');
 
+            $scope.servico = $localStorage.getObject('servicos');
+
             var aux = $cart.getAux();
             if(aux.auxiliar.length == 0 || aux.auxiliar==null){
                 aux.auxiliar = null;
@@ -89,6 +91,9 @@ angular.module('starter.controllers')
                                         item.product_id = item.id;
                                     });
 
+                                    var  s = {servicos: $scope.servico.items};
+
+
                                     var  ax = {auxiliary: angular.copy($scope.auxiliary)};
                                     console.log('o',o);
                                     angular.forEach(ax.auxiliary,function (item) {
@@ -104,7 +109,8 @@ angular.module('starter.controllers')
                                         auxiliary:ax.auxiliary,
                                         status: 2,
                                         close: Sincronizar.dataHojeSql(),
-                                        data: Sincronizar.dataHoje()
+                                        data: Sincronizar.dataHoje(),
+                                        servicos: s.servicos
                                     };
 
                                     $cart.addClose(or);

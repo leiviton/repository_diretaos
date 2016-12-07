@@ -1,3 +1,4 @@
+
 angular.module('starter.services')
     .service('$cart',['$localStorage',function ($localStorage) {
         var key = 'cart', cartAux = $localStorage.getObject(key);
@@ -18,6 +19,11 @@ angular.module('starter.services')
         var key15 = 'orders_devolvidas', odev = $localStorage.getObject(key15);
         var key16 = 'visitas',v = $localStorage.getObject(key16);
         var key17 = 'auxiliary',a = $localStorage.getObject(key17);
+        var key18 = 'servicos', ser = $localStorage.getObject(key18);
+
+        if(!ser){
+            initServicos();
+        }
         if(!v){
             initVisita();
         }
@@ -76,6 +82,7 @@ angular.module('starter.services')
         this.clear = function () {
             initCart();
             initOc();
+            initServicos();
         };
         this.clearOrder = function () {
             initOrders();
@@ -130,8 +137,8 @@ angular.module('starter.services')
         this.getItem = function (i) {
             return this.get().items[i];
         };
-        this.getQtd = function () {
-            return $localStorage.get(key11);
+        this.getServicos = function () {
+            return $localStorage.get(key18);
         };
         this.addItem = function (item) {
             var cart = this.get(), itemAux, exists = false;
@@ -180,6 +187,12 @@ angular.module('starter.services')
                 cart.items.push(item);
             }
             $localStorage.setObject(key7,cart);
+        };
+        //servicos
+        this.addServicos = function (item) {
+            var cart;
+            cart = item;
+            $localStorage.setObject(key18,cart);
         };
         //iniciadas
         this.addIni = function (item) {
@@ -408,6 +421,12 @@ angular.module('starter.services')
 
         function initAuxiliary(){
             $localStorage.setObject(key17, {
+                items:[]
+            });
+        }
+
+        function initServicos() {
+            $localStorage.setObject(key18, {
                 items:[]
             });
         }

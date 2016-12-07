@@ -13,11 +13,11 @@ var db;
 
 angular.module('starter', [
     'ionic','ionic-toast','ionic.service.core','starter.controllers','starter.services','starter.filters','starter.run',
-    'angular-oauth2','ngResource','ngCordova','pusher-angular','permission','http-auth-interceptor','chart.js'
+    'angular-oauth2','ngResource','ngCordova','pusher-angular','permission','http-auth-interceptor','chart.js', 'ionic-pullup'
 ])
     .constant('appConfig',{
         //baseUrl:'http://leiviton.com.br/direta_dev/public',
-        baseUrl:'http://direta.com.br/os/public',
+        baseUrl:'http://186.233.72.22',
         //baseUrl:'http://192.168.137.201:8000',
         pusherKey: '9da90fc97b93c4ce952a',
         redirectAfterLogin:{
@@ -243,8 +243,14 @@ angular.module('starter', [
                 controller: 'DeliverymanCheckoutCtrl'
             })
 
-            //produtos
+            .state('deliveryman.servicos',{
+                cache:false,
+                url:'/servicos/:id/:index',
+                templateUrl: 'templates/deliveryman/checkout/checkout_servico.html',
+                controller: 'DeliverymanCheckoutServicoCtrl'
+            })
 
+            //produtos
             .state('deliveryman.view_product_fibra',{
                 url:'/view_product_fibra',
                 templateUrl: 'templates/deliveryman/product/view_product_fibra.html',
@@ -306,7 +312,7 @@ angular.module('starter', [
                 controller: 'DeliverymanSummaryCtrl'
             });
 
-        //$urlRouterProvider.otherwise("/login");
+        $urlRouterProvider.otherwise("/login");
         $provide.decorator('OAuthToken',['$localStorage','$delegate',function ($localStorage,$delegate) {
             Object.defineProperties($delegate,{
                 setToken:{

@@ -37,50 +37,40 @@ angular.module('starter.controllers')
         //     $ionicLoading.hide();
         // });
 
-        ionicToast.show('Ordem '+$scope.order.number_os_sise+' inicializada com sucesso', 'bottom', false, 3500);
-        $scope.openProduct= function (o) {
-            var order = $localStorage.getObject('order_close');
-            var indice = $localStorage.get('close_index');
-            if (order.length!=0){
-                $cart.clear();
-            }
+        ionicToast.show('Ordem '+$scope.order.number_os_sise+' inicializada com sucesso', 'bottom', false, 3000);
 
-            if(indice != null){
-                $cart.clearIndex();
-            }
+            $scope.openServico = function (o,index) {
+                var i = index;
+                var order = $localStorage.getObject('order_close');
+                var indice = $localStorage.get('close_index');
+                if (order.length!=0){
+                    $cart.clear();
+                }
+                if(indice != null){
+                    $cart.clearIndex();
+                }
+                $localStorage.setObject('order_close',o);
+                $localStorage.set('close_index',$stateParams.index);
+
+                console.log('indicio',$stateParams.index);
+                $state.go('deliveryman.servicos',{id: o.id,index: $stateParams.index});
+            };
+
+            $scope.openProduct= function (o) {
+                var order = $localStorage.getObject('order_close');
+                var indice = $localStorage.get('close_index');
+                if (order.length!=0){
+                    $cart.clear();
+                }
+
+                if(indice != null){
+                    $cart.clearIndex();
+                }
 
 
-            $localStorage.setObject('order_close',o);
-            $localStorage.set('close_index',$stateParams.index);
-
-            switch (o.type) {
-                case 1:
-                    $state.go('deliveryman.checkout_fibra',{id: o.id,index: $stateParams.index});
-                    break;
-                case 2:
-                    $state.go('deliveryman.checkout_radio',{id: o.id,index: $stateParams.index});
-                    break;
-                case 3:
-                    $state.go('deliveryman.checkout_seguranca',{id: o.id,index: $stateParams.index});
-                    break;
-                case 4:
-                    $state.go('deliveryman.checkout_fibra',{id: o.id,index: $stateParams.index});
-                    break;
-                case 5:
-                    $state.go('deliveryman.checkout_radio',{id: o.id,index: $stateParams.index});
-                    break;
-                case 6:
-                    $state.go('deliveryman.checkout_radio',{id: o.id,index: $stateParams.index});
-                    break;
-                default:
-                    $localStorage.setObject('order_close',null);
-                    $ionicPopup.alert({
-                        title: 'Informação',
-                        template: 'Ocorreu um erro, tente novamente'
-                    });
-            }
-
-        };
+                $localStorage.setObject('order_close',o);
+                $localStorage.set('close_index',$stateParams.index);
+            };
         $scope.goToDeliveryClose = function (o) {
             $ionicPopup.confirm({
                 title: 'Atenção',

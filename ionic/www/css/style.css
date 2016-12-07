@@ -81,6 +81,13 @@
 
 }
 
+.servicos{
+    font-size: 12px !important;
+    font-weight: bold;
+    padding: -2px !important;
+    margin-top: -5px !important;
+}
+
 @media (max-width: 360px) {
     .aux {
         margin-left: 230px !important;

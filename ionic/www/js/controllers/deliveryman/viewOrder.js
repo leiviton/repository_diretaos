@@ -85,7 +85,7 @@ angular.module('starter.controllers')
             });
         };
 
-        $scope.goToDelivery = function () {
+        $scope.goToDelivery = function (o,i) {
 
                 $ionicPopup.confirm({
                     title: 'Atenção',
@@ -114,7 +114,7 @@ angular.module('starter.controllers')
                                     data: Sincronizar.dataHoje()
                                 };
                                 $cart.addIni(item);
-                                $state.go('deliveryman.view_close', {id: $scope.order.id,index:$stateParams.index});
+                                $state.go('deliveryman.view_close', {id: $scope.order.id,index:i});
                             }, function(err) {
                                 // error
                                 $ionicLoading.hide();

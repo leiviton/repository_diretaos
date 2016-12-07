@@ -43,8 +43,6 @@ angular.module('starter.controllers')
                 });
             };
             $scope.openOrderDetail = function (order,index) {
-                console.log(order);
-                console.log(index)
                 var i = index;
                 if (order.status == 'Iniciada') {
                     $state.go('deliveryman.view_close', {id: order.id,index: i});
