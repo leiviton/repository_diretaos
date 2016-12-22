@@ -54,5 +54,9 @@ class RepositoryServiceProvider extends ServiceProvider
             'CodeDelivery\Repositories\NotificationRepository',
             'CodeDelivery\Repositories\NotificationRepositoryEloquent'
         );
+        $this->app->bind(
+            'CodeDelivery\Repositories\VeiculoRepository',
+            'CodeDelivery\Repositories\VeiculoRepositoryEloquent'
+        );
     }
 }

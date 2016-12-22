@@ -1,22 +1,23 @@
 <ion-view>
-    <ion-nav-title>Ordem:  {{order.number_os_sise}}</ion-nav-title>
+    <ion-nav-title>Ordem:  {{order.ordem}}</ion-nav-title>
     <div class="bar bar-stable bar-subheader">
-        <h2 class="title">{{order.name}}</h2>
+        <h2 class="title">{{order.cliente}}</h2>
+        <button class="button button-clear ex" ng-click="remove(order)" ng-if="auxiliary !=null && auxiliary !=''"><img src="img/excluir.png" height="25" width="25" /></button>
     </div>
     <ion-content class="padding has-subheader">
         <ion-list>
            <ion-item class="item-text-wrap">
                <h2 class="row">
                    <div class="col data">
-                       Data:{{order.created_at.date|limitTo: 10 | date: '   dd/MM/yyyy'}}
+                       Data:{{order.data |limitTo: 10 | date: '   dd/MM/yyyy'}}
                    </div>
                    <div class="col text-right data">
-                       <i class="energized ion ion-alert-circled text-right" ng-if="order.priority=='Alta'"></i>
-                       <i class="assertive ion ion-alert-circled text-right" ng-if="order.priority=='Critica'"></i>
+                       <i class="energized ion ion-alert-circled text-right" ng-if="order.prioridade=='Alta'"></i>
+                       <i class="assertive ion ion-alert-circled text-right" ng-if="order.prioridade=='Critica'"></i>
                    </div>
                </h2>
                <div class="conteudo">
-                   <h2 class="t"> {{order.address}},{{order.address_number}} - {{order.city}}</h2>
+                   <h2 class="t"> {{order.endereco}}, {{order.bairro}} - {{order.cidade}}</h2>
                    <div class="row">
                        <h2 class="col t text-left plan">Plano: {{order.plano}}</h2>
                        <h2 class="col t text-right idplan">ID Plano: {{order.id_plano}}</h2>
@@ -25,22 +26,36 @@
                        <h2 class="col text-left tel" ng-if="order.phone1 != null"><i class="ion ion-ios-telephone"></i> <a class="nounderline" ng-href="tel: {{order.phone1}}"> {{order.phone1}} </a> </h2>
                        <h2 class="col text-right tel2" ng-if="order.phone2 != null"><i class="ion ion-ios-telephone"></i> <a class="nounderline" ng-href="tel: {{order.phone2}}"> {{order.phone2}} </a> </h2>
                    </div>
-                   <h2 class="t sol"><i class="ion ion-wrench"></i> Solicitação: {{order.defect}}</h2>
+                   <h2 class="t sol"><i class="ion ion-wrench"></i> Solicitação: {{order.problema}}</h2>
                </div>
            </ion-item>
-           <ion-item>
+           <ion-item class="item2">
+               <h2>Veiculo:</h2>
+               <div ng-repeat="v in veiculo.items">
+                   <h2>{{v.V_NOME}}</h2>
+                   <h2>{{v.V_PLACA}}</h2>
+               </div>
+               <h2 ng-if="veiculo.items == null || veiculo.items == ''">Escolha um veículo</h2>
+               <button class="button button-clear vei" ng-click="openCart(order)"><img src="img/carro.png " height="50" width="50"/></button>
+
+           </ion-item>
+           <ion-item class="item3">
+
                   <h2 class="equipe1" ng-if="auxiliary !=null && auxiliary !=''">Sua equipe:<br>
                   <h2 class="equipe"  ng-if="auxiliary !=null && auxiliary !=''">{{user.name}}</h2>
                   </h2>
-                   <h2 class="equipe" ng-repeat="a in auxiliary">
+
+               <h2 class="equipe" ng-repeat="a in auxiliary">
                        {{a.name}}
                    </h2>
-                   <button class="button button-clear aux" ng-click="openListAuxiliares()" ng-if="auxiliary !=null && auxiliary !=''" id="aux" ><i class="ion-android-add icone"></i></button>
+
+
+               <button class="button button-clear aux" ng-click="openListAuxiliares(order)" ng-if="auxiliary !=null && auxiliary !=''" id="aux" ><img src="img/equipe.png" height="40" width="40" /></button>
 
                <h2 class="equipe1"  ng-if="auxiliary==null">Sua equipe:
                    <h2 class="equipe" ng-if="auxiliary==null">{{user.name}}</h2>
                </h2>
-                   <button class="button button-clear aux" ng-click="openListAuxiliares()"  ng-if="auxiliary == null"><i class="ion-android-add icone"></i></button>
+                   <button class="button button-clear aux2" ng-click="openListAuxiliares(order)"  ng-if="auxiliary == null"><img src="img/equipe.png" height="40" width="40" /></button>
            </ion-item>
             <form name="formClose" class="formClose">
                 <label class="item item-input item-floating-label">
@@ -48,10 +63,7 @@
                     <input type="text" placeholder="Anotações Técnicas:" ng-model="order.service" ng-required="true" ng-minlength="10">
                 </label>
             </form>
-            <button type="button" class="button button-balanced button-full" ng-if="order.type>=4" ng-disabled="formClose.$invalid" ng-click="goToDeliveryClose(order)">
-                Fechar Ordem
-            </button>
-            <button type="button" class="button button-calm button-full"  ng-disabled="formClose.$invalid" ng-click="openServico(order)">
+            <button type="button" class="button button-calm button-full"  ng-disabled="formClose.$invalid || veiculo.items == null || veiculo.items == ''" ng-click="openServico(order)">
                 Próximo
             </button>
         </ion-list>

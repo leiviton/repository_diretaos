@@ -9,39 +9,6 @@ angular.module('starter.controllers')
                template: 'Carregando...'
             });
 
-            $scope.giveBack = function (o) {
-                $ionicPopup.confirm({
-                    title: 'Atenção',
-                    template: 'Deseja devolver esta Ordem?'
-                }).then(function(res) {
-                    if(res) {
-                        var posOptions = {timeout: 30000, enableHighAccuracy: false, maximumAge: 0};
-
-                        $cordovaGeolocation
-                            .getCurrentPosition(posOptions)
-                            .then(function (position) {
-                                var lat = position.coords.latitude;
-                                var long = position.coords.longitude;
-
-                                console.log(lat,long);
-
-                                DeliverymanOrder.updateStatus({id: o.id}, {
-                                    status: 3,
-                                    lat: lat,
-                                    long: long
-                                },function (data) {
-                                    console.log(data);
-                                    $ionicLoading.hide();
-                                });
-                            }, function(err) {
-                                // error
-                                $ionicLoading.hide();
-                            });
-                    } else {
-                        $ionicLoading.hide();
-                    }
-                });
-            };
             $scope.openOrderDetail = function (order,index) {
                 var i = index;
                 if (order.status == 'Iniciada') {
@@ -64,7 +31,6 @@ angular.module('starter.controllers')
                         }
                     });
                 }
-
                 $ionicLoading.hide();
             }
 

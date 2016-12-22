@@ -13,10 +13,10 @@ angular.module('starter.services')
             },
             login: function (o) {
 
-                    $ionicLoading.show({
-                        template: 'Sincronizando...',
-                        duration:4000
-                    });
+                var message = 'Sincronizando ';
+                $ionicLoading.show({
+                    template: ' <ion-spinner></ion-spinner> <br> '+ message
+                });
                     var promise = OAuth.getAccessToken(o);
                     promise
                         .then(function (data) {

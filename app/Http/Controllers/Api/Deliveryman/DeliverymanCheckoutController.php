@@ -66,6 +66,8 @@ class DeliverymanCheckoutController extends Controller
         $ordevol = $request->get('ordevol');
         $visita = $request->get('visita');
         $sinc_at = $request->get('sinc_at');
+        $pontuacao = $request->get('servicos');
+        $veiculo = $request->get('veiculo');
 
         $id_user = Authorizer::getResourceOwnerId();
         if($read && $read<>null){
@@ -115,9 +117,11 @@ class DeliverymanCheckoutController extends Controller
         if($orders && $orders <> null){
             foreach ($orders as $o){
                 $o['inic']=null;
-                $this->updateStatus($o,$sinc_at);
+                $o['status'] = 2;
+                $this->updateStatus($o,$sinc_at,$veiculo,$pontuacao);
             }
         }
+
         return $this->index();
     }
 
@@ -128,7 +132,7 @@ class DeliverymanCheckoutController extends Controller
             ->with(['items'])
             ->scopeQuery(function ($query)use($id){
                 return $query->where('user_deliveryman_id','=',$id)
-                    ->whereRaw('(status = ? or status = ?)',['Pendente','Iniciada'])->orderBy('priority','desc')->orderBy('created_at','asc');
+                    ->whereRaw('(status = ? or status = ?)',['Pendente','Iniciada'])->orderBy('prioridade','desc')->orderBy('created_at','asc');
             })->paginate();
 
         return $orders;
@@ -142,7 +146,7 @@ class DeliverymanCheckoutController extends Controller
             ->getByIdAndDeliveryman($id,$idDeliveryman);
     }
 
-    public function updateStatus($order,$sinc){
+    public function updateStatus($order,$sinc,$veiculo=null,$pontuacao=null){
         $idDeliveryman = Authorizer::getResourceOwnerId();
         $auxiliarys = $order['auxiliary'];
 
@@ -165,7 +169,9 @@ class DeliverymanCheckoutController extends Controller
             $sinc,
             $order['inic'],
             $order['close'],
-            $order['data']
+            $order['data'],
+            $veiculo,
+            $pontuacao
         );
 
 

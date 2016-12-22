@@ -45,7 +45,7 @@ class OrderRepositoryEloquent extends BaseRepository implements OrderRepository
 
         return (int) $this->model
             ->where('user_deliveryman_id',$id)
-            ->whereRaw('(status = ? or status = ?) and priority = ?',['Pendente','Iniciada','Critica'])
+            ->whereRaw('(status = ? or status = ?) and prioridade = ?',['Pendente','Iniciada','Critica'])
             ->get()->count();
     }
 
@@ -53,7 +53,7 @@ class OrderRepositoryEloquent extends BaseRepository implements OrderRepository
 
         return (int) $this->model
             ->where('user_deliveryman_id',$id)
-            ->whereRaw('(status = ? or status = ?) and priority =?',['Pendente','Iniciada','Alta'])
+            ->whereRaw('(status = ? or status = ?) and prioridade =?',['Pendente','Iniciada','Alta'])
             ->get()->count();
 
     }

@@ -9,6 +9,8 @@ angular.module('starter.controllers')
                 $cart.clear();
                 $cart.clearOrder();
                 $cart.clearClose();
+                $cart.clearLogin();
+
                 OAuthToken.removeToken();
                 $ionicHistory.clearCache();
                 $ionicHistory.clearHistory();
@@ -19,6 +21,6 @@ angular.module('starter.controllers')
 
                 ionicToast.show('Obrigado por utilizar nosso sistema', 'bottom', false, 3500);
 
-                $state.go('login');
+                $state.go('welcome');
             }
     }]);

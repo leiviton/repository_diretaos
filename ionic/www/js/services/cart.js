@@ -20,6 +20,135 @@ angular.module('starter.services')
         var key16 = 'visitas',v = $localStorage.getObject(key16);
         var key17 = 'auxiliary',a = $localStorage.getObject(key17);
         var key18 = 'servicos', ser = $localStorage.getObject(key18);
+        var key19 = 'veiculos', veiculos = $localStorage.getObject(key19);
+        var key20 = 'veiculo_order', veiculo = $localStorage.getObject(key20);
+        var key21 = 'var_servico', var_servico = $localStorage.get(key21);
+        var key22 = 'S_ALA',S_ALA = $localStorage.getObject(key22);
+        var key23 = 'S_SEN',S_SEN = $localStorage.getObject(key23);
+        var key24 = 'S_MON',S_MON = $localStorage.getObject(key24);
+        var key25 = 'S_BAT',S_BAT = $localStorage.getObject(key25);
+        var key26 = 'S_BATS',S_BATS = $localStorage.getObject(key26);
+        var key27 = 'S_SIR',S_SIR = $localStorage.getObject(key27);
+        var key28 = 'S_MOD',S_MOD = $localStorage.getObject(key28);
+        var key29 = 'S_DISP',S_DISP = $localStorage.getObject(key29);
+        var key30 = 'S_SENHA',S_SENHA = $localStorage.getObject(key30);
+        var key31 = 'S_ENE',S_ENE = $localStorage.getObject(key31);
+        var key32 = 'S_CABO',S_CABO = $localStorage.getObject(key32);
+        var key33 = 'S_OUTA',S_OUTA = $localStorage.getObject(key33);
+        var key34 = 'S_CAM',S_CAM = $localStorage.getObject(key34);
+        var key35 = 'S_CAMV',S_CAMV = $localStorage.getObject(key35);
+        var key36 = 'S_GRAV',S_GRAV = $localStorage.getObject(key36);
+        var key37 = 'S_ACE',S_ACE = $localStorage.getObject(key37);
+        var key38 = 'S_STAND',S_STAND = $localStorage.getObject(key38);
+        var key39 = 'S_CERCA',S_CERCA = $localStorage.getObject(key39);
+        var key40 = 'S_HASTE',S_HASTE = $localStorage.getObject(key40);
+        var key41 = 'S_MOLA',S_MOLA = $localStorage.getObject(key41);
+        var key42 = 'S_FIO',S_FIO = $localStorage.getObject(key42);
+        var key43 = 'S_RADIO',S_RADIO = $localStorage.getObject(key43);
+        var key44 = 'S_RADIOO',S_RADIOO = $localStorage.getObject(key44);
+        var key45 = 'S_FIBRA',S_FIBRA = $localStorage.getObject(key45);
+        var key46 = 'S_FIBRAO',S_FIBRAO = $localStorage.getObject(key46);
+        var key47 = 'S_COM',S_COM = $localStorage.getObject(key47);
+
+
+        if(!S_ALA){
+            initS_ALA();
+        }
+        if(!S_SEN){
+            initS_SEN();
+        }
+        if(!S_COM){
+            initS_COM();
+        }
+        if(!S_MON){
+            initS_MON();
+        }
+        if(!S_BAT){
+            initS_BAT();
+        }
+        if(!S_ALA){
+            initS_ALA();
+        }
+        if(!S_BATS){
+            initS_BATS();
+        }
+        if(!S_SIR){
+            initS_SIR();
+        }
+        if(!S_MOD){
+            initS_MOD();
+        }
+        if(!S_DISP){
+            initS_DISP();
+        }
+        if(!S_SENHA){
+            initS_SENHA();
+        }
+        if(!S_ENE){
+            initS_ENE();
+        }
+        if(!S_CABO){
+            initS_CABO();
+        }
+        if(!S_OUTA){
+            initS_OUTA();
+        }
+        if(!S_CAM){
+            initS_CAM();
+        }
+        if(!S_ALA){
+            initS_ALA();
+        }
+        if(!S_CAMV){
+            initS_CAMV();
+        }
+        if(!S_GRAV){
+            initS_GRAV();
+        }
+        if(!S_ACE){
+            initS_ACE();
+        }
+        if(!S_STAND){
+            initS_STAND();
+        }
+        if(!S_CERCA){
+            initS_CERCA();
+        }
+        if(!S_HASTE){
+            initS_HASTE();
+        }
+        if(!S_MOLA){
+            initS_MOLA();
+        }
+        if(!S_FIO){
+            initS_FIO();
+        }
+        if(!S_RADIO){
+            initS_RADIO();
+        }
+        if(!S_RADIOO){
+            initS_RADIOO();
+        }
+        if(!S_FIBRA){
+            initS_FIBRA();
+        }
+        if(!S_FIBRAO){
+            initS_FIBRAO();
+        }
+        if(!S_COM){
+            initS_COM();
+        }
+
+        if(!veiculos){
+            initVeiculos();
+        }
+        if (!var_servico) {
+            initVarServico();
+        }
+
+        if(!veiculo){
+            initVeiculoOrder();
+        }
 
         if(!ser){
             initServicos();
@@ -79,6 +208,10 @@ angular.module('starter.services')
             initInic();
         }
 
+        this.limpaVarServico = function () {
+            initVarServico();
+        }
+
         this.clear = function () {
             initCart();
             initOc();
@@ -100,6 +233,10 @@ angular.module('starter.services')
 
         this.clearIndex = function () {
             initIndex();
+        };
+
+        this.clearLogin = function () {
+            initLogin();
         };
 
         this.clearNotification = function () {
@@ -139,6 +276,14 @@ angular.module('starter.services')
         };
         this.getServicos = function () {
             return $localStorage.get(key18);
+        };
+
+        this.getVeiculo = function () {
+            return $localStorage.get(key19);
+        };
+
+        this.getVeiculoOrder = function () {
+            return $localStorage.get(key20);
         };
         this.addItem = function (item) {
             var cart = this.get(), itemAux, exists = false;
@@ -189,11 +334,17 @@ angular.module('starter.services')
             $localStorage.setObject(key7,cart);
         };
         //servicos
-        this.addServicos = function (item) {
+        this.addVarServicos = function (item) {
             var cart;
             cart = item;
-            $localStorage.setObject(key18,cart);
+            $localStorage.set(key21,cart);
         };
+
+        this.addServicos = function (key,item) {
+            var cart = item;
+
+            $localStorage.setObject(key,cart);
+         };
         //iniciadas
         this.addIni = function (item) {
             var cart = this.getInic(), itemAux, exists = false;
@@ -208,6 +359,12 @@ angular.module('starter.services')
                 cart.items.push(item);
             }
             $localStorage.setObject(key9,cart);
+        };
+
+        //veiculos
+        this.addVeiculo = function (item) {
+            $localStorage.setObject(key20,{
+                items:[item]});
         };
         //add orders fechadas
         this.addClose = function (item) {
@@ -287,6 +444,13 @@ angular.module('starter.services')
                 itemAux = cart.items[i];
             itemAux.serial = serial;
             $localStorage.setObject(key,cart);
+        };
+
+        this.updateServico = function(value){
+            var cart = this.getServicos();
+
+            cart.S_ALA = value;
+            $localStorage.setObject(key18,cart);
         };
 
         this.setQtd = function (value) {
@@ -429,5 +593,96 @@ angular.module('starter.services')
             $localStorage.setObject(key18, {
                 items:[]
             });
+        }
+
+        function initVeiculos(){
+            $localStorage.setObject(key19,{items:[]});
+        }
+
+        function initVeiculoOrder(){
+            $localStorage.setObject(key20,{items:[]});
+        }
+
+        function initVarServico() {
+            $localStorage.set(key21,null)
+        }
+
+        function initS_ALA() {
+            $localStorage.setObject(key22,{})
+        }
+        function initS_SEN() {
+            $localStorage.setObject(key23,{})
+        }
+        function initS_MON() {
+            $localStorage.setObject(key24,{})
+        }
+        function initS_BAT() {
+            $localStorage.setObject(key25,{})
+        }
+        function initS_BATS() {
+            $localStorage.setObject(key26,{})
+        }
+        function initS_SIR() {
+            $localStorage.setObject(key27,{})
+        }
+        function initS_MOD() {
+            $localStorage.setObject(key28,{})
+        }
+        function initS_DISP() {
+            $localStorage.setObject(key29,{})
+        }
+        function initS_SENHA() {
+            $localStorage.setObject(key30,{})
+        }
+        function initS_ENE() {
+            $localStorage.setObject(key31,{})
+        }
+        function initS_CABO() {
+            $localStorage.setObject(key32,{})
+        }
+        function initS_OUTA() {
+            $localStorage.setObject(key33,{})
+        }
+        function initS_CAM() {
+            $localStorage.setObject(key34,{})
+        }
+        function initS_CAMV() {
+            $localStorage.setObject(key35,{})
+        }
+        function initS_GRAV() {
+            $localStorage.setObject(key36,{})
+        }
+        function initS_ACE() {
+            $localStorage.setObject(key37,{})
+        }
+        function initS_STAND() {
+            $localStorage.setObject(key38,{})
+        }
+        function initS_CERCA() {
+            $localStorage.setObject(key39,{})
+        }
+        function initS_HASTE() {
+            $localStorage.setObject(key40,{})
+        }
+        function initS_MOLA() {
+            $localStorage.setObject(key41,{})
+        }
+        function initS_FIO() {
+            $localStorage.setObject(key42,{})
+        }
+        function initS_RADIO() {
+            $localStorage.setObject(key43,{})
+        }
+        function initS_RADIOO() {
+            $localStorage.setObject(key44,{})
+        }
+        function initS_FIBRA() {
+            $localStorage.setObject(key45,{})
+        }
+        function initS_FIBRAO() {
+            $localStorage.setObject(key46,{})
+        }
+        function initS_COM() {
+            $localStorage.setObject(key47,{})
         }
     }]);

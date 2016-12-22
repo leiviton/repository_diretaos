@@ -13,15 +13,17 @@ class Order extends Model implements Transformable
     protected $fillable = [
         'user_deliveryman_id',
         'status',
-        'cupom_id',
-        'geo',
-        'service',
-        'defect',
-        'number_os_sise',
-        'zipcode',
         'close_at',
         'ini_at',
-        'sinc_at'
+        'sinc_at',
+        'hash',
+        'DH_EXE',
+        'ID_TEC',
+        'RESPTEC',
+        'O_OBSOS',
+        'VEICULO',
+        'CODVEI',
+        'flag_sincronizado'
     ];
 
     public function items(){
@@ -36,6 +38,9 @@ class Order extends Model implements Transformable
         return $this->hasMany(AuxiliaryItems::class);
     }
 
+    public function pontuacao(){
+        return $this->hasMany(Pontuacao::class);
+    }
     public function deliveryman(){
         return $this->belongsTo(User::class,'user_deliveryman_id','id');
     }
@@ -47,11 +52,9 @@ class Order extends Model implements Transformable
         return $this->belongsTo(Client::class);
     }
 
-    public function cupom(){
-        return $this->belongsTo(Cupom::class);
+    public function veiculo(){
+        return $this->belongsTo(Veiculo::class);
     }
 
-    public function product(){
-        return $this->hasMany(Product::class);
-    }
+
 }

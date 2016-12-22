@@ -90,9 +90,18 @@
 
 @media (max-width: 360px) {
     .aux {
+          margin-left: 230px !important;
+          margin-top: -45px !important;
+      }
+    .aux2 {
+        margin-left: 230px !important;
+        margin-top: -35px !important;
+    }
+    .vei {
         margin-left: 230px !important;
         margin-top: -48px !important;
     }
+
 
     .button-circle {
         position: relative !important;
@@ -132,7 +141,22 @@
     }
 }
 
+.ex{
+    margin-left: 190px !important;
+    margin-top: 5px;
 
+}
+
+/**item*/
+.item2{
+    padding-bottom: 0 !important;
+    padding-top: 5px !important;
+}
+
+.item3{
+    padding-bottom: 0 !important;
+
+}
 .alerta{
     margin-right: 11px !important;
 }
@@ -233,7 +257,7 @@ a.linkum:link, a.linkum:visited {
     color: #797979;
     font-size: 20px;
     font-weight: bold;
-    text-align: inherit;
+    text-align: center;
     float: none;
     margin: 0;
     padding: 0;
@@ -242,7 +266,7 @@ a.linkum:link, a.linkum:visited {
 
 .popup-buttons .button
 {
-    background-color: #5dc2f1;
+    background-color: #387ef5;
     color: white;
     border: none;
     box-shadow: none;
@@ -255,11 +279,31 @@ a.linkum:link, a.linkum:visited {
 }
 
 .button-default{
-    background-color: #c97459 !important;
+    background-color: #ef473a !important;
 }
 
 .popup-buttons .button.activated
 {
-    background-color: #5dc2f1;
+    background-color: #387ef5 !important;
 }
 
+/**toast**/
+
+.toast_section {
+    color: #FFF;
+    cursor: default;
+    border-radius: 0 !important;
+    font-size: 1.1em !important;
+    display: none;
+    opacity: 1;
+    padding: 15px 35px 15px 15px !important;
+    margin-bottom: 55px !important;
+    margin-top: 35px !important;
+    margin-left: 15px!important;
+    position: fixed;
+    left: 0;
+    right: 0;
+    text-align: center;
+    z-index: 9999;
+    background-color: rgba(0, 0, 0, 1.0);
+}

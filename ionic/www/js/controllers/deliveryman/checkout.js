@@ -1,26 +1,27 @@
 angular.module('starter.controllers')
     .controller('DeliverymanCheckoutCtrl',[
-        '$scope','$state','$cart','DeliverymanOrder','$ionicLoading','$ionicPopup','Cupom','$cordovaBarcodeScanner','User',
-        function ($scope,$state,$cart,DeliverymanOrder,$ionicLoading,$ionicPopup,Cupom,$cordovaBarcodeScanner,User) {
+        '$scope','$state','$cart','DeliverymanOrder','$ionicLoading','$ionicPopup','Cupom','$cordovaBarcodeScanner','User','$localStorage',
+        function ($scope,$state,$cart,DeliverymanOrder,$ionicLoading,$ionicPopup,Cupom,$cordovaBarcodeScanner,User,$localStorage) {
 
 
-        var aux = $cart.getAux();
-        $scope.items = aux.auxiliar;
+            var aux = $cart.getAux();
+            $scope.items = aux.auxiliar;
 
-        $scope.removeItem = function (i) {
-           $cart.removeAux(i);
-           $scope.items.splice(i,1);
-        };
+            $scope.order =  $localStorage.getObject('order_close');
+
+            var index = $localStorage.getObject('close_index');
+
+            $scope.removeItem = function (i) {
+               $cart.removeAux(i);
+               $scope.items.splice(i,1);
+            };
 
             $scope.openListAuxiliares = function () {
                 $state.go('deliveryman.view_auxiliary');
             };
-        $scope.verTrabalhos = function () {
-          $state.go('deliveryman.order');
-        };
 
+            $scope.voltar = function () {
+                $state.go('deliveryman.view_close',{id:$scope.order.id,index:index});
+            };
 
-        $scope.openProductDetail = function (i) {
-          $state.go('client.checkout_item_detail',{index:i});
-        };
     }]);

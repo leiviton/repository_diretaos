@@ -6,6 +6,8 @@ use CodeDelivery\Http\Controllers\Controller;
 use CodeDelivery\Repositories\AuxiliaryRepository;
 use CodeDelivery\Services\OrderService;
 
+use LucaDegasperi\OAuth2Server\Facades\Authorizer;
+
 class DeliverymanAuxiliaryController extends Controller
 {
 
@@ -26,6 +28,7 @@ class DeliverymanAuxiliaryController extends Controller
     }
 
     public function index(){
+        $id = Authorizer::getResourceOwnerId();
         $auxliares = $this->repository->skipPresenter(false)->all();
 
         return $auxliares;

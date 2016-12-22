@@ -1,6 +1,6 @@
 angular.module('starter.services')
-    .factory('Sincronizar',['$cart','$localStorage','DeliverymanOrder','$ionicPopup','Product','Auxiliary'
-            ,function ($cart,$localStorage,DeliverymanOrder,$ionicPopup,Product,Auxiliary) {
+    .factory('Sincronizar',['$cart','$localStorage','DeliverymanOrder','$ionicPopup','Product','Auxiliary','Veiculo','ionicToast'
+            ,function ($cart,$localStorage,DeliverymanOrder,$ionicPopup,Product,Auxiliary,Veiculo,ionicToast) {
             return {
                     sincronizar: function () {
                             var read = [];
@@ -55,7 +55,7 @@ angular.module('starter.services')
                                             $cart.setQtd(data.meta.pagination.count);
                                             $cart.clearClose();
 
-                                            DeliverymanOrder.count({id:null,status:0},function (data) {
+                                            /*DeliverymanOrder.count({id:null,status:0},function (data) {
                                                     $localStorage.set('orders_pendentes_criticas',data[0]);
                                             });
                                             DeliverymanOrder.countD({id:null,status:0},function (data) {
@@ -75,15 +75,23 @@ angular.module('starter.services')
                                             });
                                             Product.seguranca(function (data) {
                                                     $localStorage.setObject('produtos_seguranca',{items:data.data});
-                                            });
+                                            });*/
                                             Auxiliary.query(function (data) {
                                                 $localStorage.setObject('auxiliary',{items:data.data});
+
+                                            },function (error) {
+                                                ionicToast.show('Não foi possivel conectar ao servidor', 'top', false, 3500);
                                             });
+
+                                            Veiculo.query(function (data) {
+                                                $localStorage.setObject('veiculos',{items:data.data});
+                                                ionicToast.show('Aplicativo atualizado com sucesso', 'top', false, 3500);
+                                            },function (error) {
+                                                ionicToast.show('Não foi possivel conectar ao servidor', 'top', false, 3500);
+                                            });
+
                                     },function (error) {
-                                                    $ionicPopup.alert({
-                                                            title: 'Atenção',
-                                                            template: 'Não foi possivel comunicar, verifique sua internet'
-                                                    });
+                                                ionicToast.show('Não foi possivel conectar ao servidor', 'top', false, 3500);
 
                                     });
 

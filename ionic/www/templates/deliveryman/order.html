@@ -5,17 +5,17 @@
             <ion-item collection-repeat="o in items"  ng-click="openOrderDetail(o,$index)">
                 <div class="row">
                     <div class="col">
-                        <h2>{{o.created_at.date|limitTo: 10 | date: '   dd/MM/yyyy'}}</h2>
+                        <h2>{{o.data|limitTo: 10 | date: '   dd/MM/yyyy'}}</h2>
                     </div>
                     <div class="col text-right">
-                        # {{o.number_os_sise}}
-                        <i class="energized ion ion-alert-circled" ng-if="o.priority=='Alta'"></i>
-                        <i class="assertive ion ion-alert-circled" ng-if="o.priority=='Critica'"></i>
-                        <i class="clear ion-alert-circled" ng-if="o.priority==1"></i>
+                        # {{o.ordem}}
+                        <i class="energized ion ion-alert-circled" ng-if="o.prioridade=='Alta'"></i>
+                        <i class="assertive ion ion-alert-circled" ng-if="o.prioridade=='Critica'"></i>
+                        <i class="clear ion-alert-circled" ng-if="o.prioridade=='Baixa'"></i>
                     </div>
                 </div>
                 <div class="row item-text-wrap">
-                    <p>{{o.address}},{{o.address_number}} , {{o.district}} - {{o.city}} </p>
+                    <p>{{o.endereco}}, {{o.bairro}} - {{o.cidade}} </p>
                 </div>
             </ion-item>
         </ion-list>

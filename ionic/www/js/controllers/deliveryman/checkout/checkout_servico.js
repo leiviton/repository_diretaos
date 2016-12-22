@@ -2,16 +2,18 @@ angular.module('starter.controllers')
     .controller('DeliverymanCheckoutServicoCtrl',[
         '$scope','$state','$stateParams','$cart','ClientOrder',
         '$ionicLoading','$ionicPopup','Cupom','$cordovaBarcodeScanner',
-        'User','$localStorage','DeliverymanOrder','$cordovaGeolocation','ionicToast','Sincronizar',
+        'User','$localStorage','DeliverymanOrder','$cordovaGeolocation','$ionicHistory','ionicToast','Sincronizar',
         function ($scope,$state,$stateParams,$cart,ClientOrder,
                   $ionicLoading,$ionicPopup,Cupom,$cordovaBarcodeScanner,
-                  User,$localStorage,DeliverymanOrder,$cordovaGeolocation,ionicToast,Sincronizar) {
+                  User,$localStorage,DeliverymanOrder,$cordovaGeolocation,$ionicHistory,ionicToast,Sincronizar) {
 
             var indice = $localStorage.get('close_index');
 
             $scope.validation = 0;
 
             $scope.servico = $localStorage.getObject('servicos');
+
+            $scope.veiculo = $localStorage.getObject('veiculo_order');
 
             var aux = $cart.getAux();
             if(aux.auxiliar.length == 0 || aux.auxiliar==null){
@@ -40,49 +42,70 @@ angular.module('starter.controllers')
             };
 
             $scope.salvarServicos = function (servico) {
-                var ser = {
-                    'S_ALA': servico.S_ALA,
-                    'S_SEN': servico.S_SEN,
-                    'S_COM': servico.S_COM,
-                    'S_MON': servico.S_MON,
-                    'S_BAT': servico.S_BAT,
-                    'S_BATS': servico.S_BATS,
-                    'S_SIR': servico.S_SIR,
-                    'S_MOD': servico.S_MOD,
-                    'S_DISP': servico.S_DISP,
-                    'S_SENHA': servico.S_SENHA,
-                    'S_ENE': servico.S_ENE,
-                    'S_CABO': servico.S_CABO,
-                    'S_OUTA': servico.S_OUTA,
-                    'S_CAMV': servico.S_CAMV,
-                    'S_GRAV': servico.S_GRAV,
-                    'S_ACE': servico.S_ACE,
-                    'S_STAND': servico.S_STAND,
-                    'S_CERCA': servico.S_CERCA,
-                    'S_HASTE': servico.S_HASTE,
-                    'S_MOLA': servico.S_MOLA,
-                    'S_FIO': servico.S_FIO,
-                    'S_RADIO': servico.S_RADIO,
-                    'S_RADIOO': servico.S_RADIOO,
-                    'S_FIBRA': servico.S_FIBRA,
-                    'S_FIBRAO': servico.S_FIBRAO,
-                    'S_LBRA1': servico.S_LBRA1,
-                    'S_BRA1': servico.S_BRA1,
-                    'S_LBRA2': servico.S_LBRA2,
-                    'S_BRA2': servico.S_BRA2,
-                    'S_LBRA3': servico.S_LBRA3,
-                    'S_BRA3': servico.S_BRA3,
-                    'S_LBRA4': servico.S_LBRA4,
-                    'S_BRA4': servico.S_BRA4,
-                    'S_LBRA5': servico.S_LBRA5,
-                    'S_BRA5': servico.S_BRA5
-                };
 
-                $cart.addServicos(ser);
+                     var S_ALA =  servico.S_ALA;
+                     var S_SEN =  servico.S_SEN;
+                     var S_COM =  servico.S_COM;
+                     var S_MON =  servico.S_MON;
+                     var S_BAT =  servico.S_BAT;
+                     var S_BATS = servico.S_BATS;
+                     var S_SIR = servico.S_SIR;
+                     var S_MOD =  servico.S_MOD;
+                     var S_DISP = servico.S_DISP;
+                     var S_SENHA =  servico.S_SENHA;
+                     var S_ENE = servico.S_ENE;
+                     var S_CABO = servico.S_CABO;
+                     var S_OUTA = servico.S_OUTA;
+                     var S_CAMV = servico.S_CAMV;
+                     var S_GRAV = servico.S_GRAV;
+                     var S_ACE = servico.S_ACE;
+                     var S_STAND = servico.S_STAND;
+                     var S_CERCA = servico.S_CERCA;
+                     var S_HASTE =  servico.S_HASTE;
+                     var S_MOLA = servico.S_MOLA;
+                     var S_FIO = servico.S_FIO;
+                     var S_RADIO = servico.S_RADIO;
+                     var S_RADIOO = servico.S_RADIOO;
+                     var S_FIBRA = servico.S_FIBRA;
+                     var S_FIBRAO = servico.S_FIBRAO;
+                     var S_LBRA1 = servico.S_LBRA1;
+                     var S_BRA1 =  servico.S_BRA1;
+                     var S_LBRA2 = servico.S_LBRA2;
+                     var S_BRA2 = servico.S_BRA2;
+                     var S_LBRA3 = servico.S_LBRA3;
+                     var S_BRA3 = servico.S_BRA3;
+                     var S_LBRA4 =  servico.S_LBRA4;
+                     var S_BRA4 = servico.S_BRA4;
+                     var S_LBRA5 = servico.S_LBRA5;
+                     var S_BRA5 = servico.S_BRA5;
+                if(S_ALA && S_SEN && S_COM && S_MON && S_BAT && S_BATS && S_SIR && S_MOD
+                    && S_DISP && S_SENHA && S_ENE && S_CABO && S_OUTA && S_CAMV == '' && S_GRAV == ''
+                    && S_ACE == '' && S_STAND == '' && S_CERCA == '' && S_HASTE == '' && S_MOLA == ''
+                    && S_FIO == '' && S_RADIO == '' && S_RADIOO == '' && S_FIBRA == '' && S_FIBRAO == ''
+                    && S_LBRA1 == '' && S_BRA1 == '' && S_LBRA2 == '' && S_BRA2 == '' && S_LBRA3 == ''
+                    && S_BRA3 == '' && S_LBRA4 == '' && S_BRA4 == '' && S_LBRA5 == '' && S_BRA5 == ''){
+
+                    ionicToast.show('Voce não serviços a ordem', 'middle', false, 3500);
+
+                }else{
+                    var ser = {
+                        'S_ALA': S_ALA,
+                        'S_SEN': S_SEN,
+                        'S_COM': S_COM,
+                        'S_MON': S_MON,
+                        'S_BAT':S_BAT,
+                        'S_BATS':S_BATS,
+                        'S_SIR':S_SIR,
+                    };
+
+                    $cart.addServicos(ser);
+                }
 
                 var o = $localStorage.getObject('order_close');
 
-                switch (o.type) {
+                goToDeliveryClose();
+
+                /*switch (o.type) {
                     case 1:
                         $state.go('deliveryman.checkout_fibra', {id: o.id, index: $stateParams.index});
                         break;
@@ -107,37 +130,81 @@ angular.module('starter.controllers')
                             title: 'Informação',
                             template: 'Ocorreu um erro, tente novamente'
                         });
-                }
+                }*/
             };
 
 
-            $scope.goToDeliveryClose = function () {
+            $scope.goToDeliveryClose = function (servico) {
                 $ionicPopup.confirm({
                     title: 'Atenção',
                     template: 'Deseja fechar esta Ordem?'
                 }).then(function(res) {
                     $ionicLoading.show({
-                        template: 'Enviando...'
+                        template: '<ion-spinner></ion-spinner><br> Aguarde ...'
                     });
 
                     if(res) {
-                        var v = $cart.get().items;
-                        for (var i=0;i<v.length;i++){
-                            if(v[i].serial==null || v[i].serial==''){
-                                $scope.validation = $scope.validation + 1;
-                            }
-                        }
+                        var S_ALA =  servico.S_ALA;
+                        var S_SEN =  servico.S_SEN;
+                        var S_COM =  servico.S_COM;
+                        var S_MON =  servico.S_MON;
+                        var S_BAT =  servico.S_BAT;
+                        var S_BATS = servico.S_BATS;
+                        var S_SIR = servico.S_SIR;
+                        var S_MOD =  servico.S_MOD;
+                        var S_DISP = servico.S_DISP;
+                        var S_SENHA =  servico.S_SENHA;
+                        var S_ENE = servico.S_ENE;
+                        var S_CABO = servico.S_CABO;
+                        var S_OUTA = servico.S_OUTA;
+                        var S_CAMV = servico.S_CAMV;
+                        var S_GRAV = servico.S_GRAV;
+                        var S_ACE = servico.S_ACE;
+                        var S_STAND = servico.S_STAND;
+                        var S_CERCA = servico.S_CERCA;
+                        var S_HASTE =  servico.S_HASTE;
+                        var S_MOLA = servico.S_MOLA;
+                        var S_FIO = servico.S_FIO;
+                        var S_RADIO = servico.S_RADIO;
+                        var S_RADIOO = servico.S_RADIOO;
+                        var S_FIBRA = servico.S_FIBRA;
+                        var S_FIBRAO = servico.S_FIBRAO;
+                        var S_LBRA1 = servico.S_LBRA1;
+                        var S_BRA1 =  servico.S_BRA1;
+                        var S_LBRA2 = servico.S_LBRA2;
+                        var S_BRA2 = servico.S_BRA2;
+                        var S_LBRA3 = servico.S_LBRA3;
+                        var S_BRA3 = servico.S_BRA3;
+                        var S_LBRA4 =  servico.S_LBRA4;
+                        var S_BRA4 = servico.S_BRA4;
+                        var S_LBRA5 = servico.S_LBRA5;
+                        var S_BRA5 = servico.S_BRA5;
 
-                        if (v.length==0){
-                            $ionicLoading.hide();
-                            ionicToast.show('Voce não adicionou produtos a ordem', 'middle', false, 3500);
+                        if(S_ALA && S_SEN && S_COM && S_MON && S_BAT && S_BATS && S_SIR && S_MOD
+                            && S_DISP && S_SENHA && S_ENE && S_CABO && S_OUTA && S_CAMV == '' && S_GRAV == ''
+                            && S_ACE == '' && S_STAND == '' && S_CERCA == '' && S_HASTE == '' && S_MOLA == ''
+                            && S_FIO == '' && S_RADIO == '' && S_RADIOO == '' && S_FIBRA == '' && S_FIBRAO == ''
+                            && S_LBRA1 == '' && S_BRA1 == '' && S_LBRA2 == '' && S_BRA2 == '' && S_LBRA3 == ''
+                            && S_BRA3 == '' && S_LBRA4 == '' && S_BRA4 == '' && S_LBRA5 == '' && S_BRA5 == ''){
 
-                        }else if ($scope.validation>0){
-                            $ionicLoading.hide();
-                            ionicToast.show('Voce não adicionou serial em todos os produtos', 'middle', false, 3500);
+                            ionicToast.show('Voce não serviços a ordem', 'middle', false, 3500);
+
+                        }else{
+                            var ser = {
+                                'S_ALA': S_ALA,
+                                'S_SEN': S_SEN,
+                                'S_COM': S_COM,
+                                'S_MON': S_MON,
+                                'S_BAT':S_BAT,
+                                'S_BATS':S_BATS,
+                                'S_SIR':S_SIR,
+                            };
+
+                            $cart.addServicos(ser);
 
 
-                        }else if($scope.validation==0){
+
+
                             var posOptions = {timeout: 30000, enableHighAccuracy: true, maximumAge: 0};
 
                             $cordovaGeolocation
@@ -155,6 +222,8 @@ angular.module('starter.controllers')
 
                                     var  s = {servicos: angular.copy($scope.servico)};
 
+                                    var v = {veiculos: angular.copy($scope.veiculo)};
+
                                     var  ax = {auxiliary: angular.copy($scope.auxiliary)};
                                     console.log('o',o);
                                     angular.forEach(ax.auxiliary,function (item) {
@@ -171,11 +240,13 @@ angular.module('starter.controllers')
                                         status: 2,
                                         close: Sincronizar.dataHojeSql(),
                                         data: Sincronizar.dataHoje(),
-                                        servicos: s.servicos
+                                        servicos: s.servicos,
+                                        veiculo: v.veiculos
                                     };
 
                                     $cart.addClose(or);
                                     $cart.removeOrders(indice);
+
                                     var qtd = $localStorage.get('qtdOrder');
 
                                     if(qtd > 0){
@@ -183,7 +254,16 @@ angular.module('starter.controllers')
                                         $localStorage.set('qtdOrder',q);
                                     }
                                     $ionicLoading.hide();
-                                    $state.go('deliveryman.checkout_successful');
+
+                                    ionicToast.show('Ordem fechada com sucesso', 'top', false, 3500);
+                                    $cart.clear();
+                                    $cart.clearIndex();
+                                    $ionicHistory.clearHistory();
+                                    $ionicHistory.nextViewOptions({
+                                        disableBack: true,
+                                        historyRoot: true
+                                    });
+                                    $state.go('deliveryman.order');
                                     console.log(ax);
                                 }, function(err) {
                                     $ionicLoading.hide();

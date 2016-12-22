@@ -33,7 +33,7 @@ angular.module('starter.run').run(['$state','PermissionStore','RoleStore','OAuth
         });
         RoleStore.defineRole('adm-role',['user-permission','adm-permission']);
 
-        $rootScope.$on('event:auth-loginRequired',function (event,data) {
+        /*$rootScope.$on('event:auth-loginRequired',function (event,data) {
 
             switch (data.data.error){
                 case 'access_denied':
@@ -56,5 +56,5 @@ angular.module('starter.run').run(['$state','PermissionStore','RoleStore','OAuth
             }
 
 
-        });
+        });*/
 }]);

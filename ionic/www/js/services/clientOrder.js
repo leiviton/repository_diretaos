@@ -7,6 +7,7 @@ angular.module('starter.services')
             }
         });
     }])
+
     .factory('DeliverymanOrder',['$resource','appConfig','$localStorage',function ($resource,appConfig) {
         var url = appConfig.baseUrl + '/api/deliveryman/order/:id';
 
@@ -45,7 +46,12 @@ angular.module('starter.services')
             updateNotification:{
                 method: 'PATCH',
                 url: appConfig.baseUrl +'/api/deliveryman/sincronizar'
+            },
+            getVeiculo:{
+                method: 'GET',
+                url: appConfig.baseUrl + '/api/deliveryman/veiculos'
             }
+
         });
 
     }]);

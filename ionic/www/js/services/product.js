@@ -17,14 +17,22 @@ angular.module('starter.services')
                 method:'GET',
                 url: url + 'seguranca'
             }
-
         });
-
     }])
 
     .factory('Auxiliary',['$resource','appConfig',function ($resource,appConfig) {
 
         return $resource(appConfig.baseUrl + '/api/deliveryman/auxiliary',{},{
+            query:{
+                isArray: false
+            }
+        });
+
+    }])
+
+    .factory('Veiculo',['$resource','appConfig',function ($resource,appConfig) {
+
+        return $resource(appConfig.baseUrl + '/api/deliveryman/veiculos',{},{
             query:{
                 isArray: false
             }

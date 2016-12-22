@@ -14,6 +14,7 @@ use CodeDelivery\Validators\ActionValidator;
  */
 class ActionRepositoryEloquent extends BaseRepository implements ActionRepository
 {
+
     /**
      * Specify Model class name
      *

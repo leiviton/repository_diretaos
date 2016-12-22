@@ -9,7 +9,6 @@ angular.module('starter.services',[]);
 angular.module('starter.filters',[]);
 angular.module('starter.run',[]);
 
-var db;
 
 angular.module('starter', [
     'ionic','ionic-toast','ionic.service.core','starter.controllers','starter.services','starter.filters','starter.run',
@@ -17,8 +16,8 @@ angular.module('starter', [
 ])
     .constant('appConfig',{
         //baseUrl:'http://leiviton.com.br/direta_dev/public',
-        baseUrl:'http://186.233.72.22',
-        //baseUrl:'http://192.168.137.201:8000',
+        //baseUrl:'http://186.233.72.22',
+        baseUrl:'http://192.168.137.201:8000',
         pusherKey: '9da90fc97b93c4ce952a',
         redirectAfterLogin:{
             client:'client.order',
@@ -107,9 +106,14 @@ angular.module('starter', [
             }
         });
         $stateProvider
+            .state('welcome',{
+                url:'/Welcome',
+                templateUrl:'templates/Welcome.html',
+                controller:'welcomeCtrl'
+            })
             .state('login',{
                 url:'/login',
-                templateUrl:'templates/login.html',
+                templateUrl:'templates/_login.html',
                 controller:'loginCtrl'
             })
             .state('logout',{
@@ -246,8 +250,8 @@ angular.module('starter', [
             .state('deliveryman.servicos',{
                 cache:false,
                 url:'/servicos/:id/:index',
-                templateUrl: 'templates/deliveryman/checkout/checkout_servico.html',
-                controller: 'DeliverymanCheckoutServicoCtrl'
+                templateUrl: 'templates/deliveryman/servico.html',
+                controller: 'DeliverymanServicoCtrl'
             })
 
             //produtos
@@ -310,9 +314,16 @@ angular.module('starter', [
                 url:'/summary',
                 templateUrl:'templates/deliveryman/summary.html',
                 controller: 'DeliverymanSummaryCtrl'
+            })
+            .state('deliveryman.veiculo',{
+                cache: false,
+                url:'/veiculo',
+                templateUrl:'templates/deliveryman/view_veiculo.html',
+                controller: 'DeliverymanVeiculoCtrl'
             });
 
-        $urlRouterProvider.otherwise("/login");
+
+        $urlRouterProvider.otherwise("/Welcome");
         $provide.decorator('OAuthToken',['$localStorage','$delegate',function ($localStorage,$delegate) {
             Object.defineProperties($delegate,{
                 setToken:{

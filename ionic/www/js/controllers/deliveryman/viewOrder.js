@@ -14,8 +14,9 @@ angular.module('starter.controllers')
 
         console.log($stateParams.index);
         var orders = $localStorage.getObject('orders');
+            var message = 'Enviando';
             $ionicLoading.show({
-               template: 'Carregando...'
+                template: message + ' <ion-spinner></ion-spinner>'
             });
             for (var i=0;i < orders.items.length;i++){
                 if (orders.items[i].id == $stateParams.id){
@@ -25,11 +26,11 @@ angular.module('starter.controllers')
             }
 
             function initMarkes(order) {
-                var address = order.zipcode + ', ' +
-                    order.address +',' +
-                    order.address_number +', '+
-                    order.city +' - '+
-                    order.state;
+                var address = order.cep + ', ' +
+                    order.endereco +',' +
+                    order.bairro +', '+
+                    order.cidade +' - '+
+                    order.estado;
                 console.log('address',address);
                 $scope.link = "https://google.com/maps/place/"+address;
             }
@@ -55,7 +56,7 @@ angular.module('starter.controllers')
             }).then(function(res) {
                 if(res) {
                     $ionicLoading.show({
-                        template: 'Gravando visita'
+                        template: '<ion-spinner></ion-spinner><br> Aguarde'
                     });
                     var posOptions = {timeout: 30000, enableHighAccuracy: true, maximumAge: 0};
 
@@ -95,7 +96,7 @@ angular.module('starter.controllers')
                 }).then(function(res) {
                     if(res) {
                         $ionicLoading.show({
-                            template: 'Iniciando'
+                            template: '<ion-spinner></ion-spinner><br> Aguarde'
                         });
                         var posOptions = {timeout: 30000, enableHighAccuracy: true, maximumAge: 0};
 
@@ -131,8 +132,9 @@ angular.module('starter.controllers')
                     cssClass: 'animated fadeInDown'
                 }).then(function(res) {
                     if(res) {
+
                         $ionicLoading.show({
-                            template: 'Notificando PCP'
+                            template: '<ion-spinner></ion-spinner><br> Aguarde'
                         });
                         var posOptions = {timeout: 30000, enableHighAccuracy: true, maximumAge: 0};
                         $cordovaGeolocation

@@ -99,6 +99,8 @@ Route::group(['middleware'=>'cors'],function (){
 
             Route::get('auxiliary','Api\Deliveryman\DeliverymanAuxiliaryController@index');
 
+            Route::get('veiculos','Api\Deliveryman\DeliverymanVeiculoController@index');
+
             Route::get('count','Api\Deliveryman\DeliverymanCheckoutController@count');
 
             Route::get('countD','Api\Deliveryman\DeliverymanCheckoutController@countD');

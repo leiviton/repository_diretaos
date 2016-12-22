@@ -17,6 +17,10 @@ use CodeDelivery\Validators\AuxiliaryValidator;
 class AuxiliaryRepositoryEloquent extends BaseRepository implements AuxiliaryRepository
 {
     protected $skipPresenter = false;
+
+    public function getAuxiliar($id){
+        return $this->model->where('id_user','!=',$id)->get();
+    }
     /**
      * Specify Model class name
      *

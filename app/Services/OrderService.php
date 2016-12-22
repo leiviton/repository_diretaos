@@ -92,7 +92,7 @@ class OrderService{
         }
     }
 
-    public function updateStatus($id,$idDeliveryman,$status,$lat,$long,$service=null,$ax=null,$items=null,$sinc,$inic=null,$close=null,$v=null){
+    public function updateStatus($id,$idDeliveryman,$status,$lat,$long,$service=null,$ax=null,$items=null,$sinc,$inic=null,$close=null,$v=null,$veiculo=null,$pontuacao=null){
         $order = $this->orderRepository->getByIDAndDeliveryman((int)$id,$idDeliveryman);
 
         $order->flag_sincronizado = 0;
@@ -145,6 +145,15 @@ class OrderService{
                     foreach ($ite as $i){
                         $order->items()->create($i);
                     }
+                }
+                $vei = $veiculo;
+                if($vei<>null){
+                   $order->veiculo = (int) $vei['V_NOME'];
+                   $order->CODVEI = $vei['CODVEI'];
+                }
+                $pont = $pontuacao;
+                if($pont<>null){
+                    $order->pontuacao()->create($pont);
                 }
                 $order->save();
                 break;

@@ -10,6 +10,7 @@ class AuxiliaryItems extends Model implements Transformable
 {
     use TransformableTrait;
 
+    protected $table = 'equipe';
     protected $fillable = [
         'auxiliary_id',
         'order_id',

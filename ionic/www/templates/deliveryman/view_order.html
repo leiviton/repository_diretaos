@@ -1,25 +1,25 @@
 <ion-view>
-    <ion-nav-title>Ordem: {{order.number_os_sise}}</ion-nav-title>
+    <ion-nav-title>Ordem: {{order.ordem}}</ion-nav-title>
     <div class="bar bar-stable bar-subheader">
-        <h2 class="title"> {{order.name}}</h2>
+        <h2 class="title"> {{order.cliente}}</h2>
     </div>
     <ion-content class="padding has-subheader">
         <ion-list >
             <ion-item class="item-text-wrap">
                 <h2 class="row data">
                     <div class="col">
-                       Data: {{order.created_at.date|limitTo: 10 | date: '   dd/MM/yyyy'}}
+                       Data: {{order.data|limitTo: 10 | date: '   dd/MM/yyyy'}}
                     </div>
                     <div class="col text-right">
-                        <i class="energized ion ion-alert-circled text-right" ng-if="order.priority=='Alta'"></i>
-                        <i class="assertive ion ion-alert-circled text-right" ng-if="order.priority=='Critica'"></i>
+                        <i class="energized ion ion-alert-circled text-right" ng-if="order.prioridade=='Alta'"></i>
+                        <i class="assertive ion ion-alert-circled text-right" ng-if="order.prioridade=='Critica'"></i>
                     </div>
                 </h2>
 
                 <div class="conteudo">
                     <a class="ion ion-ios-location linkum"
                                        ng-href="{{link}}"
-                                       onclick='window.open(this.href, "_system", "location=yes"); return false;'>  {{order.address}}, {{order.address_number}} - {{order.city}}</a>
+                                       onclick='window.open(this.href, "_system", "location=yes"); return false;'>  {{order.endereco}}, {{order.bairro}} - {{order.cidade}}</a>
 
 
                     <div class="row">
@@ -30,7 +30,7 @@
                          <h2 class="col text-left tel" ng-if="order.phone1 != null"><i class="ion ion-ios-telephone"></i> <a class="nounderline" ng-href="tel: {{order.phone1}}"> {{order.phone1}} </a> </h2>
                          <h2 class="col text-right tel2" ng-if="order.phone2 != null"><i class="ion ion-ios-telephone"></i> <a class="nounderline" ng-href="tel: {{order.phone2}}"> {{order.phone2}} </a> </h2>
                     </div>
-                        <h2 class="t sol"><i class="ion ion-wrench"></i> Solicitação: {{order.defect}}</h2>
+                        <h2 class="t sol"><i class="ion ion-wrench"></i> Solicitação: {{order.problema}}</h2>
                 </div>
             </ion-item>
         </ion-list>

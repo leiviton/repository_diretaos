@@ -21,14 +21,9 @@ class AuxiliaryTransformer extends TransformerAbstract
     public function transform(Auxiliary $model)
     {
         return [
-            'id'         => (int) $model->id,
-            'name'       => $model->name,
-            'status'     => (int) $model->status,
-
-            /* place your other model properties here */
-
-            'created_at' => $model->created_at,
-            'updated_at' => $model->updated_at
-        ];
+            'id'         => (int) $model->CODFUN,
+            'name'       => $model->NOMECOM,
+            'id_user'    => (int) $model->id_user,
+            ];
     }
 }

@@ -12,8 +12,7 @@ use CodeDelivery\Models\Order;
  */
 class OrderTransformer extends TransformerAbstract
 {
-    protected $availableIncludes = ['items'];
-    protected $defaultIncludes = ['auxiliary','actions'];
+    protected $defaultIncludes = ['actions'];
 
     /**
      * Transform the \Order entity
@@ -25,27 +24,25 @@ class OrderTransformer extends TransformerAbstract
     {
         return [
             'id'         => (int) $model->id,
-            'user_deliveryman_id' =>(int) $model->user_deliveryman_id,
-            'defect'=>$model->defect,
             'status'=>$model->status,
-            'priority'=>$model->priority,
             'number_os_sise'=>$model->number_os_sise,
-            'name' =>$model->name,
             'phone1' => $model->phone1,
             'phone2' => $model->phone2,
             'type' =>(int) $model->type,
-            'cep' => $model->zipcode,
-            'address' => $model->address,
-            'address_number'=>$model->address_number,
-            'district' => $model->district,
-            'city'=>$model->city,
-            'state'=>$model->state,
-            'visita'=>$model->visita,
             'plano'=>$model->plano,
             'id_plano'=>$model->id_plano,
             'product'=>$model->product,
-            'created_at' => $model->created_at,
-            'updated_at' => $model->updated_at
+            'ordem' => $model->id,
+            'data' => $model->DH_OS,
+            'cliente' => $model->TITULAR,
+            'melhor_horario' => $model->O_MELHOR,
+            'problema' => $model->O_PROBLEMA,
+            'prioridade' => $model->PRIORIDADE,
+            'endereco' => $model->ENDERECO,
+            'bairro' => $model->BAIRRO,
+            'cidade' => $model->CIDADE,
+            'estado' => $model->ESTADO,
+            'cep' => $model->CEP
         ];
     }
 

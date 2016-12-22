@@ -10,12 +10,24 @@ class Auxiliary extends Model implements Transformable
 {
     use TransformableTrait;
 
+    protected $table = "funciona";
     protected $fillable = [
-        'id',
-        'name'
+        'CODFUN',
+        'FUNCIONARIO',
+        'NOMECOM',
+        'CPF',
+        'FUNCAO',
+        'status',
+        'id_user'
     ];
+
     public function auxiliaryItem(){
         return $this->hasMany(AuxiliaryItems::class);
     }
+
+    public function user(){
+        return $this->belongsTo(User::class,'id_user','id');
+    }
+
 
 }
